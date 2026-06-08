@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Call Prompter</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --bg: #000;
+  --surface: #0d0d0d;
+  --surface2: #141414;
+  --border: #1c1c1c;
+  --text: #ffffff;
+  --muted: #404040;
+  --muted2: #2a2a2a;
+  --green: #00d26a;
+  --green-dim: #0a1f12;
+  --red: #ff3b3b;
+  --red-dim: #1f0a0a;
+  --amber: #ff9500;
+  --amber-dim: #1f1200;
+  --blue: #0a84ff;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+/* ── SCREENS ── */
+.screen { display:none; position:fixed; inset:0; overflow:hidden; }
+.screen.active { display:flex; flex-direction:column; }
+
+/* ── SETUP SCREEN ── */
+#sSetup {
+  background: var(--bg);
+  justify-content: center;
+  align-items: center;
+  padding: 32px 24px;
+  overflow-y: auto;
+}
+
+.setup-inner { width:100%; max-width:400px; }
+
+.logo {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.logo-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -1px;
+}
+
+.logo-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.setup-section {
+  margin-bottom: 28px;
+}
+
+.setup-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.setup-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+}
+
+.setup-input:focus { border-color: var(--green); }
+
+.word-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.word-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.word-btn.selected {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green);
+}
+
+.begin-btn {
+  width: 100%;
+  background: var(--green);
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  color: #000;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* ── MAIN STEP SCREEN ── */
+#sStep {
+  background: var(--bg);
+}
+
+/* Status bar */
+.status-bar {
+  padding: 14px 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.step-counter {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pdot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted2);
+  transition: background 0.3s;
+}
+
+.pdot.done { background: var(--green); opacity: 0.4; }
+.pdot.current { background: var(--green); width: 18px; border-radius: 3px; }
+
+.mic-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.mic-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background 0.3s;
+}
+
+.mic-dot.listening { background: var(--green); animation: micpulse 2s infinite; }
+.mic-dot.heard { background: var(--amber); animation: none; }
+
+@keyframes micpulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.3; }
+}
+
+.mic-label { color: var(--muted); }
+.mic-label.listening { color: var(--green); }
+
+/* Main content area */
+.step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.step-phase {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.step-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+}
+
+.step-title.warning { color: var(--red); }
+.step-title.go { color: var(--green); }
+.step-title.amber { color: var(--amber); }
+
+.main-question {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--green);
+}
+
+.main-question.red-border { border-left-color: var(--red); }
+.main-question.amber-border { border-left-color: var(--amber); }
+
+.main-q-text {
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.power-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pq {
+  font-size: 14px;
+  color: var(--muted);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.4;
+}
+
+.pq:last-child { border-bottom: none; }
+
+/* Personal rule flash */
+.rule-flash {
+  background: var(--amber-dim);
+  border: 1px solid rgba(255,149,0,0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: none;
+}
+
+.rule-flash.show { display: block; }
+.rule-flash-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Warning block */
+.warning-block {
+  background: var(--red-dim);
+  border: 1px solid rgba(255,59,59,0.25);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.warning-block.show { display: block; }
+.warning-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* Timer for rapport */
+.step-timer {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.step-timer.show { display: flex; }
+
+.timer-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.timer-label {
+  font-size: 13px;
+  color: var(--amber);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Silence pause overlay */
+.silence-pause {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.94);
+  z-index: 50;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.silence-pause.show { display: flex; }
+
+.silence-count {
+  font-size: 100px;
+  font-weight: 700;
+  color: var(--amber);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.silence-msg {
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+
+/* Bottom bar */
+.bottom-bar {
+  padding: 12px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.trigger-hint {
+  background: var(--green-dim);
+  border: 1px solid rgba(0,210,106,0.15);
+  border-radius: 12px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trigger-hint.hidden-hint { display: none; }
+
+.hint-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  animation: micpulse 2s infinite;
+}
+
+.hint-text {
+  font-size: 12px;
+  color: var(--green);
+  letter-spacing: 1px;
+}
+
+.next-preview {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.next-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.next-name {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.next-arrow {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* Manual advance btn (fallback) */
+.manual-advance {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  letter-spacing: 1px;
+}
+
+/* ── NOTES SCREEN ── */
+#sNotes {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.notes-header {
+  padding: 20px 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.notes-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.close-btn {
+  background: var(--surface2);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.notes-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.note-category {
+  margin-bottom: 20px;
+}
+
+.note-cat-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.note-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-item {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.note-item.quote-item {
+  border-left: 3px solid var(--amber);
+  background: var(--amber-dim);
+}
+
+.note-item.note-item-reg {
+  border-left: 3px solid var(--blue);
+}
+
+.note-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.note-tag.quote { color: var(--amber); }
+.note-tag.note { color: var(--blue); }
+
+.note-item-text {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.note-time {
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.empty-notes {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 40px 0;
+}
+
+/* Notes input area */
+.notes-input-area {
+  padding: 12px 20px 28px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.notes-mode-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+}
+
+.mode-btn.active-note { border-color: var(--blue); background: rgba(10,132,255,0.1); color: var(--blue); }
+.mode-btn.active-quote { border-color: var(--amber); background: var(--amber-dim); color: var(--amber); }
+
+.note-text-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  resize: none;
+  height: 80px;
+  -webkit-appearance: none;
+}
+
+.note-text-input:focus { border-color: var(--blue); }
+
+.save-note-btn {
+  width: 100%;
+  background: var(--blue);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+/* Notes dot indicator on step screen */
+.notes-indicator {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.notes-indicator.has-notes { border-color: var(--amber); }
+
+.notes-ind-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.notes-indicator.has-notes .notes-ind-count { color: var(--amber); }
+
+/* Buying beliefs tracker */
+.beliefs-screen-content {
+  padding: 0 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.belief-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.belief-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.belief-check.checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.belief-check-icon { font-size: 14px; color: #000; display: none; }
+.belief-check.checked .belief-check-icon { display: block; }
+
+.belief-text {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.4;
+  flex: 1;
+  transition: color 0.2s;
+}
+
+.belief-check.checked + .belief-text { color: var(--text); }
+
+/* Pitch recall screen */
+#sPitchRecall {
+  background: var(--bg);
+}
+
+.recall-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+.recall-section {
+  margin-bottom: 20px;
+}
+
+.recall-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.recall-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.recall-empty {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.recall-quote {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.recall-quote::before { content: '"'; color: var(--amber); }
+.recall-quote::after { content: '"'; color: var(--amber); }
+
+/* Block screen (temp check fail) */
+#sBlock {
+  background: var(--red-dim);
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.block-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.block-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: -1px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.block-sub {
+  font-size: 16px;
+  color: rgba(255,59,59,0.7);
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.block-question {
+  background: rgba(255,59,59,0.1);
+  border: 1px solid rgba(255,59,59,0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.block-q-text {
+  font-size: 20px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.unblock-btn {
+  background: transparent;
+  border: 1px solid rgba(255,59,59,0.4);
+  border-radius: 14px;
+  padding: 16px 32px;
+  color: var(--red);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 1px;
+}
+
+/* End screen */
+#sEnd {
+  background: var(--bg);
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.end-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: -2px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.end-sub {
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.end-rules {
+  width: 100%;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.end-rules-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.end-rule {
+  font-size: 14px;
+  color: var(--amber);
+  font-weight: 700;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.5px;
+}
+
+.end-rule:last-child { border-bottom: none; }
+
+.restart-btn {
+  background: var(--green);
+  border: none;
+  border-radius: 16px;
+  padding: 18px 48px;
+  color: #000;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Transition flash */
+.step-flash {
+  animation: stepflash 0.2s ease-out;
+}
+
+@keyframes stepflash {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Swipe alternatives */
+.swipe-alts {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.swipe-alts::-webkit-scrollbar { display: none; }
+
+.alt-chip {
+  flex: 0 0 auto;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.alt-chip.active-chip { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ SETUP ══════════════════════════ -->
+<div id="sSetup" class="screen active">
+  <div class="setup-inner">
+    <div class="logo">QUAN METHOD</div>
+    <div class="logo-title">Call Prompter</div>
+    <div class="logo-sub">Hands-free · Voice-triggered · 22 steps</div>
+
+    <div class="setup-section">
+      <div class="setup-label">Your Name (for rules reminders)</div>
+      <input type="text" class="setup-input" id="userName" placeholder="e.g. Richard" value="Richard">
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-label">Prospect Name</div>
+      <input type="text" class="setup-input" id="prospectName" placeholder="e.g. Bob">
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-label">Choose your trigger word</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Say this word to advance to next step</div>
+      <div class="word-grid">
+        <button class="word-btn selected" onclick="selectWord(this,'perfect')">PERFECT</button>
+        <button class="word-btn" onclick="selectWord(this,'absolutely')">ABSOLUTELY</button>
+        <button class="word-btn" onclick="selectWord(this,'forward')">FORWARD</button>
+        <button class="word-btn" onclick="selectWord(this,'continue')">CONTINUE</button>
+        <button class="word-btn" onclick="selectWord(this,'moving')">MOVING</button>
+        <button class="word-btn" onclick="selectWord(this,'next')">NEXT</button>
+      </div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-label">Note trigger word</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Say "note" to save a note, "quote" to save their exact words</div>
+      <div style="background:var(--surface);border-radius:12px;padding:14px 16px;">
+        <div style="font-size:14px;color:var(--muted);margin-bottom:4px;">Say: <span style="color:var(--blue);font-weight:700;">NOTE</span> — then what you want to save</div>
+        <div style="font-size:14px;color:var(--muted);">Say: <span style="color:var(--amber);font-weight:700;">QUOTE</span> — to save their exact words</div>
+      </div>
+    </div>
+
+    <button class="begin-btn" onclick="beginCall()">BEGIN CALL</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ STEP SCREEN ══════════════════════════ -->
+<div id="sStep" class="screen">
+
+  <div class="status-bar">
+    <span class="step-counter" id="stepCounter">STEP 1 / 22</span>
+    <div class="progress-dots" id="progressDots"></div>
+    <div class="mic-status">
+      <div class="mic-dot" id="micDot"></div>
+      <span class="mic-label" id="micLabel">MIC OFF</span>
+    </div>
+  </div>
+
+  <div class="step-content" id="stepContent">
+    <!-- Populated by JS -->
+  </div>
+
+  <div id="notesIndicator" class="notes-indicator" onclick="openNotes()">
+    <span class="notes-ind-count" id="notesCount">✎</span>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="trigger-hint" id="triggerHint">
+      <div class="hint-dot"></div>
+      <span class="hint-text" id="hintText">Say "PERFECT" to advance</span>
+    </div>
+    <div class="next-preview" id="nextPreview">
+      <div>
+        <div class="next-label">NEXT</div>
+        <div class="next-name" id="nextName">—</div>
+      </div>
+      <span class="next-arrow">›</span>
+    </div>
+    <button class="manual-advance" onclick="advance()">TAP TO ADVANCE (fallback)</button>
+  </div>
+</div>
+
+<!-- Silence pause overlay -->
+<div class="silence-pause" id="silencePause">
+  <div class="silence-count" id="silenceCountEl">2</div>
+  <div class="silence-msg">WAIT · DON'T JUMP IN</div>
+</div>
+
+<!-- ══════════════════════════ NOTES SCREEN ══════════════════════════ -->
+<div id="sNotes" class="screen">
+  <div class="notes-header">
+    <span class="notes-title">Your Notes</span>
+    <button class="close-btn" onclick="closeNotes()">← BACK</button>
+  </div>
+
+  <div class="notes-scroll" id="notesScroll">
+    <div id="notesContent">
+      <div class="empty-notes">No notes yet.<br>Say "note" or "quote" to capture.</div>
+    </div>
+  </div>
+
+  <div class="notes-input-area">
+    <div class="notes-mode-row">
+      <button class="mode-btn active-note" id="modeNoteBtn" onclick="setNoteMode('note')">NOTE</button>
+      <button class="mode-btn" id="modeQuoteBtn" onclick="setNoteMode('quote')">EXACT QUOTE</button>
+    </div>
+    <textarea class="note-text-input" id="noteTextInput" placeholder="Type or dictate a note…"></textarea>
+    <button class="save-note-btn" onclick="saveManualNote()">SAVE NOTE</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PITCH RECALL ══════════════════════════ -->
+<div id="sPitchRecall" class="screen">
+  <div class="notes-header">
+    <span class="notes-title">Their Words</span>
+    <button class="close-btn" onclick="closePitchRecall()">← BACK</button>
+  </div>
+  <div class="recall-content" id="recallContent">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ══════════════════════════ BLOCK SCREEN ══════════════════════════ -->
+<div id="sBlock" class="screen">
+  <div class="block-icon">🚨</div>
+  <div class="block-title">DO NOT PITCH</div>
+  <div class="block-sub" id="blockSub">Temperature check is below 8.<br>Find out why before moving forward.</div>
+  <div class="block-question">
+    <div class="block-q-text" id="blockQ">"What would make it a 10?"</div>
+  </div>
+  <button class="unblock-btn" onclick="unblock()">THEY ARE BOUGHT IN — CONTINUE</button>
+</div>
+
+<!-- ══════════════════════════ END SCREEN ══════════════════════════ -->
+<div id="sEnd" class="screen">
+  <div class="end-title">GREAT CALL.</div>
+  <div class="end-sub" id="endSub">You made it through all 22 steps.</div>
+  <div class="end-rules">
+    <div class="end-rules-title">RICHARD'S RULES — always</div>
+    <div class="end-rule">DO NOT SOLVE</div>
+    <div class="end-rule">DISCOVER FIRST · PITCH SECOND</div>
+    <div class="end-rule">WAIT 2 SECONDS AFTER EVERY ANSWER</div>
+    <div class="end-rule">HUNT FOR UNDERSTANDING NOT QUESTIONS</div>
+    <div class="end-rule">CLARIFY FIRST · ANSWER SECOND</div>
+    <div class="end-rule">USE "EARLIER YOU TOLD ME..."</div>
+    <div class="end-rule">THE PROSPECT TALKS 70–80%</div>
+  </div>
+  <button class="restart-btn" onclick="restart()">NEW CALL</button>
+</div>
+
+<script>
+// ── Config
+let triggerWord = 'perfect';
+let userName = 'Richard';
+let prospectName = 'them';
+let currentStep = 0;
+let notes = [];
+let noteMode = 'note';
+let recognition = null;
+let isListening = false;
+let silenceTimer = null;
+let rapportTimer = null;
+let rapportSeconds = 60;
+let prevScreen = 'sStep';
+
+// ── Steps Definition
+const STEPS = [
+  {
+    id: 1,
+    phase: 'STEP 1',
+    title: 'RAPPORT',
+    titleClass: '',
+    mainQ: 'Hey {prospect}, how are you doing today?',
+    powerQ: [
+      'Be human. Be real.',
+      'Build comfort. Build trust.',
+      'MAX 60 SECONDS — then move on.'
+    ],
+    rule: 'BE HUMAN · NOT A SALESPERSON',
+    warning: null,
+    showTimer: true,
+    silencePause: false
+  },
+  {
+    id: 2,
+    phase: 'STEP 2',
+    title: 'FRAME',
+    titleClass: '',
+    mainQ: "Today's call is simple. We have about an hour. I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help. If we can, I'll explain how. If we can't, I'll point you in the right direction. Sound fair?",
+    powerQ: [
+      'Control the call.',
+      'Ask permission.',
+      'Do NOT pitch yet.'
+    ],
+    rule: 'YOU LEAD · THEY FOLLOW',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 3,
+    phase: 'DISCOVERY — STEP 3',
+    title: 'DISCOVERY',
+    titleClass: '',
+    mainQ: 'What made you book the call today?',
+    altQ: ["What would you say is your biggest challenge right now?"],
+    powerQ: [
+      'Tell me more.',
+      'What do you mean?',
+      'Can you expand on that?',
+      'Walk me through that.',
+      'Help me understand that.'
+    ],
+    rule: 'LISTEN · TAKE NOTES · DO NOT SOLVE',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 4,
+    phase: 'DISCOVERY — STEP 4',
+    title: 'GO DEEPER',
+    titleClass: '',
+    mainQ: 'Why is that important to you?',
+    powerQ: [
+      'How has that affected you?',
+      "What's the worst part?",
+      'What frustrates you most?',
+      'How has that affected your confidence?',
+      'How has that affected your family?'
+    ],
+    rule: 'STAY HERE UNTIL EMOTION APPEARS',
+    warning: 'MAX 2–3 FOLLOW UPS PER THREAD · THEN MOVE',
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 5,
+    phase: 'DISCOVERY — STEP 5',
+    title: 'DREAM WORLD',
+    titleClass: '',
+    mainQ: 'What do you actually want?',
+    powerQ: [
+      'Why do you want that?',
+      'What would success look like?',
+      'What would that allow you to do?',
+      'Who benefits?',
+      'How would life change?',
+      'Paint me a picture of that.'
+    ],
+    rule: 'WRITE DOWN THEIR EXACT WORDS',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 6,
+    phase: 'DISCOVERY — STEP 6',
+    title: 'SITUATION',
+    titleClass: '',
+    mainQ: "What's happening right now?",
+    powerQ: [
+      "What's not working?",
+      "What's stopping you?",
+      'How long has this been happening?',
+      'What frustrates you most?'
+    ],
+    rule: 'DISCOVER CURRENT REALITY · DO NOT SOLVE',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 7,
+    phase: 'DISCOVERY — STEP 7',
+    title: 'ATTEMPTS',
+    titleClass: '',
+    mainQ: 'What have you already tried?',
+    powerQ: [
+      "Why didn't it work?",
+      'What was missing?',
+      'Have you worked with anyone before?',
+      'What would you want differently this time?'
+    ],
+    rule: 'FIND FAILED SOLUTIONS — THIS IS PITCH AMMO',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 8,
+    phase: 'DISCOVERY — STEP 8',
+    title: 'WHY NOW',
+    titleClass: '',
+    mainQ: 'Why now? What changed?',
+    powerQ: [
+      'Why not another year?',
+      'What happens if nothing changes?',
+      "What's staying stuck costing you?",
+      'How would you feel if nothing changed in 12 months?'
+    ],
+    rule: 'FIND THE URGENCY',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 9,
+    phase: 'STEP 9',
+    title: 'SUPPORT',
+    titleClass: '',
+    mainQ: 'Are you married or in a relationship?',
+    powerQ: [
+      "Does your partner know you're on this call or are we on a secret mission?",
+      'Are they supportive?',
+      'Who else is involved in this decision?',
+      'How would they feel if you achieved this?'
+    ],
+    rule: 'FIND HIDDEN DECISION MAKERS NOW',
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 10,
+    phase: 'STEP 10',
+    title: 'QUALIFY',
+    titleClass: '',
+    mainQ: 'On a scale of 1–10… 1 being money is a genuine concern, and 10 being if you found the right solution you\'d move forward immediately — where would you put yourself today?',
+    altQ: [
+      "Let's say we find the perfect solution — what's more likely to stop you: time, money, or believing it'll actually work?",
+      "Be honest with me — if this solved the problem we've been discussing, would you find a way or would you find a reason?",
+      "If we found exactly what you were looking for today — would you feel ready to move forward, or would you still need some time?",
+      "Just curious — have you invested in yourself before?"
+    ],
+    powerQ: [
+      'What makes you say that?',
+      'Why that number specifically?',
+      "What's keeping it from being a 10?",
+      "Is that more of a money thing or a certainty thing?",
+      "Is that because of finances or because you need to believe it'll work?"
+    ],
+    rule: "DON'T HUNT FOR MONEY · HUNT FOR THE TRUTH",
+    warning: null,
+    showTimer: false,
+    silencePause: true
+  },
+  {
+    id: 11,
+    phase: 'STEP 11',
+    title: 'TEMP CHECK 1',
+    titleClass: '',
+    mainQ: 'Can you see yourself doing this?',
+    powerQ: [
+      'Does this sound like it would help?',
+      'Any concerns? Any hesitation?',
+      'On a scale of 1–10 where are you?'
+    ],
+    rule: 'BELOW 8 — DO NOT PITCH',
+    warning: 'IF BELOW 8: STOP. ASK WHAT WOULD MAKE IT A 10.',
+    isBlock: true,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 12,
+    phase: 'STEP 12',
+    title: 'PRE-PITCH',
+    titleClass: '',
+    mainQ: 'Have we missed anything important?',
+    powerQ: [
+      'Is there anything else I should know?',
+      'Have I got the full picture?'
+    ],
+    rule: 'MAKE SURE YOU HAVE EVERYTHING',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 13,
+    phase: 'STEP 13',
+    title: 'TRANSITION',
+    titleClass: 'go',
+    mainQ: "Based on everything you've told me, I genuinely think we can help. Would you like me to walk you through how?",
+    powerQ: [],
+    rule: 'WAIT FOR YES BEFORE CONTINUING',
+    warning: null,
+    showTimer: false,
+    silencePause: false,
+    showRecall: true
+  },
+  {
+    id: 14,
+    phase: 'STEP 14',
+    title: 'GOLDEN PROMISE',
+    titleClass: 'go',
+    mainQ: "This is a ___ step process to take you from [THEIR CURRENT SITUATION] to [THEIR DESIRED RESULT] in approximately ___.",
+    powerQ: [
+      'RESULT — not process.',
+      '1–2 sentences only.',
+      'Keep it short.',
+      'Use their exact words.'
+    ],
+    rule: 'SHORT · SIMPLE · THEIR WORDS',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 15,
+    phase: 'STEP 15',
+    title: 'PILLAR 1',
+    titleClass: 'go',
+    mainQ: '"Earlier you told me [THEIR PAIN]… That is exactly why [YOUR SOLUTION]… So you [THEIR BENEFIT]."',
+    powerQ: [
+      'Does that make sense?',
+      'Can you see how that would help?',
+      'Get agreement before moving on.'
+    ],
+    rule: 'EARLIER YOU TOLD ME... PROBLEM → SOLUTION → BENEFIT',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 16,
+    phase: 'STEP 16',
+    title: 'PILLAR 2',
+    titleClass: 'go',
+    mainQ: '"Earlier you told me [THEIR PAIN]… That is exactly why [YOUR SOLUTION]… So you [THEIR BENEFIT]."',
+    powerQ: [
+      'Does that make sense?',
+      'Can you see how that would help?',
+      'Get agreement before moving on.'
+    ],
+    rule: 'EARLIER YOU TOLD ME... PROBLEM → SOLUTION → BENEFIT',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 17,
+    phase: 'STEP 17',
+    title: 'PILLAR 3',
+    titleClass: 'go',
+    mainQ: '"Earlier you told me [THEIR PAIN]… That is exactly why [YOUR SOLUTION]… So you [THEIR BENEFIT]."',
+    powerQ: [
+      'Does that make sense?',
+      'Can you see how that would help?',
+      'Get agreement before moving on.'
+    ],
+    rule: 'EARLIER YOU TOLD ME... PROBLEM → SOLUTION → BENEFIT',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 18,
+    phase: 'STEP 18',
+    title: 'DELIVERY',
+    titleClass: '',
+    mainQ: 'Let me explain how the support works…',
+    powerQ: [
+      'Keep it high level.',
+      'Do NOT overwhelm.',
+      'Cover: coaching, accountability, community, support, access.',
+      'Does that make sense?'
+    ],
+    rule: 'HIGH LEVEL · DO NOT OVERWHELM',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 19,
+    phase: 'STEP 19',
+    title: 'TEMP CHECK 2',
+    titleClass: '',
+    mainQ: 'Can you see yourself doing this?',
+    powerQ: [
+      'Does this feel like what you\'ve been looking for?',
+      'Do you feel this would solve the challenges we discussed?',
+      'Any concerns before we move forward?',
+      'On a scale of 1–10 where are you?'
+    ],
+    rule: 'BELOW 8 — STOP · DO NOT DISCUSS PRICE',
+    warning: 'IF BELOW 8: STOP. DO NOT DISCUSS PRICE.',
+    isBlock: true,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 20,
+    phase: 'STEP 20',
+    title: 'CLARIFY FIRST',
+    titleClass: 'amber',
+    mainQ: 'When they ask about price, time, or the programme — DO NOT ANSWER YET.',
+    powerQ: [
+      '"What made you ask that?"',
+      '"Have you experienced that before?"',
+      '"Tell me more."',
+      '"What are you trying to avoid?"',
+      'Find the REAL question behind the question.'
+    ],
+    rule: 'CLARIFY FIRST · ANSWER SECOND — ALWAYS',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 21,
+    phase: 'STEP 21',
+    title: 'FUTURE PACE',
+    titleClass: 'go',
+    mainQ: 'Once you\'re onboarded, during your first week, when your coach reaches out…',
+    powerQ: [
+      'Make success feel real.',
+      '"After your first breakthrough…"',
+      '"Once you\'re getting results…"',
+      '"During your first coaching session…"'
+    ],
+    rule: 'MAKE THE FUTURE FEEL REAL',
+    warning: null,
+    showTimer: false,
+    silencePause: false
+  },
+  {
+    id: 22,
+    phase: 'STEP 22',
+    title: 'INVESTMENT',
+    titleClass: '',
+    mainQ: 'The investment for this is…',
+    powerQ: [
+      '✓ Discovery complete',
+      '✓ Qualification complete',
+      '✓ Both temperature checks done',
+      '✓ Buy-in received',
+      'Only now discuss price.'
+    ],
+    rule: 'ALL BOXES TICKED — YOU EARNED THIS',
+    warning: null,
+    showTimer: false,
+    silencePause: false,
+    isLast: true
+  }
+];
+
+// ── Setup functions
+function selectWord(btn, word) {
+  document.querySelectorAll('.word-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  triggerWord = word;
+}
+
+function beginCall() {
+  userName = document.getElementById('userName').value || 'Richard';
+  prospectName = document.getElementById('prospectName').value || 'them';
+  currentStep = 0;
+  notes = [];
+  renderStep();
+  showScreen('sStep');
+  buildProgressDots();
+  startSpeechRecognition();
+}
+
+// ── Screen nav
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── Build progress dots
+function buildProgressDots() {
+  const el = document.getElementById('progressDots');
+  el.innerHTML = '';
+  const visible = Math.min(STEPS.length, 12);
+  const chunkSize = Math.ceil(STEPS.length / visible);
+  for (let i = 0; i < visible; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot';
+    const stepNum = i * chunkSize;
+    if (stepNum < currentStep) d.classList.add('done');
+    if (stepNum === currentStep) d.classList.add('current');
+    el.appendChild(d);
+  }
+}
+
+// ── Render step
+function renderStep() {
+  const step = STEPS[currentStep];
+  if (!step) { showScreen('sEnd'); return; }
+
+  document.getElementById('stepCounter').textContent =
+    'STEP ' + step.id + ' / ' + STEPS.length;
+
+  document.getElementById('hintText').textContent =
+    'Say "' + triggerWord.toUpperCase() + '" to advance';
+
+  const nextStep = STEPS[currentStep + 1];
+  document.getElementById('nextName').textContent =
+    nextStep ? nextStep.title : 'END OF CALL';
+
+  buildProgressDots();
+
+  const content = document.getElementById('stepContent');
+  content.classList.remove('step-flash');
+  void content.offsetWidth;
+  content.classList.add('step-flash');
+
+  // Replace prospect placeholder
+  const mainQText = step.mainQ.replace(/{prospect}/g, prospectName || 'them');
+
+  // Build HTML
+  let html = '';
+
+  // Phase label
+  html += `<div class="step-phase">${step.phase}</div>`;
+
+  // Title
+  html += `<div class="step-title ${step.titleClass || ''}">${step.title}</div>`;
+
+  // Rapport timer
+  if (step.showTimer) {
+    html += `<div class="step-timer show" id="rapportTimerEl">
+      <div class="timer-circle" id="timerNum">60</div>
+      <div class="timer-label">MAX 60 SECONDS<br>THEN MOVE ON</div>
+    </div>`;
+  }
+
+  // Rule flash
+  if (step.rule) {
+    html += `<div class="rule-flash show"><div class="rule-flash-text">⚠ ${step.rule}</div></div>`;
+  }
+
+  // Warning block
+  if (step.warning) {
+    html += `<div class="warning-block show"><div class="warning-text">🚨 ${step.warning}</div></div>`;
+  }
+
+  // Alt question chips
+  if (step.altQ && step.altQ.length > 0) {
+    html += `<div class="swipe-alts" style="margin-bottom:12px;">`;
+    step.altQ.forEach((q, i) => {
+      html += `<div class="alt-chip" onclick="swapMainQ(this, '${esc(q)}')">${q.substring(0,30)}…</div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Main question
+  const borderClass = step.titleClass === 'warning' ? 'red-border' : step.titleClass === 'amber' ? 'amber-border' : '';
+  html += `<div class="main-question ${borderClass}">
+    <div class="main-q-text" id="mainQDisplay">${mainQText}</div>
+  </div>`;
+
+  // Power questions
+  if (step.powerQ && step.powerQ.length > 0) {
+    html += `<div class="power-questions">`;
+    step.powerQ.forEach(q => {
+      html += `<div class="pq">${q}</div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Recall button on transition step
+  if (step.showRecall) {
+    html += `<div style="margin-top:14px;">
+      <button onclick="openPitchRecall()" style="background:var(--amber-dim);border:1px solid rgba(255,149,0,0.3);border-radius:12px;padding:12px 20px;color:var(--amber);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:inherit;width:100%;">
+        ★ SEE THEIR EXACT WORDS
+      </button>
+    </div>`;
+  }
+
+  content.innerHTML = html;
+
+  // Start rapport timer if needed
+  if (step.showTimer) {
+    startRapportTimer();
+  }
+
+  // Update notes indicator
+  updateNotesIndicator();
+}
+
+function swapMainQ(chip, q) {
+  document.getElementById('mainQDisplay').textContent = q;
+  document.querySelectorAll('.alt-chip').forEach(c => c.classList.remove('active-chip'));
+  chip.classList.add('active-chip');
+}
+
+function esc(str) {
+  return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// ── Advance
+function advance() {
+  const step = STEPS[currentStep];
+
+  // Block check
+  if (step && step.isBlock) {
+    showBlock(step);
+    return;
+  }
+
+  // Show silence pause for 2 seconds before advancing (steps with silencePause)
+  if (step && step.silencePause) {
+    showSilencePause(() => {
+      doAdvance();
+    });
+  } else {
+    doAdvance();
+  }
+}
+
+function doAdvance() {
+  currentStep++;
+  if (currentStep >= STEPS.length) {
+    showScreen('sEnd');
+    stopSpeechRecognition();
+    return;
+  }
+  renderStep();
+}
+
+function showBlock(step) {
+  prevScreen = 'sStep';
+  document.getElementById('blockSub').textContent =
+    step.id === 11
+      ? 'Temperature check is below 8.\nFind out why before pitching.'
+      : 'Temperature check is below 8.\nDo NOT discuss price yet.';
+  document.getElementById('blockQ').textContent = '"What would make it a 10?"';
+  showScreen('sBlock');
+}
+
+function unblock() {
+  showScreen('sStep');
+  doAdvance();
+}
+
+// ── Silence pause
+function showSilencePause(callback) {
+  const overlay = document.getElementById('silencePause');
+  const countEl = document.getElementById('silenceCountEl');
+  overlay.classList.add('show');
+  let n = 2;
+  countEl.textContent = n;
+  const t = setInterval(() => {
+    n--;
+    if (n > 0) {
+      countEl.textContent = n;
+    } else {
+      clearInterval(t);
+      overlay.classList.remove('show');
+      if (callback) callback();
+    }
+  }, 1000);
+}
+
+// ── Rapport timer
+function startRapportTimer() {
+  if (rapportTimer) clearInterval(rapportTimer);
+  rapportSeconds = 60;
+  rapportTimer = setInterval(() => {
+    rapportSeconds--;
+    const el = document.getElementById('timerNum');
+    if (!el) { clearInterval(rapportTimer); return; }
+    el.textContent = rapportSeconds;
+    if (rapportSeconds <= 10) el.style.color = 'var(--red)';
+    if (rapportSeconds <= 0) {
+      clearInterval(rapportTimer);
+      el.textContent = '✓';
+      el.style.color = 'var(--green)';
+    }
+  }, 1000);
+}
+
+// ── Speech Recognition
+function startSpeechRecognition() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    document.getElementById('micLabel').textContent = 'NO MIC';
+    return;
+  }
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-GB';
+
+  recognition.onstart = () => {
+    isListening = true;
+    document.getElementById('micDot').classList.add('listening');
+    document.getElementById('micLabel').textContent = 'LISTENING';
+    document.getElementById('micLabel').classList.add('listening');
+  };
+
+  recognition.onresult = (event) => {
+    let finalTranscript = '';
+    let interimTranscript = '';
+
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const t = event.results[i][0].transcript.toLowerCase().trim();
+      if (event.results[i].isFinal) {
+        finalTranscript += t + ' ';
+      } else {
+        interimTranscript += t;
+      }
+    }
+
+    const combined = (finalTranscript + interimTranscript).toLowerCase();
+
+    // Check trigger word
+    if (combined.includes(triggerWord.toLowerCase())) {
+      flashMicHeard();
+      advance();
+      return;
+    }
+
+    // Check note command
+    if (finalTranscript.includes('note ') || finalTranscript.startsWith('note')) {
+      const content = finalTranscript.replace(/^note\s*/i, '').trim();
+      if (content.length > 2) {
+        saveVoiceNote('note', content);
+        flashMicHeard();
+      }
+      return;
+    }
+
+    // Check quote command
+    if (finalTranscript.includes('quote ') || finalTranscript.startsWith('quote')) {
+      const content = finalTranscript.replace(/^quote\s*/i, '').trim();
+      if (content.length > 2) {
+        saveVoiceNote('quote', content);
+        flashMicHeard();
+      }
+      return;
+    }
+  };
+
+  recognition.onerror = (e) => {
+    if (e.error !== 'no-speech') {
+      setTimeout(startSpeechRecognition, 1000);
+    }
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    if (document.getElementById('sStep').classList.contains('active')) {
+      setTimeout(startSpeechRecognition, 300);
+    }
+  };
+
+  recognition.start();
+}
+
+function stopSpeechRecognition() {
+  if (recognition) recognition.stop();
+  isListening = false;
+}
+
+function flashMicHeard() {
+  const dot = document.getElementById('micDot');
+  dot.classList.remove('listening');
+  dot.classList.add('heard');
+  setTimeout(() => {
+    dot.classList.remove('heard');
+    dot.classList.add('listening');
+  }, 600);
+}
+
+// ── Notes
+function setNoteMode(mode) {
+  noteMode = mode;
+  document.getElementById('modeNoteBtn').className = 'mode-btn' + (mode === 'note' ? ' active-note' : '');
+  document.getElementById('modeQuoteBtn').className = 'mode-btn' + (mode === 'quote' ? ' active-quote' : '');
+}
+
+function saveVoiceNote(type, text) {
+  const stepName = STEPS[currentStep] ? STEPS[currentStep].title : '?';
+  notes.push({
+    type,
+    text,
+    step: stepName,
+    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
+    id: Date.now()
+  });
+  updateNotesIndicator();
+
+  // Brief flash feedback
+  const dot = document.getElementById('micDot');
+  dot.classList.add('heard');
+  setTimeout(() => dot.classList.remove('heard'), 800);
+}
+
+function saveManualNote() {
+  const text = document.getElementById('noteTextInput').value.trim();
+  if (!text) return;
+  saveVoiceNote(noteMode, text);
+  document.getElementById('noteTextInput').value = '';
+  renderNotesScreen();
+}
+
+function updateNotesIndicator() {
+  const el = document.getElementById('notesIndicator');
+  const countEl = document.getElementById('notesCount');
+  if (notes.length > 0) {
+    el.classList.add('has-notes');
+    countEl.textContent = notes.length;
+  } else {
+    el.classList.remove('has-notes');
+    countEl.textContent = '✎';
+  }
+}
+
+function openNotes() {
+  prevScreen = 'sStep';
+  renderNotesScreen();
+  showScreen('sNotes');
+}
+
+function closeNotes() {
+  showScreen('sStep');
+}
+
+function renderNotesScreen() {
+  const el = document.getElementById('notesContent');
+  if (notes.length === 0) {
+    el.innerHTML = '<div class="empty-notes">No notes yet.<br>Say "note" or "quote" to capture.</div>';
+    return;
+  }
+
+  // Group by step
+  const byStep = {};
+  notes.forEach(n => {
+    if (!byStep[n.step]) byStep[n.step] = [];
+    byStep[n.step].push(n);
+  });
+
+  let html = '';
+  Object.entries(byStep).forEach(([step, items]) => {
+    html += `<div class="note-category">
+      <div class="note-cat-label">${step}</div>
+      <div class="note-items">`;
+    items.forEach(n => {
+      const cls = n.type === 'quote' ? 'quote-item' : 'note-item-reg';
+      html += `<div class="note-item ${cls}">
+        <span class="note-tag ${n.type}">${n.type === 'quote' ? 'QUOTE' : 'NOTE'}</span>
+        <span class="note-item-text">${escHtml(n.text)}</span>
+        <span class="note-time">${n.time}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  el.innerHTML = html;
+}
+
+// ── Pitch recall
+function openPitchRecall() {
+  const quotes = notes.filter(n => n.type === 'quote');
+  const allNotes = notes.filter(n => n.type === 'note');
+
+  let html = '';
+
+  html += `<div class="recall-section">
+    <div class="recall-label">THEIR EXACT WORDS — use "Earlier you told me..."</div>
+    <div class="recall-card">`;
+
+  if (quotes.length === 0) {
+    html += `<div class="recall-empty">No quotes captured yet.</div>`;
+  } else {
+    quotes.forEach(q => {
+      html += `<div class="recall-quote" style="margin-bottom:16px;">${escHtml(q.text)}</div>`;
+    });
+  }
+  html += `</div></div>`;
+
+  html += `<div class="recall-section">
+    <div class="recall-label">ALL NOTES</div>
+    <div class="recall-card">`;
+
+  if (allNotes.length === 0) {
+    html += `<div class="recall-empty">No notes captured yet.</div>`;
+  } else {
+    allNotes.forEach(n => {
+      html += `<div style="font-size:15px;color:var(--text);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.4;">${escHtml(n.text)} <span style="font-size:11px;color:var(--muted);">(${n.step})</span></div>`;
+    });
+  }
+  html += `</div></div>`;
+
+  document.getElementById('recallContent').innerHTML = html;
+  showScreen('sPitchRecall');
+}
+
+function closePitchRecall() {
+  showScreen('sStep');
+}
+
+// ── Helpers
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function restart() {
+  currentStep = 0;
+  notes = [];
+  showScreen('sSetup');
+}
+</script>
+</body>
+</html>
