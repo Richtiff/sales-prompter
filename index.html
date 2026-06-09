@@ -2,363 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sales Call Flow</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-:root {
-  --bg:#000; --surface:#0d0d0d; --surface2:#141414; --border:#1e1e1e;
-  --text:#fff; --muted:#505050; --muted2:#222;
-  --green:#00d26a; --green-dim:#061510;
-  --red:#ff3b3b; --red-dim:#1a0707;
-  --amber:#ff9500; --amber-dim:#1a0e00;
-  --blue:#0a84ff; --blue-dim:#060f1a;
-  --purple:#bf5af2; --purple-dim:#130a1a;
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#000;--surface:#0d0d0d;--surface2:#141414;--border:#1e1e1e;
+  --text:#fff;--muted:#555;--muted2:#222;
+  --green:#00d26a;--green-dim:#061510;
+  --red:#ff3b3b;--red-dim:#1a0707;
+  --amber:#ff9500;--amber-dim:#1a0e00;
+  --blue:#0a84ff;--blue-dim:#060f1a;
+  --purple:#bf5af2;--purple-dim:#130a1a;
 }
-html,body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif; height:100%; overflow:hidden; }
-.screen { display:none; position:fixed; inset:0; flex-direction:column; overflow:hidden; }
-.screen.active { display:flex; }
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;height:100%;overflow:hidden;}
+.screen{display:none;position:fixed;inset:0;flex-direction:column;overflow:hidden;}
+.screen.active{display:flex;}
 
-/* ══ SETUP ══ */
-#sSetup { background:var(--bg); overflow-y:auto; align-items:center; justify-content:center; padding:48px 40px; }
-.setup-wrap { width:100%; max-width:600px; }
-.s-logo { font-size:12px; letter-spacing:5px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; }
-.s-title { font-size:48px; font-weight:700; letter-spacing:-2px; margin-bottom:6px; }
-.s-sub { font-size:16px; color:var(--muted); margin-bottom:48px; }
-.s-section { margin-bottom:32px; }
-.s-label { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
-.s-input { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:18px 20px; color:var(--text); font-size:20px; font-family:inherit; outline:none; }
-.s-input:focus { border-color:var(--green); }
-.s-hint { background:var(--surface); border-radius:14px; padding:18px 20px; margin-top:10px; }
-.s-hint-row { font-size:15px; color:var(--muted); margin-bottom:8px; line-height:1.5; }
-.s-hint-row:last-child { margin-bottom:0; }
-.s-hint-row strong { color:var(--text); }
-.begin-btn { width:100%; background:var(--green); border:none; border-radius:18px; padding:22px; color:#000; font-size:20px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; letter-spacing:1px; }
+/* ── SETUP ── */
+#sSetup{background:var(--bg);overflow-y:auto;align-items:center;justify-content:center;padding:40px 24px;}
+.sw{width:100%;max-width:560px;}
+.s-logo{font-size:11px;letter-spacing:4px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;}
+.s-title{font-size:42px;font-weight:700;letter-spacing:-1.5px;margin-bottom:4px;}
+.s-sub{font-size:14px;color:var(--muted);margin-bottom:36px;}
+.s-sec{margin-bottom:24px;}
+.s-lbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.s-inp{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--text);font-size:18px;font-family:inherit;outline:none;}
+.s-inp:focus{border-color:var(--green);}
+.dpb{background:rgba(191,90,242,0.08);border:1px solid rgba(191,90,242,0.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;}
+.dpb-title{font-size:9px;letter-spacing:3px;color:rgba(191,90,242,0.6);text-transform:uppercase;margin-bottom:8px;}
+.dpb-text{font-size:14px;color:rgba(191,90,242,0.9);line-height:1.65;font-style:italic;}
+.dpb-text strong{color:#fff;font-style:normal;}
+.begin-btn{width:100%;background:var(--green);border:none;border-radius:14px;padding:18px;color:#000;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:1px;}
+.hints{background:var(--surface);border-radius:12px;padding:14px 16px;margin-bottom:20px;}
+.hint-row{font-size:13px;color:var(--muted);margin-bottom:6px;line-height:1.5;}
+.hint-row:last-child{margin-bottom:0;}
+.hint-row strong{color:var(--text);}
 
-/* ══ STEP SCREEN ══ */
-#sStep { background:var(--bg); }
+/* ── STEP SCREEN ── */
+#sStep{background:var(--bg);}
+.reminder{padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;text-align:center;}
+.reminder-txt{font-size:12px;color:var(--muted);font-style:italic;transition:opacity 0.4s;}
+.reminder-txt.fade{opacity:0;}
+.topbar{padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+.step-num{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:600;}
+.dots{display:flex;gap:3px;align-items:center;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--muted2);transition:all 0.3s;}
+.dot.done{background:var(--green);opacity:0.3;}
+.dot.cur{background:var(--green);width:16px;border-radius:3px;}
+.hotkeys{display:flex;gap:6px;}
+.hk{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10px;color:var(--muted);font-family:monospace;letter-spacing:0.5px;}
+.hk.p{border-color:rgba(255,59,59,0.3);color:rgba(255,59,59,0.5);}
+.hk.d{border-color:rgba(0,210,106,0.3);color:rgba(0,210,106,0.5);}
+.step-body{flex:1;overflow-y:auto;padding:20px 28px;-webkit-overflow-scrolling:touch;}
+.phase-lbl{font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;text-align:center;}
+.step-title{font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:16px;text-align:center;}
+.step-title.green{color:var(--green);}
+.step-title.amber{color:var(--amber);}
+.step-title.red{color:var(--red);}
+.whisper{background:var(--purple-dim);border:1px solid rgba(191,90,242,0.15);border-radius:10px;padding:10px 14px;margin-bottom:14px;text-align:center;}
+.whisper-txt{font-size:13px;color:rgba(191,90,242,0.95);line-height:1.55;font-style:italic;}
+.rule-banner{border-radius:10px;padding:10px 14px;margin-bottom:12px;text-align:center;}
+.rule-banner.amber{background:var(--amber-dim);border:1px solid rgba(255,149,0,0.2);}
+.rule-banner.red{background:var(--red-dim);border:1px solid rgba(255,59,59,0.2);}
+.rule-banner.green{background:var(--green-dim);border:1px solid rgba(0,210,106,0.2);}
+.rule-banner.blue{background:var(--blue-dim);border:1px solid rgba(10,132,255,0.2);}
+.rule-txt{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;line-height:1.5;}
+.rule-txt.amber{color:var(--amber);}
+.rule-txt.red{color:var(--red);}
+.rule-txt.green{color:var(--green);}
+.rule-txt.blue{color:var(--blue);}
+.quan-box{background:rgba(255,59,59,0.06);border:1px solid rgba(255,59,59,0.15);border-radius:10px;padding:12px 16px;margin-bottom:12px;text-align:center;}
+.quan-line{font-size:12px;font-weight:700;color:var(--red);padding:2px 0;line-height:1.6;letter-spacing:0.3px;}
 
-.reminder-strip { padding:7px 16px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; min-height:30px; }
-.reminder-txt { font-size:11px; color:var(--muted); letter-spacing:0.2px; text-align:center; font-style:italic; transition:opacity 0.5s; }
-.reminder-txt.fade { opacity:0; }
+/* Lead question + follow-ups */
+.lead-card{background:var(--surface);border-radius:14px;padding:18px 20px;margin-bottom:12px;border-left:4px solid var(--green);}
+.lead-lbl{font-size:9px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:8px;opacity:0.7;}
+.lead-q{font-size:22px;color:#fff;line-height:1.45;font-weight:500;}
+.followup-wrap{background:var(--surface2);border-radius:12px;padding:12px 16px;margin-bottom:12px;}
+.followup-lbl{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.fq{font-size:17px;color:rgba(255,255,255,0.6);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.fq:last-child{border-bottom:none;}
+.fq::before{content:"↳ ";color:var(--muted);}
 
-.top-bar { padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; border-bottom:1px solid var(--border); }
-.step-num { font-size:11px; letter-spacing:2px; color:var(--muted); font-weight:600; }
-.prog-dots { display:flex; gap:4px; align-items:center; }
-.pd { width:6px; height:6px; border-radius:50%; background:var(--muted2); transition:all 0.3s; }
-.pd.done { background:var(--green); opacity:0.3; }
-.pd.cur { background:var(--green); width:20px; border-radius:3px; }
-@keyframes mp { 0%,100%{opacity:1}50%{opacity:0.2} }
+/* Main card */
+.main-card{background:var(--surface);border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+.main-card.gl{border-left:4px solid var(--green);}
+.main-card.al{border-left:4px solid var(--amber);}
+.main-card.rl{border-left:4px solid var(--red);}
+.main-q{font-size:20px;color:var(--text);line-height:1.5;}
+.main-q.big{font-size:22px;font-weight:500;}
+.or-div{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:10px 0;text-align:center;}
 
-.step-body { flex:1; overflow-y:auto; padding:16px 24px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
-.step-inner { width:100%; max-width:100%; }
+/* Qual sections */
+.qs{background:var(--surface);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.qs-q{font-size:20px;color:var(--text);line-height:1.5;margin-bottom:12px;}
+.qs-fu-title{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.qs-fu{font-size:15px;color:rgba(255,255,255,0.45);padding:7px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.qs-fu:last-child{border-bottom:none;}
 
-.phase-lbl { font-size:10px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:6px; text-align:center; }
-.step-title { font-size:48px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:14px; text-align:center; }
-.step-title.amber { color:var(--amber); }
-.step-title.green { color:var(--green); }
-.step-title.red { color:var(--red); }
+/* Inline items */
+.item{font-size:20px;color:rgba(255,255,255,0.7);padding:11px 0;border-bottom:1px solid var(--border);text-align:center;line-height:1.4;}
+.item:last-child{border-bottom:none;}
+.item.big{font-size:22px;color:#fff;}
 
-.whisper { background:var(--purple-dim); border:1px solid rgba(191,90,242,0.2); border-radius:10px; padding:10px 14px; margin-bottom:12px; text-align:center; }
-.whisper-txt { font-size:14px; color:rgba(191,90,242,1); line-height:1.55; font-style:italic; }
-
-.rule-banner { border-radius:10px; padding:10px 14px; margin-bottom:10px; text-align:center; }
-.rule-banner.amber { background:var(--amber-dim); border:1px solid rgba(255,149,0,0.2); }
-.rule-banner.red { background:var(--red-dim); border:1px solid rgba(255,59,59,0.2); }
-.rule-banner.green { background:var(--green-dim); border:1px solid rgba(0,210,106,0.2); }
-.rule-banner.blue { background:var(--blue-dim); border:1px solid rgba(10,132,255,0.2); }
-.rule-txt { font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; line-height:1.5; }
-.rule-txt.amber { color:var(--amber); }
-.rule-txt.red { color:var(--red); }
-.rule-txt.green { color:var(--green); }
-.rule-txt.blue { color:var(--blue); }
-
-.rapport-timer { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:16px; }
-.rt-circle { width:64px; height:64px; border-radius:50%; background:var(--surface); border:2px solid var(--amber); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; color:var(--amber); flex-shrink:0; }
-.rt-lbl { font-size:15px; font-weight:700; color:var(--amber); letter-spacing:1px; line-height:1.6; }
-
-.main-card { background:var(--surface); border-radius:14px; padding:16px 20px; margin-bottom:12px; }
-.main-card.green-l { border-left:4px solid var(--green); }
-.main-card.amber-l { border-left:4px solid var(--amber); }
-.main-card.red-l { border-left:4px solid var(--red); }
-.main-q { font-size:20px; color:var(--text); line-height:1.55; font-weight:400; }
-.main-q.big { font-size:24px; font-weight:500; }
-.main-q2 { font-size:24px; color:rgba(255,255,255,0.55); line-height:1.5; }
-.or-div { font-size:12px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin:14px 0; text-align:center; }
-
-.instr-line { font-size:22px; font-weight:700; color:var(--text); letter-spacing:1px; padding:12px 0; border-bottom:1px solid var(--border); text-align:center; }
-.instr-line:last-child { border-bottom:none; }
-
-/* ── ONE-AT-A-TIME Q CARDS ── */
-/* Acknowledge flash */
-60%{opacity:1} 100%{opacity:0} }
-
-/* Depth check */
-.depth-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.96); z-index:60; flex-direction:column; align-items:center; justify-content:center; padding:48px; }
-.depth-overlay.show { display:flex; }
-.depth-title { font-size:12px; letter-spacing:4px; color:var(--muted); text-transform:uppercase; margin-bottom:20px; }
-.depth-q { font-size:28px; color:var(--text); text-align:center; line-height:1.5; margin-bottom:36px; max-width:560px; font-weight:400; }
-.depth-yes { width:100%; max-width:400px; background:var(--green); border:none; border-radius:16px; padding:20px; color:#000; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit; margin-bottom:12px; }
-.depth-no { width:100%; max-width:400px; background:transparent; border:1px solid rgba(255,149,0,0.4); border-radius:16px; padding:18px; color:var(--amber); font-size:16px; font-weight:600; cursor:pointer; font-family:inherit; }
-.depth-best { margin-top:28px; background:var(--amber-dim); border:1px solid rgba(255,149,0,0.2); border-radius:14px; padding:20px 24px; max-width:480px; width:100%; text-align:center; display:none; }
-.depth-best.show { display:block; }
-.depth-best-lbl { font-size:11px; letter-spacing:3px; color:var(--amber); text-transform:uppercase; margin-bottom:10px; }
-.depth-best-txt { font-size:22px; color:var(--text); line-height:1.5; }
-.depth-back-btn { margin-top:14px; background:var(--amber); border:none; border-radius:12px; padding:14px 28px; color:#000; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; display:none; }
-.depth-back-btn.show { display:block; }
-
-/* Qual */
-.qual-section { background:var(--surface); border-radius:16px; padding:22px 26px; margin-bottom:12px; }
-.qs-q { font-size:22px; color:var(--text); line-height:1.5; margin-bottom:14px; }
-.qs-fu-title { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
-.qs-fu { font-size:17px; color:rgba(255,255,255,0.45); padding:8px 0; border-bottom:1px solid var(--border); line-height:1.4; }
-.qs-fu:last-child { border-bottom:none; }
-.quan-box { background:rgba(255,59,59,0.07); border:1px solid rgba(255,59,59,0.2); border-radius:16px; padding:20px; margin-bottom:12px; text-align:center; }
-.quan-line { font-size:16px; font-weight:700; color:var(--red); letter-spacing:0.5px; padding:4px 0; line-height:1.6; }
+/* Rapport timer */
+.rt-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px;}
+.rt-circle{width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--amber);flex-shrink:0;}
+.rt-lbl{font-size:13px;font-weight:700;color:var(--amber);letter-spacing:0.5px;line-height:1.6;}
 
 /* Committing */
-.commit-rule { background:var(--blue-dim); border:1px solid rgba(10,132,255,0.2); border-radius:12px; padding:14px 20px; margin-bottom:14px; text-align:center; }
-.commit-rule-txt { font-size:16px; font-weight:700; color:var(--blue); letter-spacing:1px; }
-.real-q-row { background:var(--surface); border-radius:12px; padding:16px 20px; margin-bottom:8px; }
-.rq-q { font-size:15px; color:var(--muted); margin-bottom:6px; }
-.rq-real { font-size:18px; color:var(--text); font-weight:600; }
-.answer-flow { background:var(--surface); border-radius:14px; padding:18px 22px; margin-bottom:12px; }
-.af-title { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
-.af-step { font-size:17px; color:rgba(255,255,255,0.55); padding:8px 0; border-bottom:1px solid var(--border); }
-.af-step:last-child { border-bottom:none; }
-.example-box { background:var(--amber-dim); border:1px solid rgba(255,149,0,0.2); border-radius:14px; padding:18px 22px; margin-bottom:12px; }
-.ex-txt { font-size:18px; color:rgba(255,255,255,0.85); line-height:1.6; }
-.ex-follow { font-size:17px; color:var(--amber); margin-top:12px; font-weight:600; }
+.commit-rule{background:var(--blue-dim);border:1px solid rgba(10,132,255,0.2);border-radius:10px;padding:12px 16px;margin-bottom:12px;text-align:center;}
+.commit-rule-txt{font-size:14px;font-weight:700;color:var(--blue);letter-spacing:1px;}
+.real-q{background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:8px;}
+.rq-q{font-size:13px;color:var(--muted);margin-bottom:4px;}
+.rq-real{font-size:16px;color:var(--text);font-weight:600;}
+.af{background:var(--surface);border-radius:12px;padding:14px 18px;margin-bottom:10px;}
+.af-title{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.af-step{font-size:15px;color:rgba(255,255,255,0.5);padding:7px 0;border-bottom:1px solid var(--border);}
+.af-step:last-child{border-bottom:none;}
+.ex-box{background:var(--amber-dim);border:1px solid rgba(255,149,0,0.2);border-radius:12px;padding:14px 18px;margin-bottom:10px;}
+.ex-txt{font-size:16px;color:rgba(255,255,255,0.85);line-height:1.6;}
+.ex-follow{font-size:14px;color:var(--amber);margin-top:8px;font-weight:600;}
 
 /* Investment */
-.inv-check-item { display:flex; align-items:center; gap:16px; padding:16px 0; border-bottom:1px solid var(--border); cursor:pointer; }
-.inv-check-item:last-child { border-bottom:none; }
-.inv-box { width:30px; height:30px; border-radius:8px; border:2px solid var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.inv-box.checked { background:var(--green); border-color:var(--green); }
-.inv-tick { font-size:16px; color:#000; display:none; }
-.inv-box.checked .inv-tick { display:block; }
-.inv-lbl { font-size:18px; color:var(--muted); transition:color 0.2s; }
-.inv-box.checked + .inv-lbl { color:var(--text); }
-.inv-then { background:var(--green-dim); border:1px solid rgba(0,210,106,0.2); border-radius:14px; padding:18px 22px; margin-top:16px; }
-.inv-then-title { font-size:11px; letter-spacing:3px; color:var(--green); text-transform:uppercase; margin-bottom:10px; }
-.inv-then-item { font-size:18px; color:rgba(255,255,255,0.65); padding:6px 0; border-bottom:1px solid rgba(0,210,106,0.1); }
-.inv-then-item:last-child { border-bottom:none; }
+.inv-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.inv-item:last-child{border-bottom:none;}
+.inv-box{width:26px;height:26px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.inv-box.chk{background:var(--green);border-color:var(--green);}
+.inv-tick{font-size:13px;color:#000;display:none;}
+.inv-box.chk .inv-tick{display:block;}
+.inv-lbl{font-size:16px;color:var(--muted);transition:color 0.2s;}
+.inv-box.chk+.inv-lbl{color:var(--text);}
+.inv-then{background:var(--green-dim);border:1px solid rgba(0,210,106,0.2);border-radius:12px;padding:14px 18px;margin-top:14px;}
+.inv-then-title{font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
+.inv-then-item{font-size:16px;color:rgba(255,255,255,0.6);padding:5px 0;border-bottom:1px solid rgba(0,210,106,0.1);}
+.inv-then-item:last-child{border-bottom:none;}
 
-.recall-btn { width:100%; background:var(--amber-dim); border:1px solid rgba(255,149,0,0.3); border-radius:14px; padding:18px; color:var(--amber); font-size:16px; font-weight:700; letter-spacing:1px; cursor:pointer; font-family:inherit; margin-bottom:14px; }
-
-/* Silence overlay */
-.silence-ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.94); z-index:50; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
-.silence-ov.show { display:flex; }
-.sil-n { font-size:140px; font-weight:700; color:var(--amber); line-height:1; }
-.sil-lbl { font-size:18px; letter-spacing:5px; color:var(--amber); text-transform:uppercase; }
-
-/* Notes FAB */
-.notes-fab { position:fixed; bottom:100px; right:24px; width:52px; height:52px; border-radius:50%; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:20; font-size:16px; font-weight:700; color:var(--muted); transition:all 0.2s; }
-.notes-fab.has { border-color:var(--amber); color:var(--amber); }
+/* Recall btn */
+.recall-btn{width:100%;background:var(--amber-dim);border:1px solid rgba(255,149,0,0.3);border-radius:12px;padding:14px;color:var(--amber);font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:inherit;margin-bottom:12px;}
 
 /* Bottom bar */
-.bot-bar { padding:10px 16px 14px; flex-shrink:0; display:flex; flex-direction:column; gap:8px; border-top:1px solid var(--border); background:var(--bg); }
-.trigger-bar { background:var(--green-dim); border:1px solid rgba(0,210,106,0.15); border-radius:14px; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; }
-.trig-left { display:flex; align-items:center; gap:10px; }
-.trig-dot { width:9px; height:9px; border-radius:50%; background:var(--green); flex-shrink:0; animation:mp 2s infinite; }
-.trig-txt { font-size:11px; color:var(--green); letter-spacing:0.5px; font-weight:600; }
-.hotkeys { display:flex; gap:8px; }
-.hk { background:rgba(0,0,0,0.3); border:1px solid rgba(0,210,106,0.2); border-radius:6px; padding:3px 8px; font-size:10px; color:rgba(0,210,106,0.6); font-family:monospace; letter-spacing:0.5px; }
-.hk.pain-hk { border-color:rgba(255,59,59,0.3); color:rgba(255,59,59,0.6); }
-.hk.dream-hk { border-color:rgba(0,210,106,0.3); color:rgba(0,210,106,0.6); }
-.hk.back-hk { border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.3); }
-.bot-row { display:flex; gap:10px; }
-.next-bar { background:var(--surface); border-radius:12px; padding:9px 14px; display:flex; align-items:center; justify-content:space-between; flex:1; }
-.next-lbl { font-size:10px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:3px; }
-.next-name { font-size:13px; color:var(--muted); }
-.advance-btn { background:var(--green); border:none; border-radius:14px; padding:16px 28px; color:#000; font-size:15px; font-weight:700; letter-spacing:1px; cursor:pointer; font-family:inherit; white-space:nowrap; transition:all 0.2s; }
-.advance-btn.ready { background:var(--green); color:#000; }
-.back-btn-bar { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:10px 14px; color:var(--muted); font-size:12px; cursor:pointer; font-family:inherit; white-space:nowrap; }
+.botbar{padding:10px 16px 16px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);background:var(--bg);}
+.botrow{display:flex;gap:8px;}
+.back-btn{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.next-bar{background:var(--surface);border-radius:12px;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex:1;}
+.next-lbl{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:2px;}
+.next-name{font-size:13px;color:var(--muted);}
+.adv-btn{background:var(--green);border:none;border-radius:12px;padding:12px 22px;color:#000;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;letter-spacing:0.5px;}
 
-/* ══ PAIN MODE ══ */
-#sPain {
-  background:#0a0000;
-  display:flex;
-  align-items:center; justify-content:center;
-  padding:48px 64px;
-}
-.pain-mode-label { font-size:11px; letter-spacing:5px; color:rgba(255,59,59,0.4); text-transform:uppercase; margin-bottom:20px; }
-.pain-q-wrap { width:100%; max-width:700px; text-align:center; }
-.pain-q-num { font-size:12px; letter-spacing:3px; color:rgba(255,59,59,0.35); margin-bottom:24px; }
-.pain-q-card { background:rgba(255,59,59,0.06); border:1px solid rgba(255,59,59,0.2); border-radius:24px; padding:48px 48px; margin-bottom:32px; min-height:200px; display:flex; align-items:center; justify-content:center; }
-.pain-q-txt { font-size:38px; color:#ffffff; line-height:1.45; font-weight:500; }
-.pain-layer-lbl { font-size:12px; letter-spacing:3px; color:rgba(255,59,59,0.45); text-transform:uppercase; margin-bottom:16px; }
-.pain-next-btn { background:rgba(255,59,59,0.1); border:1px solid rgba(255,59,59,0.3); border-radius:16px; padding:18px 40px; color:var(--red); font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:1px; margin-bottom:12px; }
-.pain-exit-btn { background:rgba(255,59,59,0.08); border:1px solid rgba(255,59,59,0.3); border-radius:14px; padding:14px 32px; color:var(--red); font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; letter-spacing:1px; }
-.pain-whisper { font-size:14px; color:rgba(255,59,59,0.4); font-style:italic; margin-top:20px; max-width:500px; line-height:1.6; text-align:center; }
-.pain-progress { display:flex; gap:6px; justify-content:center; margin-bottom:28px; }
-.pain-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,59,59,0.15); transition:all 0.3s; }
-.pain-dot.done { background:rgba(255,59,59,0.4); }
-.pain-dot.cur { background:var(--red); width:24px; border-radius:4px; }
+/* Notes FAB */
+.notes-fab{position:fixed;bottom:90px;right:16px;width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;font-size:14px;font-weight:700;color:var(--muted);}
+.notes-fab.has{border-color:var(--amber);color:var(--amber);}
 
-/* ══ DREAM MODE ══ */
-#sDream {
-  background:#000a04;
-  display:flex;
-  align-items:center; justify-content:center;
-  padding:48px 64px;
-}
-.dream-mode-label { font-size:11px; letter-spacing:5px; color:rgba(0,210,106,0.4); text-transform:uppercase; margin-bottom:20px; }
-.dream-q-wrap { width:100%; max-width:700px; text-align:center; }
-.dream-q-num { font-size:12px; letter-spacing:3px; color:rgba(0,210,106,0.35); margin-bottom:24px; }
-.dream-q-card { background:rgba(0,210,106,0.05); border:1px solid rgba(0,210,106,0.2); border-radius:24px; padding:48px 48px; margin-bottom:32px; min-height:200px; display:flex; align-items:center; justify-content:center; }
-.dream-q-txt { font-size:38px; color:#ffffff; line-height:1.45; font-weight:500; }
-.dream-layer-lbl { font-size:12px; letter-spacing:3px; color:rgba(0,210,106,0.45); text-transform:uppercase; margin-bottom:16px; }
-.dream-next-btn { background:rgba(0,210,106,0.08); border:1px solid rgba(0,210,106,0.3); border-radius:16px; padding:18px 40px; color:var(--green); font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:1px; margin-bottom:12px; }
-.dream-exit-btn { background:rgba(0,210,106,0.08); border:1px solid rgba(0,210,106,0.3); border-radius:14px; padding:14px 32px; color:var(--green); font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; letter-spacing:1px; }
-.dream-whisper { font-size:14px; color:rgba(0,210,106,0.4); font-style:italic; margin-top:20px; max-width:500px; line-height:1.6; text-align:center; }
-.dream-progress { display:flex; gap:6px; justify-content:center; margin-bottom:28px; }
-.dream-dot { width:8px; height:8px; border-radius:50%; background:rgba(0,210,106,0.15); transition:all 0.3s; }
-.dream-dot.done { background:rgba(0,210,106,0.4); }
-.dream-dot.cur { background:var(--green); width:24px; border-radius:4px; }
+/* ── PAIN MODE ── */
+#sPain{background:#060000;align-items:center;justify-content:center;padding:40px 32px;}
+.pain-label{font-size:10px;letter-spacing:5px;color:rgba(255,59,59,0.4);text-transform:uppercase;margin-bottom:16px;}
+.pain-wrap{width:100%;max-width:640px;text-align:center;}
+.pain-layer{font-size:11px;letter-spacing:3px;color:rgba(255,59,59,0.4);text-transform:uppercase;margin-bottom:18px;}
+.pain-prog{display:flex;gap:5px;justify-content:center;margin-bottom:20px;}
+.pdot{width:7px;height:7px;border-radius:50%;background:rgba(255,59,59,0.15);transition:all 0.3s;}
+.pdot.done{background:rgba(255,59,59,0.35);}
+.pdot.cur{background:var(--red);width:20px;border-radius:4px;}
+.pain-card{background:rgba(255,59,59,0.06);border:1px solid rgba(255,59,59,0.2);border-radius:20px;padding:40px 36px;margin-bottom:24px;min-height:160px;display:flex;align-items:center;justify-content:center;}
+.pain-q{font-size:32px;color:#fff;line-height:1.45;font-weight:400;}
+.pain-whisper{font-size:13px;color:rgba(255,59,59,0.4);font-style:italic;margin-bottom:20px;line-height:1.6;}
+.pain-next-btn{background:rgba(255,59,59,0.1);border:1px solid rgba(255,59,59,0.3);border-radius:14px;padding:16px 36px;color:var(--red);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;margin-bottom:10px;width:100%;}
+.pain-ret-btn{background:transparent;border:1px solid rgba(255,59,59,0.3);border-radius:12px;padding:12px 28px;color:var(--red);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
 
-/* Block */
-#sBlock { background:var(--red-dim); align-items:center; justify-content:center; padding:60px 48px; text-align:center; }
-.blk-icon { font-size:72px; margin-bottom:20px; }
-.blk-title { font-size:60px; font-weight:700; color:var(--red); letter-spacing:-2px; margin-bottom:12px; }
-.blk-sub { font-size:18px; color:rgba(255,59,59,0.65); line-height:1.6; margin-bottom:36px; max-width:500px; }
-.blk-q { background:rgba(255,59,59,0.1); border:1px solid rgba(255,59,59,0.25); border-radius:18px; padding:24px 32px; margin-bottom:28px; width:100%; max-width:560px; }
-.blk-q-txt { font-size:26px; color:var(--text); line-height:1.4; }
-.blk-btn { background:transparent; border:1px solid rgba(255,59,59,0.4); border-radius:16px; padding:18px 36px; color:var(--red); font-size:16px; font-weight:600; cursor:pointer; font-family:inherit; letter-spacing:1px; }
+/* ── DREAM MODE ── */
+#sDream{background:#000603;align-items:center;justify-content:center;padding:40px 32px;}
+.dream-label{font-size:10px;letter-spacing:5px;color:rgba(0,210,106,0.4);text-transform:uppercase;margin-bottom:16px;}
+.dream-wrap{width:100%;max-width:640px;text-align:center;}
+.dream-layer{font-size:11px;letter-spacing:3px;color:rgba(0,210,106,0.4);text-transform:uppercase;margin-bottom:18px;}
+.dream-prog{display:flex;gap:5px;justify-content:center;margin-bottom:20px;}
+.ddot{width:7px;height:7px;border-radius:50%;background:rgba(0,210,106,0.15);transition:all 0.3s;}
+.ddot.done{background:rgba(0,210,106,0.35);}
+.ddot.cur{background:var(--green);width:20px;border-radius:4px;}
+.dream-card{background:rgba(0,210,106,0.05);border:1px solid rgba(0,210,106,0.2);border-radius:20px;padding:40px 36px;margin-bottom:24px;min-height:160px;display:flex;align-items:center;justify-content:center;}
+.dream-q{font-size:32px;color:#fff;line-height:1.45;font-weight:400;}
+.dream-whisper{font-size:13px;color:rgba(0,210,106,0.4);font-style:italic;margin-bottom:20px;line-height:1.6;}
+.dream-next-btn{background:rgba(0,210,106,0.08);border:1px solid rgba(0,210,106,0.3);border-radius:14px;padding:16px 36px;color:var(--green);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;margin-bottom:10px;width:100%;}
+.dream-ret-btn{background:transparent;border:1px solid rgba(0,210,106,0.3);border-radius:12px;padding:12px 28px;color:var(--green);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
 
-/* Notes */
-#sNotes { background:var(--bg); }
-.notes-hdr { padding:22px 32px 18px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); flex-shrink:0; }
-.notes-hdr-title { font-size:26px; font-weight:700; }
-.back-btn { background:var(--surface2); border:none; border-radius:12px; padding:10px 20px; color:var(--muted); font-size:15px; cursor:pointer; font-family:inherit; }
-.notes-list { flex:1; overflow-y:auto; padding:20px 32px; }
-.note-grp { margin-bottom:24px; }
-.note-grp-lbl { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
-.note-card { background:var(--surface); border-radius:12px; padding:14px 18px; display:flex; gap:12px; align-items:flex-start; margin-bottom:8px; }
-.note-card.q { border-left:3px solid var(--amber); background:var(--amber-dim); }
-.note-card.n { border-left:3px solid var(--blue); }
-.nt-tag { font-size:11px; font-weight:700; letter-spacing:1px; flex-shrink:0; margin-top:2px; }
-.nt-tag.q { color:var(--amber); }
-.nt-tag.n { color:var(--blue); }
-.nt-txt { font-size:17px; color:var(--text); line-height:1.5; flex:1; }
-.nt-time { font-size:12px; color:var(--muted); flex-shrink:0; }
-.no-notes { text-align:center; color:var(--muted); font-size:17px; padding:60px 0; line-height:2; }
-.notes-inp-area { padding:16px 32px 32px; border-top:1px solid var(--border); flex-shrink:0; }
-.mode-row { display:flex; gap:10px; margin-bottom:12px; }
-.mode-btn { flex:1; padding:13px; border-radius:12px; border:1px solid var(--border); background:var(--surface2); color:var(--muted); font-size:14px; font-weight:700; letter-spacing:1px; cursor:pointer; text-align:center; font-family:inherit; }
-.mode-btn.mn { border-color:var(--blue); background:rgba(10,132,255,0.1); color:var(--blue); }
-.mode-btn.mq { border-color:var(--amber); background:var(--amber-dim); color:var(--amber); }
-.note-ta { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:14px 18px; color:var(--text); font-size:18px; font-family:inherit; outline:none; resize:none; height:100px; }
-.note-ta:focus { border-color:var(--blue); }
-.save-btn { width:100%; background:var(--blue); border:none; border-radius:14px; padding:16px; color:#fff; font-size:17px; font-weight:600; cursor:pointer; font-family:inherit; margin-top:10px; }
+/* ── CONFIRMATION FLASH ── */
+#painFlash,#dreamFlash{display:none;position:fixed;inset:0;z-index:90;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+#painFlash{background:rgba(6,0,0,0.97);}
+#dreamFlash{background:rgba(0,6,3,0.97);}
+.flash-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:8px;}
+.flash-label.red{color:rgba(255,59,59,0.5);}
+.flash-label.green{color:rgba(0,210,106,0.5);}
+.flash-title{font-size:56px;font-weight:800;letter-spacing:-2px;text-align:center;}
+.flash-title.red{color:var(--red);}
+.flash-title.green{color:var(--green);}
+.flash-sub{font-size:15px;font-style:italic;text-align:center;line-height:1.6;}
+.flash-sub.red{color:rgba(255,59,59,0.6);}
+.flash-sub.green{color:rgba(0,210,106,0.6);}
 
-/* Pitch recall */
-#sPitchRecall { background:var(--bg); }
-.recall-body { flex:1; overflow-y:auto; padding:20px 32px; }
-.recall-sec { margin-bottom:24px; }
-.recall-lbl { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
-.recall-card { background:var(--surface); border-radius:16px; padding:20px 24px; }
-.recall-q { font-size:22px; color:var(--text); line-height:1.6; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border); }
-.recall-q::before { content:'\201C'; color:var(--amber); }
-.recall-q::after { content:'\201D'; color:var(--amber); }
-.recall-q:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
-.recall-empty { font-size:16px; color:var(--muted); font-style:italic; }
+/* ── SILENCE ── */
+#silOv{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:50;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+#silOv.show{display:flex;}
+.sil-n{font-size:120px;font-weight:700;color:var(--amber);line-height:1;}
+.sil-lbl{font-size:16px;letter-spacing:4px;color:var(--amber);text-transform:uppercase;}
 
-/* End */
-#sEnd { background:var(--bg); align-items:center; justify-content:center; padding:60px 48px; overflow-y:auto; }
-.end-title { font-size:72px; font-weight:700; color:var(--green); letter-spacing:-3px; margin-bottom:8px; }
-.end-sub { font-size:17px; color:var(--muted); margin-bottom:40px; text-align:center; }
-.end-rules-card { width:100%; max-width:560px; background:var(--surface); border-radius:18px; padding:24px 28px; margin-bottom:28px; }
-.end-rules-lbl { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:14px; }
-.end-rule { font-size:17px; font-weight:700; color:var(--amber); padding:9px 0; border-bottom:1px solid var(--border); letter-spacing:0.5px; }
-.end-rule:last-child { border-bottom:none; }
-.restart-btn { background:var(--green); border:none; border-radius:18px; padding:20px 56px; color:#000; font-size:19px; font-weight:700; cursor:pointer; font-family:inherit; }
+/* ── BLOCK ── */
+#sBlock{background:var(--red-dim);align-items:center;justify-content:center;padding:48px 32px;text-align:center;}
+.blk-icon{font-size:60px;margin-bottom:16px;}
+.blk-title{font-size:48px;font-weight:700;color:var(--red);letter-spacing:-2px;margin-bottom:10px;}
+.blk-sub{font-size:16px;color:rgba(255,59,59,0.6);line-height:1.6;margin-bottom:28px;max-width:460px;}
+.blk-q{background:rgba(255,59,59,0.1);border:1px solid rgba(255,59,59,0.25);border-radius:16px;padding:20px 24px;margin-bottom:22px;width:100%;max-width:500px;}
+.blk-q-txt{font-size:22px;color:var(--text);line-height:1.4;}
+.blk-btn{background:transparent;border:1px solid rgba(255,59,59,0.4);border-radius:14px;padding:15px 28px;color:var(--red);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:0.5px;}
 
-.flash-in { animation:fi 0.25s ease-out; }
-@keyframes fi { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+/* ── NOTES ── */
+#sNotes{background:var(--bg);}
+.notes-hdr{padding:18px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+.notes-hdr-title{font-size:22px;font-weight:700;}
+.notes-back{background:var(--surface2);border:none;border-radius:10px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
+.notes-list{flex:1;overflow-y:auto;padding:16px 20px;}
+.note-grp{margin-bottom:20px;}
+.note-grp-lbl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.note-card{background:var(--surface);border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
+.note-card.q{border-left:3px solid var(--amber);background:var(--amber-dim);}
+.note-card.n{border-left:3px solid var(--blue);}
+.nt-tag{font-size:10px;font-weight:700;letter-spacing:1px;flex-shrink:0;margin-top:1px;}
+.nt-tag.q{color:var(--amber);}
+.nt-tag.n{color:var(--blue);}
+.nt-txt{font-size:15px;color:var(--text);line-height:1.4;flex:1;}
+.nt-time{font-size:11px;color:var(--muted);flex-shrink:0;}
+.no-notes{text-align:center;color:var(--muted);font-size:15px;padding:40px 0;line-height:2;}
+.notes-inp{padding:12px 20px 24px;border-top:1px solid var(--border);flex-shrink:0;}
+.mode-row{display:flex;gap:8px;margin-bottom:10px;}
+.mode-btn{flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;text-align:center;font-family:inherit;}
+.mode-btn.mn{border-color:var(--blue);background:rgba(10,132,255,0.1);color:var(--blue);}
+.mode-btn.mq{border-color:var(--amber);background:var(--amber-dim);color:var(--amber);}
+.note-ta{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:16px;font-family:inherit;outline:none;resize:none;height:90px;}
+.note-ta:focus{border-color:var(--blue);}
+.save-btn{width:100%;background:var(--blue);border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;}
 
-/* question list */
-.q-list { display:flex; flex-direction:column; margin-bottom:16px; }
-.q-list-item {
-  font-size:22px; color:#ffffff; padding:14px 16px;
-  border-bottom:1px solid var(--border); line-height:1.5; text-align:center;
-  font-weight:400; letter-spacing:0.2px;
-}
-.q-list-item:last-child { border-bottom:none; }
+/* ── PITCH RECALL ── */
+#sRecall{background:var(--bg);}
+.recall-body{flex:1;overflow-y:auto;padding:16px 20px;}
+.recall-sec{margin-bottom:20px;}
+.recall-lbl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.recall-card{background:var(--surface);border-radius:14px;padding:16px 20px;}
+.recall-q{font-size:20px;color:var(--text);line-height:1.6;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.recall-q::before{content:'\201C';color:var(--amber);}
+.recall-q::after{content:'\201D';color:var(--amber);}
+.recall-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.recall-empty{font-size:14px;color:var(--muted);font-style:italic;}
 
-/* ── LEAD QUESTION + FOLLOW-UPS ── */
-.lead-question-card {
-  background:var(--surface);
-  border-radius:16px;
-  padding:20px 22px;
-  margin-bottom:14px;
-  border-left:4px solid var(--green);
-}
-.lead-q-label {
-  font-size:9px;
-  letter-spacing:3px;
-  color:var(--green);
-  text-transform:uppercase;
-  margin-bottom:8px;
-  opacity:0.7;
-}
-.lead-q-text {
-  font-size:24px;
-  color:#ffffff;
-  line-height:1.45;
-  font-weight:500;
-}
-.followup-section {
-  background:var(--surface2);
-  border-radius:14px;
-  padding:14px 18px;
-  margin-bottom:10px;
-}
-.followup-label {
-  font-size:9px;
-  letter-spacing:3px;
-  color:var(--muted);
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-.q-followup {
-  font-size:17px;
-  color:rgba(255,255,255,0.65);
-  padding:9px 0;
-  border-bottom:1px solid var(--border);
-  line-height:1.4;
-}
-.q-followup:last-child { border-bottom:none; }
+/* ── END ── */
+#sEnd{background:var(--bg);align-items:center;justify-content:center;padding:48px 32px;overflow-y:auto;}
+.end-title{font-size:60px;font-weight:700;color:var(--green);letter-spacing:-2.5px;margin-bottom:6px;}
+.end-sub{font-size:15px;color:var(--muted);margin-bottom:32px;text-align:center;}
+.end-rules{width:100%;max-width:500px;background:var(--surface);border-radius:16px;padding:20px 24px;margin-bottom:24px;}
+.end-rules-lbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.end-rule{font-size:15px;font-weight:700;color:var(--amber);padding:8px 0;border-bottom:1px solid var(--border);letter-spacing:0.3px;}
+.end-rule:last-child{border-bottom:none;}
+.restart-btn{background:var(--green);border:none;border-radius:16px;padding:18px 48px;color:#000;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+.flash-in{animation:fi 0.2s ease-out;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mp{0%,100%{opacity:1}50%{opacity:0.2}}
 </style>
 </head>
 <body>
 
 <!-- SETUP -->
 <div id="sSetup" class="screen active">
-<div class="setup-wrap">
+<div class="sw">
   <div class="s-logo">RICHARD STOKES</div>
   <div class="s-title">Sales Call Flow</div>
-  <div class="s-sub">Discovery · Pain · Dream · 22 Steps</div>
-  <div class="s-section">
-    <div class="s-label">Your Name</div>
-    <input class="s-input" id="inYourName" placeholder="e.g. Richard Stokes" autocomplete="off" value="Richard Stokes">
+  <div class="s-sub">Discovery · Pain · Dream · 26 Steps</div>
+  <div class="s-sec">
+    <div class="s-lbl">Your Name</div>
+    <input class="s-inp" id="inName" value="Richard Stokes" autocomplete="off">
   </div>
-  <div class="s-section">
-    <div class="s-label">Your Role</div>
-    <input class="s-input" id="inYourRole" placeholder="e.g. Lead Sales Advisor at XYZ" autocomplete="off">
+  <div class="s-sec">
+    <div class="s-lbl">Your Role</div>
+    <input class="s-inp" id="inRole" placeholder="e.g. Lead Sales Advisor at XYZ" autocomplete="off">
   </div>
-  <div class="s-section">
-    <div class="s-label">Prospect Name</div>
-    <input class="s-input" id="inProspect" placeholder="e.g. Bob" autocomplete="off">
+  <div class="s-sec">
+    <div class="s-lbl">Prospect Name</div>
+    <input class="s-inp" id="inProspect" placeholder="e.g. Bob" autocomplete="off">
   </div>
-  <div style="background:rgba(191,90,242,0.08);border:1px solid rgba(191,90,242,0.2);border-radius:14px;padding:16px 20px;margin-bottom:16px;">
-    <div style="font-size:11px;letter-spacing:3px;color:rgba(191,90,242,0.6);text-transform:uppercase;margin-bottom:10px;">BEFORE YOU START</div>
-    <div style="font-size:15px;color:rgba(191,90,242,0.9);line-height:1.7;font-style:italic;">
+  <div class="dpb">
+    <div class="dpb-title">BEFORE YOU START — DISNEY PRINCESS BIG</div>
+    <div class="dpb-text">
       Add 2–3 emotion points through the camera.<br>
       Bigger curiosity. Bigger surprise. Bigger concern.<br>
-      <strong style="color:rgba(191,90,242,1);font-style:normal;">Become a bigger version of yourself.</strong>
+      <strong>Become a bigger version of yourself.</strong>
     </div>
+  </div>
+  <div class="hints">
+    <div class="hint-row"><strong>P key</strong> — Pain Mode (press after writing 5 pain points)</div>
+    <div class="hint-row"><strong>D key</strong> — Dream Mode (press after writing 5 dream points)</div>
+    <div class="hint-row"><strong>B or ← arrow</strong> — Go back one step</div>
+    <div class="hint-row"><strong>Spacebar / → arrow / foot pedal</strong> — Advance</div>
+    <div class="hint-row"><strong>Escape</strong> — Exit Pain or Dream mode</div>
   </div>
   <button class="begin-btn" onclick="beginCall()">BEGIN CALL</button>
 </div>
@@ -366,105 +308,75 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 
 <!-- STEP SCREEN -->
 <div id="sStep" class="screen">
-  <div class="reminder-strip"><span class="reminder-txt" id="reminderTxt">Curious is king. When you're genuinely curious, it never sounds like an interrogation.</span></div>
-  <div class="top-bar">
-    <span class="step-num" id="stepNum">STEP 1 / 22</span>
-    <div class="prog-dots" id="progDots"></div>
-
-  </div>
-  <div class="step-body" id="stepBody">
-    <div class="step-inner" id="stepInner"></div>
-  </div>
-  <div class="notes-fab" id="notesFab" onclick="openNotes()">✎</div>
-  <div class="bot-bar">
-    <div class="trigger-bar">
-      <div class="trig-left">
-        <div class="trig-dot"></div>
-        <span class="trig-txt">Clicker · spacebar · arrow keys to advance</span>
-      </div>
-      <div class="hotkeys">
-        <span class="hk pain-hk">P = PAIN</span>
-        <span class="hk dream-hk">D = DREAM</span>
-        <span class="hk back-hk">B = BACK</span>
-      </div>
+  <div class="reminder"><span class="reminder-txt" id="reminderTxt">Curious is king. When you're genuinely curious it never sounds like an interrogation.</span></div>
+  <div class="topbar">
+    <span class="step-num" id="stepNum">STEP 1 / 26</span>
+    <div class="dots" id="dots"></div>
+    <div class="hotkeys">
+      <span class="hk p">P=PAIN</span>
+      <span class="hk d">D=DREAM</span>
+      <span class="hk">B=BACK</span>
     </div>
-    <div class="bot-row">
-      <button class="back-btn-bar" onclick="goBack()">← BACK</button>
+  </div>
+  <div class="step-body" id="stepBody"></div>
+  <div class="notes-fab" id="notesFab" onclick="openNotes()">✎</div>
+  <div class="botbar">
+    <div class="botrow">
+      <button class="back-btn" onclick="goBack()">← BACK</button>
       <div class="next-bar">
         <div>
           <div class="next-lbl">NEXT STEP</div>
           <div class="next-name" id="nextName">—</div>
         </div>
-        <span style="font-size:20px;color:var(--muted)">›</span>
+        <span style="font-size:18px;color:var(--muted)">›</span>
       </div>
-      <button class="advance-btn" id="advanceBtn" onclick="advance()">ADVANCE ›</button>
+      <button class="adv-btn" onclick="advance()">ADVANCE ›</button>
     </div>
   </div>
 </div>
 
+<!-- PAIN FLASH -->
+<div id="painFlash">
+  <div class="flash-label red">PAIN FOUNDATION</div>
+  <div class="flash-title red">STRONG</div>
+  <div class="flash-sub red">You've collected enough.<br>Now go deeper.</div>
+</div>
+
+<!-- DREAM FLASH -->
+<div id="dreamFlash">
+  <div class="flash-label green">DREAM FOUNDATION</div>
+  <div class="flash-title green">STRONG</div>
+  <div class="flash-sub green">You know what they want.<br>Now make it bigger.</div>
+</div>
+
 <!-- PAIN MODE -->
 <div id="sPain" class="screen">
-  <div class="pain-mode-label">PAIN MODE</div>
-  <div class="pain-q-wrap">
-    <div class="pain-progress" id="painProgress"></div>
-    <div class="pain-layer-lbl" id="painLayerLbl">LAYER 1 — SURFACE</div>
-    <div class="pain-q-card">
-      <div class="pain-q-txt" id="painQTxt">What's the biggest challenge right now?</div>
-    </div>
+  <div class="pain-label">PAIN MODE</div>
+  <div class="pain-wrap">
+    <div class="pain-prog" id="painProg"></div>
+    <div class="pain-layer" id="painLayer">LAYER 1 — SURFACE</div>
+    <div class="pain-card"><div class="pain-q" id="painQ">What's the biggest challenge right now?</div></div>
+    <div class="pain-whisper" id="painWhisper">Stay here. Let them go deeper.</div>
     <button class="pain-next-btn" onclick="painNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="pain-exit-btn" onclick="exitMode()">← RETURN TO CALL</button>
-    <div class="pain-whisper" id="painWhisper">Stay here. Let them go deeper. You don't need to move on yet.</div>
+    <button class="pain-ret-btn" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
 </div>
 
 <!-- DREAM MODE -->
 <div id="sDream" class="screen">
-  <div class="dream-mode-label">DREAM MODE</div>
-  <div class="dream-q-wrap">
-    <div class="dream-progress" id="dreamProgress"></div>
-    <div class="dream-layer-lbl" id="dreamLayerLbl">LAYER 1 — WHAT THEY WANT</div>
-    <div class="dream-q-card">
-      <div class="dream-q-txt" id="dreamQTxt">What do you actually want?</div>
-    </div>
+  <div class="dream-label">DREAM MODE</div>
+  <div class="dream-wrap">
+    <div class="dream-prog" id="dreamProg"></div>
+    <div class="dream-layer" id="dreamLayer">LAYER 1 — WHAT THEY WANT</div>
+    <div class="dream-card"><div class="dream-q" id="dreamQ">What do you actually want?</div></div>
+    <div class="dream-whisper" id="dreamWhisper">Make the dream bigger with every question.</div>
     <button class="dream-next-btn" onclick="dreamNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="dream-exit-btn" onclick="exitMode()">← RETURN TO CALL</button>
-    <div class="dream-whisper" id="dreamWhisper">Make the dream bigger and more specific with every question.</div>
+    <button class="dream-ret-btn" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
-</div>
-
-<!-- DEPTH CHECK -->
-<div class="depth-overlay" id="depthOverlay">
-  <div class="depth-title">BEFORE YOU MOVE ON</div>
-  <div class="depth-q" id="depthQ">Do you genuinely understand what brought them here today?</div>
-  <div class="q-list" style="width:100%;max-width:560px;margin-bottom:28px;">
-    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What's really driving this for you right now?</div>
-    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What happened recently that made this feel important?</div>
-    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What would you want to be different 6 months from now?</div>
-    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What have you tried so far — and what was missing from that?</div>
-  </div>
-  <button class="depth-yes" onclick="depthYes()">YES — READY TO MOVE ON</button>
-  <button class="depth-no" onclick="depthNo()">NOT YET — GO BACK</button>
-  <div class="depth-best" id="depthBest">
-    <div class="depth-best-lbl">GO BACK WITH THIS</div>
-    <div class="depth-best-txt" id="depthBestTxt"></div>
-  </div>
-  <button class="depth-back-btn" id="depthBackBtn" onclick="depthGoBack()">← GO BACK</button>
 </div>
 
 <!-- SILENCE -->
-<!-- Pain/Dream confirmation flash -->
-<div id="painFlash" style="display:none;position:fixed;inset:0;background:rgba(26,7,7,0.97);z-index:80;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
-  <div style="font-size:11px;letter-spacing:5px;color:rgba(255,59,59,0.5);text-transform:uppercase;">PAIN FOUNDATION</div>
-  <div style="font-size:52px;font-weight:800;color:var(--red);letter-spacing:-2px;text-align:center;">STRONG</div>
-  <div style="font-size:16px;color:rgba(255,59,59,0.7);text-align:center;font-style:italic;">You've collected enough.<br>Now go deeper.</div>
-</div>
-<div id="dreamFlash" style="display:none;position:fixed;inset:0;background:rgba(6,21,16,0.97);z-index:80;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
-  <div style="font-size:11px;letter-spacing:5px;color:rgba(0,210,106,0.5);text-transform:uppercase;">DREAM FOUNDATION</div>
-  <div style="font-size:52px;font-weight:800;color:var(--green);letter-spacing:-2px;text-align:center;">STRONG</div>
-  <div style="font-size:16px;color:rgba(0,210,106,0.7);text-align:center;font-style:italic;">You know what they want.<br>Now make it bigger.</div>
-</div>
-
-<div class="silence-ov" id="silOv">
+<div id="silOv" class="screen">
   <div class="sil-n" id="silN">2</div>
   <div class="sil-lbl">WAIT · LET THAT LAND</div>
 </div>
@@ -474,7 +386,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
   <div class="blk-icon">🚨</div>
   <div class="blk-title" id="blkTitle">DO NOT PITCH</div>
   <div class="blk-sub" id="blkSub">Below 8. Find out why before moving forward.</div>
-  <div class="blk-q"><div class="blk-q-txt">"What would make it a 10?"</div></div>
+  <div class="blk-q"><div class="blk-q-txt">"What would need to feel different for this to feel like a yes?"</div></div>
   <button class="blk-btn" onclick="unblock()">THEY ARE BOUGHT IN — CONTINUE</button>
 </div>
 
@@ -482,24 +394,24 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 <div id="sNotes" class="screen">
   <div class="notes-hdr">
     <span class="notes-hdr-title">Your Notes</span>
-    <button class="back-btn" onclick="closeNotes()">← BACK</button>
+    <button class="notes-back" onclick="closeNotes()">← BACK</button>
   </div>
   <div class="notes-list" id="notesList"></div>
-  <div class="notes-inp-area">
+  <div class="notes-inp">
     <div class="mode-row">
       <button class="mode-btn mn" id="modeN" onclick="setMode('note')">NOTE</button>
       <button class="mode-btn" id="modeQ" onclick="setMode('quote')">EXACT QUOTE</button>
     </div>
     <textarea class="note-ta" id="noteTa" placeholder="Type a note…"></textarea>
-    <button class="save-btn" onclick="saveManual()">SAVE</button>
+    <button class="save-btn" onclick="saveNote()">SAVE</button>
   </div>
 </div>
 
 <!-- PITCH RECALL -->
-<div id="sPitchRecall" class="screen">
+<div id="sRecall" class="screen">
   <div class="notes-hdr">
     <span class="notes-hdr-title">Their Words</span>
-    <button class="back-btn" onclick="closeRecall()">← BACK</button>
+    <button class="notes-back" onclick="closeRecall()">← BACK</button>
   </div>
   <div class="recall-body" id="recallBody"></div>
 </div>
@@ -507,564 +419,443 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 <!-- END -->
 <div id="sEnd" class="screen">
   <div class="end-title">GREAT CALL.</div>
-  <div class="end-sub">You completed all 22 steps.</div>
-  <div class="end-rules-card">
+  <div class="end-sub">You completed all 26 steps.</div>
+  <div class="end-rules">
     <div class="end-rules-lbl">RICHARD'S RULES</div>
-    <div class="end-rule">⚠ DO NOT SOLVE</div>
-    <div class="end-rule">⚠ DO NOT TEACH</div>
+    <div class="end-rule">⚠ DO NOT SOLVE · DO NOT TEACH</div>
     <div class="end-rule">⚠ DISCOVER FIRST · PITCH SECOND</div>
-    <div class="end-rule">⚠ WAIT 2 SECONDS</div>
-    <div class="end-rule">⚠ TAKE NOTES · WRITE DOWN EXACT PHRASES</div>
-    <div class="end-rule">⚠ THE PROSPECT TALKS 70–80%</div>
+    <div class="end-rule">⚠ WAIT 2 SECONDS AFTER EVERY ANSWER</div>
     <div class="end-rule">⚠ HUNT FOR UNDERSTANDING NOT QUESTIONS</div>
     <div class="end-rule">⚠ CLARIFY FIRST · ANSWER SECOND</div>
-    <div class="end-rule">⚠ USE "EARLIER YOU TOLD ME..." THROUGHOUT THE PITCH</div>
+    <div class="end-rule">⚠ USE "EARLIER YOU TOLD ME..." THROUGHOUT</div>
+    <div class="end-rule">⚠ THE PROSPECT TALKS 70–80%</div>
+    <div class="end-rule">⚠ I DO NOT NEED TO BE MORE IMPRESSIVE</div>
+    <div class="end-rule">⚠ I NEED TO BE MORE CURIOUS</div>
   </div>
   <button class="restart-btn" onclick="restart()">NEW CALL</button>
 </div>
 
 <script>
 // ── State
-// Voice trigger removed — ring clicker used for navigation
-let prospectName = 'Bob';
-let yourName = 'Richard Stokes';
-let yourRole = '';
-let currentStep = 0;
-let notes = [];
-let noteMode = 'note';
-let rapportInterval = null;
-let rapportSecs = 60;
-let reminderInterval = null;
-let reminderIdx = 0;
-let painIdx = 0;
-let dreamIdx = 0;
-let prevScreen = 'sStep';
+var prospectName='Bob', yourName='Richard Stokes', yourRole='';
+var currentStep=0, notes=[], noteMode='note';
+var painIdx=0, dreamIdx=0;
+var rapportInterval=null, rapportSecs=60;
+var reminderInterval=null, reminderIdx=0;
 
-// ── Pain questions — surface to deep
-const PAIN_Qs = [
-  { layer:"LAYER 1 — SURFACE", q:"What's the biggest challenge right now?", whisper:"Let them answer fully. Don't fill the silence." },
-  { layer:"LAYER 2 — MEANING", q:"What do you mean by that?", whisper:"Make sure you're understanding their world, not assuming it." },
-  { layer:"LAYER 3 — DURATION", q:"How long has this been going on?", whisper:"Duration builds urgency. Let that number land." },
-  { layer:"LAYER 4 — IMPACT", q:"How has that affected you?", whisper:"This is where it gets real. Stay here." },
-  { layer:"LAYER 5 — FRUSTRATION", q:"What frustrates you most about it?", whisper:"Frustration is emotion. You're getting closer." },
-  { layer:"LAYER 6 — COST", q:"What is this costing you?", whisper:"Financial pain is powerful. Let them quantify it themselves." },
-  { layer:"LAYER 7 — PERSONAL", q:"How has this affected you personally?", whisper:"Personal pain is the deepest pain. Don't rush this." },
-  { layer:"LAYER 8 — FAMILY", q:"How has this affected the people around you?", whisper:"Family impact is the most emotional layer. Be still." },
-  { layer:"LAYER 9 — IDENTITY", q:"How do you feel about where you are right now?", whisper:"This is identity-level pain. The sale lives here." },
-  { layer:"LAYER 10 — CONSEQUENCE", q:"What happens if nothing changes in the next 12 months?", whisper:"The cost of inaction. Let them say it out loud." }
+// ── Pain questions
+var PAIN_Qs=[
+  {layer:"LAYER 1 — SURFACE",q:"What's the hardest part about that?",w:"Stay here. Let them keep talking."},
+  {layer:"LAYER 2 — MEANING",q:"What do you mean by that exactly?",w:"Make sure you understand their world — don't assume."},
+  {layer:"LAYER 3 — DURATION",q:"How long have you been dealing with this?",w:"Duration builds urgency. Let that number land."},
+  {layer:"LAYER 4 — IMPACT",q:"How has that been affecting you day to day?",w:"This is where it gets real. Stay here."},
+  {layer:"LAYER 5 — FRUSTRATION",q:"What are you most fed up with?",w:"Frustration is emotion. You're getting closer."},
+  {layer:"LAYER 6 — COST",q:"What's that actually costing you?",w:"Financial pain is powerful. Let them say the number."},
+  {layer:"LAYER 7 — PERSONAL",q:"How has this affected you personally?",w:"Personal pain is the deepest. Don't rush this."},
+  {layer:"LAYER 8 — OTHERS",q:"Who else is feeling the impact of this?",w:"Family and others make it more real. Be still."},
+  {layer:"LAYER 9 — IDENTITY",q:"How do you feel about where you are right now?",w:"This is identity-level pain. The sale lives here."},
+  {layer:"LAYER 10 — CONSEQUENCE",q:"What happens if nothing changes?",w:"The cost of inaction. Let them say it out loud."}
 ];
 
-// ── Dream questions — surface to deep
-const DREAM_Qs = [
-  { layer:"LAYER 1 — WHAT THEY WANT", q:"What do you actually want?", whisper:"Let them dream out loud. Don't interrupt." },
-  { layer:"LAYER 2 — WHY IT MATTERS", q:"Why is that important to you?", whisper:"The reason behind the dream is more powerful than the dream itself." },
-  { layer:"LAYER 3 — SPECIFICS", q:"What would success actually look like?", whisper:"Vague dreams don't close. Get specific." },
-  { layer:"LAYER 4 — FREEDOM", q:"What would that allow you to do that you can't do right now?", whisper:"Freedom is the real motivator for most people." },
-  { layer:"LAYER 5 — FEELING", q:"How would you feel if you achieved that?", whisper:"Emotion is what drives decisions. Let them feel it." },
-  { layer:"LAYER 6 — TIMELINE", q:"When would you want this to happen?", whisper:"A dream with a timeline becomes a goal. A goal creates urgency." },
-  { layer:"LAYER 7 — FAMILY", q:"Who else would this affect?", whisper:"When family is involved the stakes are higher. Stay here." },
-  { layer:"LAYER 8 — IDENTITY", q:"Who would you become if this worked?", whisper:"Identity-level desire is the strongest motivator there is." },
-  { layer:"LAYER 9 — PICTURE", q:"Paint me a picture. What does life actually look like?", whisper:"Make the dream vivid. The more real it feels, the more they want it." },
-  { layer:"LAYER 10 — GAP", q:"How far are you from that right now?", whisper:"The gap between here and there is where you build the sale." }
+// ── Dream questions
+var DREAM_Qs=[
+  {layer:"LAYER 1 — WHAT THEY WANT",q:"Best case scenario — what would you love to happen?",w:"Let them dream out loud. Don't interrupt."},
+  {layer:"LAYER 2 — WHY IT MATTERS",q:"Why is that important to you?",w:"The reason behind the dream is more powerful than the dream itself."},
+  {layer:"LAYER 3 — SPECIFICS",q:"What would success actually look like?",w:"Vague dreams don't close. Get specific."},
+  {layer:"LAYER 4 — FREEDOM",q:"What would that allow you to do that you can't do right now?",w:"Freedom is the real motivator for most people."},
+  {layer:"LAYER 5 — FEELING",q:"How would that feel?",w:"Emotion drives decisions. Let them feel it."},
+  {layer:"LAYER 6 — TIMELINE",q:"If we were talking 6 months from now and everything had worked — what's different?",w:"A dream with a timeline becomes a goal."},
+  {layer:"LAYER 7 — OTHERS",q:"Who else would benefit if you got this right?",w:"When family is involved the stakes are higher."},
+  {layer:"LAYER 8 — IDENTITY",q:"Who would you become if this worked?",w:"Identity-level desire is the strongest motivator."},
+  {layer:"LAYER 9 — PICTURE",q:"Paint me a picture of that life.",w:"Make the dream vivid. The more real it feels the more they want it."},
+  {layer:"LAYER 10 — GAP",q:"How far are you from that right now?",w:"The gap between here and there is where you build the sale."}
 ];
 
 // ── Reminders
-
+var REMINDERS=[
+  "When you feel the urge to explain — ask a question.",
+  "When you feel the urge to solve — ask a question.",
+  "When you feel the urge to pitch — dig deeper.",
+  "You don't need another question. You need another pause.",
+  "Slow down. Stay here longer than feels comfortable.",
+  "Repeat their last word back. Then wait.",
+  "I do not need to be more impressive. I need to be more curious.",
+  "I do not need to talk more. I need to understand more.",
+  "The prospect gives you the gold if you shut up long enough.",
+  "Curious is king. When you're genuinely curious it never sounds like an interrogation.",
+  "Their third answer is always better than their first.",
+  "One question at a time. Always.",
+  "The pause is the most powerful thing you have. Use it.",
+  "When emotion appears — stay there. Don't move on.",
+  "Bad discovery creates objections. Good discovery removes them.",
+  "They should be doing 70–80% of the talking. Always.",
+  "The first answer is rarely the real answer. Go deeper.",
+  "Let them finish. Their next sentence is usually more valuable than your next question.",
+  "Ask one question. Then wait. Really wait.",
+  "What they say after a pause is usually the real answer."
+];
 
 // ── Steps
-const STEPS = [
-  { id:1, phase:'STEP 1', title:'RAPPORT', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Be yourself. Build genuine comfort in under 60 seconds.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="rapport-timer"><div class="rt-circle" id="rtNum">60</div><div class="rt-lbl">⚠ MAX 60 SECONDS<br>THEN MOVE ON</div></div>
-      <div class="main-card green-l">
-        <div class="main-q big">"Hey ${prospectName}, good to speak with you — I'm ${yourName}, ${yourRole}."</div>
-        <div style="height:14px"></div>
-        <div class="main-q" style="color:rgba(255,255,255,0.6);">"How are you doing today?"</div>
-      </div>
-      <div class="rule-banner green"><div class="rule-txt green">✓ READY TO MOVE ON?</div></div>`; }
-  },
-  { id:2, phase:'STEP 2', title:'FRAME', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Set the agenda. You lead, they follow. This is your call.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="main-card green-l">
-        <div class="main-q">"Today's call is simple. We have approximately 1 hour.</div>
-        <div style="height:12px"></div>
-        <div class="main-q">I just want to understand where you're at, where you'd like to get to, and most importantly see whether we can genuinely help.</div>
-        <div style="height:12px"></div>
-        <div class="main-q">If we can, I'll explain how. If we can't, I'll point you in the right direction.</div>
-        <div style="height:14px"></div>
-        <div class="main-q" style="color:var(--green);font-weight:600;">Sound fair?"</div>
-      </div>
-      <div class="rule-banner green"><div class="rule-txt green">✓ AGREED?</div></div>`; }
-  },
-  { id:3, phase:'DISCOVERY STARTS HERE — STEP 3', title:'DISCOVERY', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Listen more than you speak. Pick the question that fits the moment.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Listen more than you speak. Pick the question that fits the moment."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">What's been going on?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ What made you decide to jump on a call?</div>
-        <div class="q-followup">↳ Fill me in.</div>
-        <div class="q-followup">↳ Help me understand where you're at.</div>
-        <div class="q-followup">↳ What do you mean by that?</div>
-        <div class="q-followup">↳ Walk me through that.</div>
-      </div>
-      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">LISTEN. TAKE NOTES. DO NOT SOLVE. DO NOT TEACH.</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
-  },
-    { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Stay here until emotion appears. Don\'t rush.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Stay here until emotion appears. Don\'t rush."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">What's the hardest part about that?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ What's been most frustrating?</div>
-        <div class="q-followup">↳ How long have you been dealing with that?</div>
-        <div class="q-followup">↳ What's that costing you?</div>
-        <div class="q-followup">↳ What happens if nothing changes?</div>
-      </div>
-      <div class="rule-banner amber" style="margin-top:14px;"><div class="rule-txt amber">&#9888; STAY HERE UNTIL EMOTION APPEARS</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; FOUND PAIN?</div></div>`; }
-  },
-    { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Vague dreams don\'t close. Get specific. Make them feel it.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Vague dreams don\'t close. Get specific. Make them feel it."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">Best case scenario — what would you love to happen?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ If we were having this conversation a year from now and everything worked out — what would life look like?</div>
-        <div class="q-followup">↳ What would that allow you to do?</div>
-        <div class="q-followup">↳ Why is that important?</div>
-        <div class="q-followup">↳ How would that feel?</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">GOAL: DISCOVER THE DREAM</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; CLEAR ON DREAM?</div></div>`; }
-  },
-    { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Understand their current reality completely. No assumptions.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Understand their current reality completely. No assumptions."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">What does a normal week look like right now?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ What's working?</div>
-        <div class="q-followup">↳ What's not working?</div>
-        <div class="q-followup">↳ What's been the hardest part of it?</div>
-        <div class="q-followup">↳ How long has it been like this?</div>
-      </div>
-      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER CURRENT REALITY</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
-  },
-    { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Failed attempts are pitch ammunition. Every answer here is a pillar.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Failed attempts are pitch ammunition. Every answer here is a pillar."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">What have you done so far to try and fix this?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ How did that go?</div>
-        <div class="q-followup">↳ What was missing?</div>
-        <div class="q-followup">↳ What did you learn from it?</div>
-        <div class="q-followup">↳ What would need to feel different this time?</div>
-      </div>
-      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER FAILED SOLUTIONS</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
-  },
-    { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"No urgency means no decision. Stay here until you find it.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"No urgency means no decision. Stay here until you find it."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">What changed — why now?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ Why not six months from now?</div>
-        <div class="q-followup">↳ What happens if nothing changes?</div>
-        <div class="q-followup">↳ How would you feel if you were still here next year?</div>
-        <div class="q-followup">↳ What's staying stuck costing you?</div>
-      </div>
-      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER URGENCY</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; FOUND URGENCY?</div></div>`; }
-  },
-    { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Find hidden decision makers now.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Find hidden decision makers now."</div></div>
-      <div class="lead-question-card">
-        <div class="lead-q-label">ASK THIS FIRST</div>
-        <div class="lead-q-text">Are you in a relationship?</div>
-      </div>
-      <div class="followup-section">
-        <div class="followup-label">THEN DIG DEEPER</div>
-        <div class="q-followup">↳ Does your partner know you're on this call — or are we on a secret mission?</div>
-        <div class="q-followup">↳ Are they supportive?</div>
-        <div class="q-followup">↳ Who else benefits if you solve this?</div>
-        <div class="q-followup">↳ If today felt right — could you make that call yourself?</div>
-      </div>
-      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER DECISION MAKERS</div></div>
-      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; SUPPORT DISCOVERED?</div></div>`; }
-  },
-  { id:10, phase:'STEP 10', title:'MONEY', titleCol:'amber',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Don\'t hunt for money. Hunt for the truth.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Don\'t hunt for money. Hunt for the truth."</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q big">On a scale of 1–10… 1 being money is a genuine concern, 10 being if you found the right solution you'd move forward immediately… where would you put yourself today?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-list-item">Interesting… why that number?</div>
-        <div class="q-list-item">Why not lower?</div>
-        <div class="q-list-item">What's stopping it being a 10?</div>
-        <div class="q-list-item">Is that a money thing or more of a certainty thing?</div>
-        <div class="q-list-item">Is it finances — or do you need to believe it'll actually work?</div>
-        <div class="q-list-item">If money wasn't a factor — would you move forward?</div>
-        <div class="q-list-item">Have you invested in yourself before?</div>
-        <div class="q-list-item">Do you tend to see things like this as an expense or an investment?</div>
-      </div>
-      <div class="quan-box" style="margin-top:12px;">
-        <div class="quan-line">DON\'T HUNT FOR MONEY.</div>
-        <div class="quan-line">HUNT FOR THE TRUTH.</div>
-        <div class="quan-line" style="margin-top:6px;">"IF THIS IS THE RIGHT SOLUTION — ARE THEY READY?"</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; MONEY QUALIFIED?</div></div>`; }
-  },
-    { id:11, phase:'STEP 11', title:'READINESS', titleCol:'amber',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Are they ready to decide — or do they still need something?",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Are they ready to decide — or do they still need something?"</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q big">If we found exactly what you were looking for today… would you feel ready to move forward — or would you still need some time?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to feel different for this to feel like a yes?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's the one thing that's still sitting with you?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is there something specific you'd want clarity on first?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to happen for you to feel completely ready?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's your process normally for a decision like this?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's holding you back — is it logic or is it feeling?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">If you knew it would work — would you do it today?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would make this a no-brainer for you?</div>
-      </div>
-      <div class="quan-box" style="margin-top:12px;">
-        <div class="quan-line">CURIOUS IS KING.</div>
-        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; READINESS CLEAR?</div></div>`; }
-  },
-    { id:12, phase:'STEP 12', title:'WHAT STOPS YOU', titleCol:'amber',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Find the real blocker before it becomes an objection at the end.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"Find the real blocker before it becomes an objection at the end."</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q big">Let's say we find the perfect solution. What's more likely to stop you — time, money, or believing it'll actually work?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Interesting. Why that one?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Tell me more about that.</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How long has that been a concern?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Have you had a bad experience before?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What happened there?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What was missing from that?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would you want to be different this time?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is there anything you'd want to avoid?</div>
-      </div>
-      <div class="quan-box" style="margin-top:12px;">
-        <div class="quan-line">CURIOUS IS KING.</div>
-        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; BLOCKER IDENTIFIED?</div></div>`; }
-  },
-    { id:13, phase:'STEP 13', title:'PAST INVESTMENT', titleCol:'amber',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"How they\'ve invested before tells you how serious they are now.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"How they\'ve invested before tells you how serious they are now."</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q big">Just curious… have you ever invested in getting help with this before?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How did that go?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What did you like about it?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What didn't work?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What was missing from that experience?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What did you take from it?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to feel different this time?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Did you feel supported throughout?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would have made it better?</div>
-      </div>
-      <div class="quan-box" style="margin-top:12px;">
-        <div class="quan-line">CURIOUS IS KING.</div>
-        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; HISTORY UNDERSTOOD?</div></div>`; }
-  },
-    { id:14, phase:'STEP 14', title:'COMMITMENT', titleCol:'amber',
-    type:'standard', hasSilence:true, isBlock:false,
-    whisper:"This is the moment of truth. Buyer or browser?",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"This is the moment of truth. Buyer or browser?"</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q big">Be honest with me… if this solved the problem we've been discussing — would you find a way, or would you find a reason?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What makes you say that?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How serious are you about solving this?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would it mean to you if you finally cracked this?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's the cost of not solving it?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Can I challenge you on something?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Do you honestly think doing the same thing is going to produce a different result?</div>
-        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's stopping you from saying yes to yourself right now?</div>
-      </div>
-      <div class="quan-box" style="margin-top:12px;">
-        <div class="quan-line">DON\'T HUNT FOR MONEY.</div>
-        <div class="quan-line">HUNT FOR THE TRUTH.</div>
-        <div class="quan-line" style="margin-top:6px;">"IF THIS IS THE RIGHT SOLUTION — ARE THEY READY?"</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; COMMITMENT ASSESSED?</div></div>`; }
-  },
-  { id:15, phase:'STEP 15', title:'TEMP CHECK #1', titleCol:'', type:'standard', hasSilence:false, isBlock:true,
-    blockTitle:'DO NOT PITCH', blockSub:'Below 8. Find out why before moving forward.',
-    whisper:"Don't pitch into uncertainty. If they're not bought in, find out why first.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-              <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">How's all this sounding so far?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Does this feel aligned with what you're looking for?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Is there anything you're unsure about?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Any concerns?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">On a scale of 1–10 where are you?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">What's stopping it being a 10?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">What would make this a no-brainer?</div>
-        <div class="rule-banner red" style="margin-top:18px;"><div class="rule-txt red">⚠ BELOW 8? DO NOT PITCH. FIND OUT WHY.</div><div class="rule-txt red" style="margin-top:6px;">ASK: "What would make it a 10?"</div></div>
-      <div class="rule-banner green" style="margin-top:10px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`; }
-  },
-  { id:16, phase:'STEP 16', title:'PRE-PITCH', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Last chance to find anything you missed. Ask and really listen to the answer.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div style="font-size:26px;color:var(--text);text-align:center;padding:16px 0;border-bottom:1px solid var(--border);">Have we missed anything important?</div>
-      <div style="font-size:22px;color:rgba(255,255,255,0.5);text-align:center;padding:13px 0;border-bottom:1px solid var(--border);">Is there anything else I should know?</div>
-      <div style="font-size:22px;color:rgba(255,255,255,0.5);text-align:center;padding:13px 0;">Have I got the full picture?</div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ READY?</div></div>`; }
-  },
-  { id:17, phase:'STEP 17', title:'TRANSITION', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"You earned this. Everything from here flows from what they told you.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="main-card green-l">
-        <div class="main-q">"Based on everything you've told me, I genuinely think we can help.</div>
-        <div style="height:14px"></div>
-        <div class="main-q" style="color:var(--green);font-weight:600;">Would you like me to walk you through how?"</div>
-      </div>
-      <button class="recall-btn" onclick="openRecall()">★ SEE THEIR EXACT WORDS</button>
-      <div class="rule-banner green"><div class="rule-txt green">WAIT FOR YES</div></div>`; }
-  },
-  { id:18, phase:'STEP 18', title:'GOLDEN PROMISE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Result not process. One or two sentences. Use their exact words.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="rule-banner amber"><div class="rule-txt amber">⚠ KEEP SHORT · 1–2 SENTENCES · RESULT NOT PROCESS</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q">"This is a _____ step process to take you from:</div><div style="height:12px"></div>
-        <div class="main-q" style="color:var(--amber);">CURRENT SITUATION</div><div style="height:8px"></div>
-        <div class="main-q">TO</div><div style="height:8px"></div>
-        <div class="main-q" style="color:var(--green);">DESIRED RESULT</div><div style="height:12px"></div>
-        <div class="main-q">IN APPROXIMATELY _____"</div>
-      </div>
-      <div class="rule-banner green"><div class="rule-txt green">✓ PROMISE DELIVERED?</div></div>`; }
-  },
-  { id:19, phase:'STEP 19', title:'PILLAR 1', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Earlier you told me... Connect every feature to something they said.",
-    render() { return renderPillar(this.whisper,'SOLVE PROBLEM #1'); }
-  },
-  { id:20, phase:'STEP 20', title:'PILLAR 2', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Earlier you told me... Go back to your notes. Use their exact words.",
-    render() { return renderPillar(this.whisper,'SOLVE PROBLEM #2'); }
-  },
-  { id:21, phase:'STEP 21', title:'PILLAR 3', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Earlier you told me... Every pillar should feel like it was built specifically for them.",
-    render() { return renderPillar(this.whisper,'SOLVE PROBLEM #3'); }
-  },
-  { id:22, phase:'STEP 22', title:'DELIVERY', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"High level only. The more you explain, the more questions you create.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: EXPLAIN HOW SUPPORT WORKS · KEEP HIGH LEVEL · DO NOT OVERWHELM</div></div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">Coaching</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">Accountability</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">Community</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">Training</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;">Support · Access · Check-ins</div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ UNDERSTOOD?</div></div>`; }
-  },
-  { id:23, phase:'STEP 23', title:'TEMP CHECK #2', titleCol:'red', type:'standard', hasSilence:false, isBlock:true,
-    blockTitle:'DO NOT DISCUSS PRICE', blockSub:'Below 8. Stop. Find out why.',
-    whisper:"Do not discuss price until they are bought in. Full stop.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-              <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">How's all this sounding so far?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Does this feel aligned with what you're looking for?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Is there anything you're unsure about?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">Any concerns?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">On a scale of 1–10 where are you?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">What's stopping it being a 10?</div>
-        <div style="font-size:22px;color:#ffffff;text-align:center;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.4;">What would make this a no-brainer?</div>
-        <div class="rule-banner red" style="margin-top:18px;"><div class="rule-txt red">⚠ BELOW 8? STOP. DO NOT DISCUSS PRICE.</div><div class="rule-txt red" style="margin-top:6px;">ASK: "What would make it a 10?" · "What's holding you back?"</div></div>
-      <div class="rule-banner green" style="margin-top:10px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`; }
-  },
-  { id:24, phase:'STEP 24', title:'COMMITTING PHASE', titleCol:'amber', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Clarify before you answer. Every time. The question is never just the question.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="commit-rule"><div class="commit-rule-txt">RULE: CLARIFY FIRST · ANSWER SECOND</div></div>
-      <div class="main-card amber-l">
-        <div class="main-q">Prospect asks anything about the programme…</div>
-        <div style="height:12px"></div><div class="main-q" style="color:var(--red);font-weight:700;">DO NOT ANSWER YET</div><div style="height:14px"></div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid var(--border);">Great question. What made you ask that?</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid var(--border);">Just so I understand — what specifically do you mean?</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid var(--border);">Interesting… tell me more.</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid var(--border);">Have you had a bad experience before?</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid var(--border);">What are you hoping to avoid?</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);padding:8px 0;">What's behind that question?</div>
-      </div>
-      <div style="font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:16px 0 10px;text-align:center;">FIND THE REAL QUESTION</div>
-      <div class="real-q-row"><div class="rq-q">Question: "Does it include group coaching?"</div><div class="rq-real">Real Concern: "Am I going to get enough support?"</div></div>
-      <div class="real-q-row"><div class="rq-q">Question: "How long is the program?"</div><div class="rq-real">Real Concern: "Can I actually do this?"</div></div>
-      <div class="answer-flow"><div class="af-title">THEN ANSWER</div>
-        <div class="af-step">Understand concern ↓</div><div class="af-step">Acknowledge concern ↓</div>
-        <div class="af-step">Contrast previous experience ↓</div><div class="af-step">Explain your solution ↓</div>
-        <div class="af-step">Confirm understanding</div>
-      </div>
-      <div class="example-box">
-        <div class="ex-txt">"I can understand why that would be frustrating. That's exactly why we do things differently. Here's how our support works…"</div>
-        <div class="ex-follow">↓ "Does that sound more like what you're looking for?"</div>
-      </div>
-      <div class="rule-banner green"><div class="rule-txt green">✓ CONCERNS HANDLED?</div></div>`; }
-  },
-  { id:25, phase:'STEP 25', title:'FUTURE PACE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
-    whisper:"Make success feel real and close. They should be able to picture it.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="rule-banner green"><div class="rule-txt green">GOAL: MAKE SUCCESS FEEL REAL</div></div>
-      <div style="font-size:24px;color:var(--text);text-align:center;padding:14px 0;border-bottom:1px solid var(--border);">Once you're onboarded…</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">During your first week…</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">When your coach reaches out…</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">During your first coaching session…</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">After your first breakthrough…</div>
-      <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;">Once you're getting results…</div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ EXCITED?</div></div>`; }
-  },
-  { id:26, phase:'STEP 26', title:'INVESTMENT', titleCol:'', type:'standard', hasSilence:false, isBlock:false, isLast:true,
-    whisper:"You earned this moment. Everything they told you got you here.",
-    render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="rule-banner red"><div class="rule-txt red">ONLY DISCUSS PRICE AFTER ALL BOXES TICKED:</div></div>
-      <div id="invChecks">
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">DISCOVERY COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">QUALIFICATION COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">TEMPERATURE CHECK #1 COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">PITCH COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">TEMPERATURE CHECK #2 COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">COMMITTING PHASE COMPLETE</span></div>
-        <div class="inv-check-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">BUY-IN RECEIVED</span></div>
-      </div>
-      <div class="inv-then"><div class="inv-then-title">THEN DISCUSS:</div>
-        <div class="inv-then-item">• INVESTMENT</div><div class="inv-then-item">• PAYMENT OPTIONS</div><div class="inv-then-item">• NEXT STEPS</div>
-      </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ DONE?</div></div>`; }
-  }
+var STEPS=[
+{id:1,phase:'STEP 1',title:'RAPPORT',tc:'',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Be yourself. Build genuine comfort in under 60 seconds."</div></div>
+<div class="rt-wrap"><div class="rt-circle" id="rtNum">60</div><div class="rt-lbl">⚠ MAX 60 SECONDS<br>THEN MOVE ON</div></div>
+<div class="main-card gl"><div class="main-q big">"Hey ${prospectName} — good to speak with you. I'm ${yourName}${yourRole?', '+yourRole:''}."</div><div style="height:10px"></div><div class="main-q">"How are you doing today?"</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ READY TO MOVE ON?</div></div>`;}},
+
+{id:2,phase:'STEP 2',title:'FRAME',tc:'',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Set the agenda. You lead, they follow. This is your call."</div></div>
+<div class="main-card gl">
+<div class="main-q">"Today's call is simple. We have approximately 1 hour.</div><div style="height:10px"></div>
+<div class="main-q">I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help.</div><div style="height:10px"></div>
+<div class="main-q">If we can, I'll explain how. If we can't, I'll point you in the right direction.</div><div style="height:12px"></div>
+<div class="main-q" style="color:var(--green);font-weight:600;">Sound fair?"</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ AGREED?</div></div>`;}},
+
+{id:3,phase:'DISCOVERY — STEP 3',title:'DISCOVERY',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Listen more than you speak. Pick the question that fits the moment."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">What's been going on?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">What made you decide to jump on a call?</div>
+<div class="fq">Fill me in.</div>
+<div class="fq">Help me understand where you're at.</div>
+<div class="fq">What do you mean by that?</div>
+<div class="fq">Walk me through that.</div></div>
+<div class="quan-box"><div class="quan-line">LISTEN. TAKE NOTES. DO NOT SOLVE. DO NOT TEACH.</div><div class="quan-line">THE PROSPECT TALKS 70–80% OF THE TIME.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ UNDERSTAND THE PROBLEM?</div></div>`;}},
+
+{id:4,phase:'STEP 4',title:'GO DEEPER',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Stay here until emotion appears. Don't rush."</div></div>
+<div class="lead-card" style="border-left-color:var(--red)"><div class="lead-lbl" style="color:var(--red)">ASK THIS FIRST</div><div class="lead-q">What's the hardest part about that?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">What's been most frustrating?</div>
+<div class="fq">How long have you been dealing with that?</div>
+<div class="fq">What's that costing you?</div>
+<div class="fq">What happens if nothing changes?</div></div>
+<div class="quan-box"><div class="quan-line">STAY HERE UNTIL EMOTION APPEARS.</div><div class="quan-line">IF IT DOESN'T FEEL UNCOMFORTABLE YOU HAVEN'T GONE DEEP ENOUGH.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ FOUND PAIN?</div></div>`;}},
+
+{id:5,phase:'STEP 5',title:'DREAM WORLD',tc:'green',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Vague dreams don't close. Get specific. Make them feel it."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">Best case scenario — what would you love to happen?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">If we were having this conversation a year from now and everything worked out — what would life look like?</div>
+<div class="fq">What would that allow you to do?</div>
+<div class="fq">Why is that important?</div>
+<div class="fq">How would that feel?</div></div>
+<div class="quan-box"><div class="quan-line">VAGUE DREAMS DON'T CLOSE.</div><div class="quan-line">GET SPECIFIC. MAKE THEM FEEL IT.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ CLEAR ON DREAM?</div></div>`;}},
+
+{id:6,phase:'STEP 6',title:'SITUATION',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Understand their current reality completely. No assumptions."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">What does a normal week look like right now?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">What's working?</div>
+<div class="fq">What's not working?</div>
+<div class="fq">What's been the hardest part of it?</div>
+<div class="fq">How long has it been like this?</div></div>
+<div class="quan-box"><div class="quan-line">DISCOVER CURRENT REALITY.</div><div class="quan-line">NO ASSUMPTIONS. UNDERSTAND THEIR WORLD COMPLETELY.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ UNDERSTAND CURRENT SITUATION?</div></div>`;}},
+
+{id:7,phase:'STEP 7',title:'ATTEMPTS',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Failed attempts are pitch ammunition. Every answer here is a pillar."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">What have you done so far to try and fix this?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">How did that go?</div>
+<div class="fq">What was missing?</div>
+<div class="fq">What did you learn from it?</div>
+<div class="fq">What would need to feel different this time?</div></div>
+<div class="quan-box"><div class="quan-line">FAILED ATTEMPTS ARE PITCH AMMUNITION.</div><div class="quan-line">EVERY ANSWER HERE IS A PILLAR WAITING TO HAPPEN.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ UNDERSTAND ATTEMPTS?</div></div>`;}},
+
+{id:8,phase:'STEP 8',title:'WHY NOW',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"No urgency means no decision. Stay here until you find it."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">What changed — why now?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">Why not six months from now?</div>
+<div class="fq">What happens if nothing changes?</div>
+<div class="fq">How would you feel if you were still here next year?</div>
+<div class="fq">What's staying stuck costing you?</div></div>
+<div class="quan-box"><div class="quan-line">NO URGENCY MEANS NO DECISION.</div><div class="quan-line">STAY HERE UNTIL YOU FIND IT.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ FOUND URGENCY?</div></div>`;}},
+
+{id:9,phase:'STEP 9',title:'SUPPORT',tc:'',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Find hidden decision makers now. The 'need to speak to my partner' objection lives here."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">Are you in a relationship?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="fq">Does your partner know you're on this call — or are we on a secret mission?</div>
+<div class="fq">Are they supportive?</div>
+<div class="fq">Who else benefits if you solve this?</div>
+<div class="fq">If today felt right — could you make that call yourself?</div></div>
+<div class="quan-box"><div class="quan-line">FIND THE DECISION MAKERS NOW.</div><div class="quan-line">THE 'I NEED TO SPEAK TO MY PARTNER' OBJECTION LIVES HERE.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ SUPPORT DISCOVERED?</div></div>`;}},
+
+{id:10,phase:'QUALIFICATION — STEP 10',title:'MONEY',tc:'amber',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Don't hunt for money. Hunt for the truth."</div></div>
+<div class="main-card al"><div class="main-q big">"On a scale of 1–10… 1 being money is a genuine concern, 10 being if you found the right solution you'd move forward immediately… where would you put yourself today?"</div></div>
+<div class="followup-wrap"><div class="followup-lbl">FOLLOW UPS</div>
+<div class="fq" style="padding-left:0">Interesting… why that number?</div>
+<div class="fq" style="padding-left:0">What's stopping it being a 10?</div>
+<div class="fq" style="padding-left:0">Is that a money thing or more of a certainty thing?</div>
+<div class="fq" style="padding-left:0">Is it finances — or do you need to believe it'll actually work?</div>
+<div class="fq" style="padding-left:0">Have you invested in yourself before?</div>
+<div class="fq" style="padding-left:0">Do you tend to see this as an expense or an investment?</div></div>
+<div class="quan-box"><div class="quan-line">DON'T HUNT FOR MONEY. HUNT FOR THE TRUTH.</div><div class="quan-line">"IF THIS IS THE RIGHT SOLUTION — ARE THEY READY?"</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ MONEY QUALIFIED?</div></div>`;}},
+
+{id:11,phase:'QUALIFICATION — STEP 11',title:'READINESS',tc:'amber',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Are they ready to decide — or do they still need something?"</div></div>
+<div class="main-card al"><div class="main-q big">"If we found exactly what you were looking for today… would you feel ready to move forward — or would you still need some time?"</div></div>
+<div class="followup-wrap"><div class="followup-lbl">FOLLOW UPS</div>
+<div class="fq" style="padding-left:0">What would need to feel different for this to feel like a yes?</div>
+<div class="fq" style="padding-left:0">What's the one thing that's still sitting with you?</div>
+<div class="fq" style="padding-left:0">What would need to happen for you to feel completely ready?</div>
+<div class="fq" style="padding-left:0">What's your process normally for a decision like this?</div>
+<div class="fq" style="padding-left:0">If you knew it would work — would you do it today?</div></div>
+<div class="quan-box"><div class="quan-line">CURIOUS IS KING.</div><div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ READINESS CLEAR?</div></div>`;}},
+
+{id:12,phase:'QUALIFICATION — STEP 12',title:'WHAT STOPS YOU',tc:'amber',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Find the real blocker before it becomes an objection at the end."</div></div>
+<div class="main-card al"><div class="main-q big">"Let's say we find the perfect solution. What's more likely to stop you — time, money, or believing it'll actually work?"</div></div>
+<div class="followup-wrap"><div class="followup-lbl">FOLLOW UPS</div>
+<div class="fq" style="padding-left:0">Interesting. Why that one?</div>
+<div class="fq" style="padding-left:0">Tell me more about that.</div>
+<div class="fq" style="padding-left:0">Have you had a bad experience before?</div>
+<div class="fq" style="padding-left:0">What would you want to be different this time?</div></div>
+<div class="quan-box"><div class="quan-line">CURIOUS IS KING.</div><div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ BLOCKER IDENTIFIED?</div></div>`;}},
+
+{id:13,phase:'QUALIFICATION — STEP 13',title:'PAST INVESTMENT',tc:'amber',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"How they've invested before tells you how serious they are now."</div></div>
+<div class="main-card al"><div class="main-q big">"Just curious… have you ever invested in getting help with this before?"</div></div>
+<div class="followup-wrap"><div class="followup-lbl">FOLLOW UPS</div>
+<div class="fq" style="padding-left:0">How did that go?</div>
+<div class="fq" style="padding-left:0">What did you like? What didn't work?</div>
+<div class="fq" style="padding-left:0">What was missing from that?</div>
+<div class="fq" style="padding-left:0">What would need to feel different this time?</div></div>
+<div class="quan-box"><div class="quan-line">CURIOUS IS KING.</div><div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ HISTORY UNDERSTOOD?</div></div>`;}},
+
+{id:14,phase:'QUALIFICATION — STEP 14',title:'COMMITMENT',tc:'amber',hs:true,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Buyer or browser? This is the moment of truth."</div></div>
+<div class="main-card al"><div class="main-q big">"Be honest with me… if this solved the problem we've been discussing — would you find a way, or would you find a reason?"</div></div>
+<div class="followup-wrap"><div class="followup-lbl">FOLLOW UPS</div>
+<div class="fq" style="padding-left:0">What makes you say that?</div>
+<div class="fq" style="padding-left:0">How serious are you about solving this?</div>
+<div class="fq" style="padding-left:0">Can I challenge you on something?</div>
+<div class="fq" style="padding-left:0">Do you honestly think doing the same thing is going to produce a different result?</div>
+<div class="fq" style="padding-left:0">What's stopping you from saying yes to yourself right now?</div></div>
+<div class="quan-box"><div class="quan-line">DON'T HUNT FOR MONEY. HUNT FOR THE TRUTH.</div><div class="quan-line">🚨 ARE THEY READY TO MOVE FORWARD? 🚨</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ COMMITMENT ASSESSED?</div></div>`;}},
+
+{id:15,phase:'STEP 15',title:'TEMP CHECK #1',tc:'',hs:false,ib:true,bTitle:'DO NOT PITCH',bSub:'Below 8. Find out why before moving forward.',
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Don't pitch into uncertainty. If they're not bought in, find out why first."</div></div>
+<div class="item big">How's all this sounding so far?</div>
+<div class="item">Does this feel aligned with what you're looking for?</div>
+<div class="item">Is there anything you're unsure about?</div>
+<div class="item">Any concerns?</div>
+<div class="item">On a scale of 1–10 where are you?</div>
+<div class="item">What's stopping it being a 10?</div>
+<div class="item">What would make this a no-brainer?</div>
+<div class="rule-banner red" style="margin-top:14px;"><div class="rule-txt red">⚠ BELOW 8? DO NOT PITCH. FIND OUT WHY.</div></div>
+<div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`;}},
+
+{id:16,phase:'STEP 16',title:'PRE-PITCH',tc:'',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Last chance to find anything you missed. Ask and really listen."</div></div>
+<div class="item big">Have we missed anything important?</div>
+<div class="item">Is there anything else I should know?</div>
+<div class="item">Have I got the full picture?</div>
+<div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">✓ READY?</div></div>`;}},
+
+{id:17,phase:'STEP 17',title:'TRANSITION',tc:'green',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"You earned this. Everything from here flows from what they told you."</div></div>
+<div class="main-card gl">
+<div class="main-q">"Based on everything you've told me, I genuinely think we can help.</div>
+<div style="height:12px"></div>
+<div class="main-q" style="color:var(--green);font-weight:600;">Would you like me to walk you through how?"</div></div>
+<button class="recall-btn" onclick="openRecall()">★ SEE THEIR EXACT WORDS</button>
+<div class="rule-banner green"><div class="rule-txt green">WAIT FOR YES</div></div>`;}},
+
+{id:18,phase:'STEP 18',title:'GOLDEN PROMISE',tc:'green',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Result not process. 1–2 sentences. Use their exact words."</div></div>
+<div class="rule-banner amber"><div class="rule-txt amber">⚠ SHORT · RESULT NOT PROCESS · THEIR WORDS</div></div>
+<div class="main-card al">
+<div class="main-q">FORMULA:</div><div style="height:10px"></div>
+<div class="main-q">"This is a _____ step process to take you from:</div><div style="height:8px"></div>
+<div class="main-q" style="color:var(--amber);">CURRENT SITUATION</div><div style="height:6px"></div>
+<div class="main-q">TO</div><div style="height:6px"></div>
+<div class="main-q" style="color:var(--green);">DESIRED RESULT</div><div style="height:8px"></div>
+<div class="main-q">IN APPROXIMATELY _____"</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ PROMISE DELIVERED?</div></div>`;}},
+
+{id:19,phase:'STEP 19',title:'PILLAR 1',tc:'green',hs:false,ib:false,render:function(){return pillarRender('SOLVE PROBLEM #1');}},
+{id:20,phase:'STEP 20',title:'PILLAR 2',tc:'green',hs:false,ib:false,render:function(){return pillarRender('SOLVE PROBLEM #2');}},
+{id:21,phase:'STEP 21',title:'PILLAR 3',tc:'green',hs:false,ib:false,render:function(){return pillarRender('SOLVE PROBLEM #3');}},
+
+{id:22,phase:'STEP 22',title:'DELIVERY',tc:'',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"High level only. The more you explain, the more questions you create."</div></div>
+<div class="rule-banner blue"><div class="rule-txt blue">EXPLAIN HOW SUPPORT WORKS · KEEP HIGH LEVEL · DO NOT OVERWHELM</div></div>
+<div class="item">Coaching</div>
+<div class="item">Accountability</div>
+<div class="item">Community</div>
+<div class="item">Training</div>
+<div class="item">Support · Access · Check-ins</div>
+<div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">✓ UNDERSTOOD?</div></div>`;}},
+
+{id:23,phase:'🚨 STEP 23',title:'TEMP CHECK #2',tc:'red',hs:false,ib:true,bTitle:'DO NOT DISCUSS PRICE',bSub:'Below 8. Stop. Find out why.',
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Do not discuss price until they are bought in. Full stop."</div></div>
+<div class="item big">How's all this sounding so far?</div>
+<div class="item">Does this feel like what you've been looking for?</div>
+<div class="item">Any concerns before we move forward?</div>
+<div class="item">On a scale of 1–10 where are you?</div>
+<div class="item">What's stopping it being a 10?</div>
+<div class="rule-banner red" style="margin-top:14px;"><div class="rule-txt red">⚠ BELOW 8? STOP. DO NOT DISCUSS PRICE.</div></div>
+<div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`;}},
+
+{id:24,phase:'🚨 STEP 24',title:'COMMITTING PHASE',tc:'amber',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Clarify before you answer. Every time. The question is never just the question."</div></div>
+<div class="commit-rule"><div class="commit-rule-txt">RULE: CLARIFY FIRST · ANSWER SECOND</div></div>
+<div class="main-card al">
+<div class="main-q">Prospect asks anything about the programme…</div>
+<div style="height:10px"></div>
+<div class="main-q" style="color:var(--red);font-weight:700;">DO NOT ANSWER YET</div>
+<div style="height:12px"></div>
+<div class="item" style="text-align:left;font-size:18px;">Great question. What made you ask that?</div>
+<div class="item" style="text-align:left;font-size:18px;">Just so I understand — what specifically do you mean?</div>
+<div class="item" style="text-align:left;font-size:18px;">Interesting… tell me more.</div>
+<div class="item" style="text-align:left;font-size:18px;">Have you had a bad experience before?</div>
+<div class="item" style="text-align:left;font-size:18px;">What are you hoping to avoid?</div>
+<div class="item" style="text-align:left;font-size:18px;border-bottom:none;">What's behind that question?</div></div>
+<div class="real-q"><div class="rq-q">Question: "Does it include group coaching?"</div><div class="rq-real">Real Concern: "Am I going to get enough support?"</div></div>
+<div class="real-q"><div class="rq-q">Question: "How long is the program?"</div><div class="rq-real">Real Concern: "Can I actually do this?"</div></div>
+<div class="af"><div class="af-title">THEN ANSWER</div>
+<div class="af-step">Understand concern ↓</div>
+<div class="af-step">Acknowledge concern ↓</div>
+<div class="af-step">Contrast previous experience ↓</div>
+<div class="af-step">Explain your solution ↓</div>
+<div class="af-step">Confirm understanding</div></div>
+<div class="ex-box"><div class="ex-txt">"I can understand why that would be frustrating. That's exactly why we do things differently. Here's how our support works…"</div><div class="ex-follow">↓ "Does that sound more like what you're looking for?"</div></div>
+<div class="rule-banner green"><div class="rule-txt green">✓ CONCERNS HANDLED?</div></div>`;}},
+
+{id:25,phase:'STEP 25',title:'FUTURE PACE',tc:'green',hs:false,ib:false,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"Make success feel real and close. They should be able to picture it."</div></div>
+<div class="rule-banner green"><div class="rule-txt green">GOAL: MAKE SUCCESS FEEL REAL</div></div>
+<div class="item big">Once you're onboarded…</div>
+<div class="item">During your first week…</div>
+<div class="item">When your coach reaches out…</div>
+<div class="item">After your first breakthrough…</div>
+<div class="item">Once you're getting results…</div>
+<div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">✓ EXCITED?</div></div>`;}},
+
+{id:26,phase:'STEP 26',title:'INVESTMENT',tc:'',hs:false,ib:false,isLast:true,
+render:function(){return `
+<div class="whisper"><div class="whisper-txt">"You earned this moment. Everything they told you got you here."</div></div>
+<div class="rule-banner red"><div class="rule-txt red">ONLY DISCUSS PRICE AFTER ALL BOXES TICKED:</div></div>
+<div id="invChecks">
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">DISCOVERY COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">QUALIFICATION COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">TEMPERATURE CHECK #1 COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">PITCH COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">TEMPERATURE CHECK #2 COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">COMMITTING PHASE COMPLETE</span></div>
+<div class="inv-item" onclick="tickInv(this)"><div class="inv-box"><span class="inv-tick">✓</span></div><span class="inv-lbl">BUY-IN RECEIVED</span></div></div>
+<div class="inv-then"><div class="inv-then-title">THEN DISCUSS:</div>
+<div class="inv-then-item">• INVESTMENT</div>
+<div class="inv-then-item">• PAYMENT OPTIONS</div>
+<div class="inv-then-item">• NEXT STEPS</div></div>
+<div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">✓ DONE?</div></div>`;}},
 ];
-// ── Helpers
+
+function pillarRender(goal){
+return `<div class="whisper"><div class="whisper-txt">"Earlier you told me... Connect every feature to something they said."</div></div>
+<div class="rule-banner green"><div class="rule-txt green">GOAL: ${goal}</div></div>
+<div class="rule-banner amber"><div class="rule-txt amber">FORMULA: EARLIER YOU TOLD ME...</div></div>
+<div class="main-card al">
+<div class="main-q" style="font-size:24px;font-weight:700;">EARLIER YOU TOLD ME…</div>
+<div style="height:12px"></div>
+<div class="main-q" style="color:var(--amber);">↓ PROBLEM</div>
+<div style="height:8px"></div>
+<div class="main-q" style="color:var(--blue);">↓ SOLUTION</div>
+<div style="height:8px"></div>
+<div class="main-q" style="color:var(--green);">↓ BENEFIT</div></div>
+<div class="item">Does that make sense?</div>
+<div class="item">Can you see how that would help?</div>
+<div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">✓ AGREEMENT RECEIVED?</div></div>`;}
+
+// ── Core functions
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// ── Setup
-function beginCall(){
-  prospectName=document.getElementById('inProspect').value.trim()||'Bob';
-  yourName=document.getElementById('inYourName').value.trim()||'Richard Stokes';
-  yourRole=document.getElementById('inYourRole').value.trim()||'your advisor today';
-  currentStep=0; notes=[];
-  painIdx=0; dreamIdx=0;
-  buildDots(); renderStep();
-  showScreen('sStep');
-  startReminderRotation();
-}
-
-// ── Screens
 function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById(id).classList.add('active');
 }
 
-// ── Progress dots
+function beginCall(){
+  yourName=document.getElementById('inName').value.trim()||'Richard Stokes';
+  yourRole=document.getElementById('inRole').value.trim();
+  prospectName=document.getElementById('inProspect').value.trim()||'Bob';
+  currentStep=0; notes=[];
+  buildDots(); renderStep();
+  showScreen('sStep');
+  startReminders();
+}
+
 function buildDots(){
-  const el=document.getElementById('progDots'); el.innerHTML='';
-  for(let i=0;i<STEPS.length;i++){
-    const d=document.createElement('div');
-    d.className='pd'+(i<currentStep?' done':i===currentStep?' cur':'');
+  var el=document.getElementById('dots'); el.innerHTML='';
+  for(var i=0;i<STEPS.length;i++){
+    var d=document.createElement('div');
+    d.className='dot'+(i<currentStep?' done':i===currentStep?' cur':'');
     el.appendChild(d);
   }
 }
 
-// ── Render step
 function renderStep(){
-  const step=STEPS[currentStep];
+  var step=STEPS[currentStep];
   if(!step){showScreen('sEnd');stopReminders();return;}
   document.getElementById('stepNum').textContent='STEP '+step.id+' / '+STEPS.length;
-  const next=STEPS[currentStep+1];
+  var next=STEPS[currentStep+1];
   document.getElementById('nextName').textContent=next?next.title:'END OF CALL';
   buildDots();
-  const inner=document.getElementById('stepInner');
-  inner.classList.remove('flash-in'); void inner.offsetWidth; inner.classList.add('flash-in');
-  let html=`<div class="phase-lbl">${step.phase}</div><div class="step-title ${step.titleCol||''}">${step.title}</div>`;
-  html+=step.render();
-  inner.innerHTML=html;
-  document.getElementById('stepBody').scrollTop=0;
+  var body=document.getElementById('stepBody');
+  body.classList.remove('flash-in'); void body.offsetWidth; body.classList.add('flash-in');
+  body.innerHTML='<div class="phase-lbl">'+step.phase+'</div><div class="step-title '+step.tc+'">'+step.title+'</div>'+step.render();
+  body.scrollTop=0;
   if(step.id===1) startRapportTimer();
   updateFab();
 }
 
-// ── Advance
 function advance(){
-  const step=STEPS[currentStep];
+  var step=STEPS[currentStep];
   if(!step) return;
-  if(step.isBlock){
-    document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';
-    document.getElementById('blkSub').textContent=step.blockSub||'Below 8. Find out why.';
+  if(step.ib){
+    document.getElementById('blkTitle').textContent=step.bTitle||'DO NOT PITCH';
+    document.getElementById('blkSub').textContent=step.bSub||'Below 8. Find out why.';
     showScreen('sBlock'); return;
   }
-  if(step.hasSilence) showSilence(()=>doAdvance());
+  if(step.hs) showSilence(function(){doAdvance();});
   else doAdvance();
 }
 
@@ -1080,104 +871,22 @@ function goBack(){
 
 function unblock(){showScreen('sStep');doAdvance();}
 
-// ── Depth check
-function showDepthCheck(step){
-  document.getElementById('depthQ').textContent=step.depthCheck||'Have you gone deep enough?';
-  document.getElementById('depthBestTxt').textContent='"'+(step.depthBestQ||'')+'"';
-  document.getElementById('depthBest').classList.remove('show');
-  document.getElementById('depthBackBtn').classList.remove('show');
-  document.getElementById('depthOverlay').classList.add('show');
-}
-function depthYes(){
-  document.getElementById('depthOverlay').classList.remove('show');
-  const step=STEPS[currentStep];
-  if(step&&step.isBlock){
-    document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';
-    document.getElementById('blkSub').textContent=step.blockSub||'';
-    showScreen('sBlock'); return;
-  }
-  if(step&&step.hasSilence) showSilence(()=>doAdvance());
-  else doAdvance();
-}
-function depthNo(){
-  document.getElementById('depthBest').classList.add('show');
-  document.getElementById('depthBackBtn').classList.add('show');
-}
-function depthGoBack(){document.getElementById('depthOverlay').classList.remove('show');}
-
-// ── Pain Mode
-function activatePainMode(){
-  const flash = document.getElementById('painFlash');
-  flash.style.display='flex';
-  setTimeout(()=>{
-    flash.style.display='none';
-    painIdx=0; prevScreen='sStep';
-    renderPainQ(); showScreen('sPain');
-  }, 1500);
-}
-function renderPainQ(){
-  const p=PAIN_Qs[painIdx]||PAIN_Qs[PAIN_Qs.length-1];
-  document.getElementById('painLayerLbl').textContent=p.layer;
-  document.getElementById('painQTxt').textContent=p.q;
-  document.getElementById('painWhisper').textContent=p.whisper;
-  const prog=document.getElementById('painProgress'); prog.innerHTML='';
-  PAIN_Qs.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='pain-dot'+(i<painIdx?' done':i===painIdx?' cur':'');
-    prog.appendChild(d);
-  });
-}
-function painNext(){
-  if(painIdx<PAIN_Qs.length-1) painIdx++;
-  renderPainQ();
-}
-
-// ── Dream Mode
-function activateDreamMode(){
-  const flash = document.getElementById('dreamFlash');
-  flash.style.display='flex';
-  setTimeout(()=>{
-    flash.style.display='none';
-    dreamIdx=0; prevScreen='sStep';
-    renderDreamQ(); showScreen('sDream');
-  }, 1500);
-}
-function renderDreamQ(){
-  const d=DREAM_Qs[dreamIdx]||DREAM_Qs[DREAM_Qs.length-1];
-  document.getElementById('dreamLayerLbl').textContent=d.layer;
-  document.getElementById('dreamQTxt').textContent=d.q;
-  document.getElementById('dreamWhisper').textContent=d.whisper;
-  const prog=document.getElementById('dreamProgress'); prog.innerHTML='';
-  DREAM_Qs.forEach((_,i)=>{
-    const dd=document.createElement('div');
-    dd.className='dream-dot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');
-    prog.appendChild(dd);
-  });
-}
-function dreamNext(){
-  if(dreamIdx<DREAM_Qs.length-1) dreamIdx++;
-  renderDreamQ();
-}
-function exitMode(){showScreen('sStep');}
-
-// ── Silence pause
 function showSilence(cb){
-  const ov=document.getElementById('silOv'), n=document.getElementById('silN');
-  ov.classList.add('show'); let c=2; n.textContent=c;
-  const t=setInterval(()=>{
+  var ov=document.getElementById('silOv'), n=document.getElementById('silN');
+  ov.classList.add('show'); var c=2; n.textContent=c;
+  var t=setInterval(function(){
     c--;
     if(c>0) n.textContent=c;
-    else{clearInterval(t); ov.classList.remove('show'); if(cb)cb();}
+    else{clearInterval(t);ov.classList.remove('show');if(cb)cb();}
   },1000);
 }
 
-// ── Rapport timer
 function startRapportTimer(){
   if(rapportInterval) clearInterval(rapportInterval);
   rapportSecs=60;
-  rapportInterval=setInterval(()=>{
+  rapportInterval=setInterval(function(){
     rapportSecs--;
-    const el=document.getElementById('rtNum');
+    var el=document.getElementById('rtNum');
     if(!el){clearInterval(rapportInterval);return;}
     el.textContent=rapportSecs;
     if(rapportSecs<=10) el.style.color='var(--red)';
@@ -1185,57 +894,149 @@ function startRapportTimer(){
   },1000);
 }
 
-// ── Reminders
-const REMINDERS=[
-  "When you feel the urge to explain — ask a question.",
-  "When you feel the urge to solve — ask a question.",
-  "When you feel the urge to pitch — dig deeper.",
-  "You don't need another question. You need another pause.",
-  "Slow down. Stay here longer than feels comfortable.",
-  "Repeat their last word back. Then wait.",
-  "I do not need to be more impressive. I need to be more curious.",
-  "I do not need to talk more. I need to understand more.",
-  "The prospect usually gives you the gold if you shut up long enough.",
-  "Curious is king. When you're genuinely curious it never sounds like an interrogation.",
-  "Their third answer is always better than their first.",
-  "One question at a time. Always.",
-  "The pause is the most powerful thing you have. Use it.",
-  "When emotion appears — stay there. Don't move on.",
-  "Bad discovery creates objections. Good discovery removes them.",
-  "They should be doing 70–80% of the talking. Always.",
-  "The first answer is rarely the real answer. Go deeper.",
-  "Let them finish. Their next sentence is usually more valuable than your next question.",
-  "Ask one question. Then wait. Really wait.",
-  "What they say after a pause is usually the real answer."
-];
-
-function startReminderRotation(){
+function startReminders(){
   if(reminderInterval) clearInterval(reminderInterval);
   reminderIdx=0;
-  reminderInterval=setInterval(()=>{
-    const el=document.getElementById('reminderTxt');
+  reminderInterval=setInterval(function(){
+    var el=document.getElementById('reminderTxt');
     if(!el) return;
     el.classList.add('fade');
-    setTimeout(()=>{
+    setTimeout(function(){
       reminderIdx=(reminderIdx+1)%REMINDERS.length;
       el.textContent=REMINDERS[reminderIdx];
       el.classList.remove('fade');
-    },500);
+    },400);
   },8000);
 }
+
 function stopReminders(){if(reminderInterval)clearInterval(reminderInterval);}
 
-// ── Investment tick
-function tickInv(row){row.querySelector('.inv-box').classList.toggle('checked');}
+function tickInv(row){row.querySelector('.inv-box').classList.toggle('chk');}
 
-// ── Keyboard shortcuts
-document.addEventListener('keydown',e=>{
-  const active=document.activeElement;
-  const inInput=active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT');
+// ── Pain Mode
+function activatePainMode(){
+  var flash=document.getElementById('painFlash');
+  flash.style.display='flex';
+  setTimeout(function(){
+    flash.style.display='none';
+    painIdx=0; renderPainQ(); showScreen('sPain');
+  },1500);
+}
+
+function renderPainQ(){
+  var p=PAIN_Qs[painIdx]||PAIN_Qs[PAIN_Qs.length-1];
+  document.getElementById('painLayer').textContent=p.layer;
+  document.getElementById('painQ').textContent=p.q;
+  document.getElementById('painWhisper').textContent=p.w;
+  var prog=document.getElementById('painProg'); prog.innerHTML='';
+  PAIN_Qs.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='pdot'+(i<painIdx?' done':i===painIdx?' cur':'');
+    prog.appendChild(d);
+  });
+}
+
+function painNext(){
+  if(painIdx<PAIN_Qs.length-1) painIdx++;
+  renderPainQ();
+}
+
+// ── Dream Mode
+function activateDreamMode(){
+  var flash=document.getElementById('dreamFlash');
+  flash.style.display='flex';
+  setTimeout(function(){
+    flash.style.display='none';
+    dreamIdx=0; renderDreamQ(); showScreen('sDream');
+  },1500);
+}
+
+function renderDreamQ(){
+  var d=DREAM_Qs[dreamIdx]||DREAM_Qs[DREAM_Qs.length-1];
+  document.getElementById('dreamLayer').textContent=d.layer;
+  document.getElementById('dreamQ').textContent=d.q;
+  document.getElementById('dreamWhisper').textContent=d.w;
+  var prog=document.getElementById('dreamProg'); prog.innerHTML='';
+  DREAM_Qs.forEach(function(_,i){
+    var dd=document.createElement('div');
+    dd.className='ddot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');
+    prog.appendChild(dd);
+  });
+}
+
+function dreamNext(){
+  if(dreamIdx<DREAM_Qs.length-1) dreamIdx++;
+  renderDreamQ();
+}
+
+function exitMode(){showScreen('sStep');}
+
+// ── Notes
+function updateFab(){
+  var f=document.getElementById('notesFab');
+  if(notes.length>0){f.classList.add('has');f.textContent=notes.length;}
+  else{f.classList.remove('has');f.textContent='✎';}
+}
+
+function setMode(m){
+  noteMode=m;
+  document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');
+  document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');
+}
+
+function openNotes(){renderNotes();showScreen('sNotes');}
+function closeNotes(){showScreen('sStep');}
+
+function renderNotes(){
+  var el=document.getElementById('notesList');
+  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.<br>Type below to add one.</div>';return;}
+  var groups={};
+  notes.forEach(function(n){if(!groups[n.step])groups[n.step]=[];groups[n.step].push(n);});
+  var html='';
+  Object.keys(groups).forEach(function(step){
+    html+='<div class="note-grp"><div class="note-grp-lbl">'+step+'</div>';
+    groups[step].forEach(function(n){
+      html+='<div class="note-card '+n.type+'"><span class="nt-tag '+n.type+'">'+(n.type==='quote'?'QUOTE':'NOTE')+'</span><span class="nt-txt">'+esc(n.text)+'</span><span class="nt-time">'+n.time+'</span></div>';
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function saveNote(){
+  var ta=document.getElementById('noteTa');
+  var txt=ta.value.trim();
+  if(!txt) return;
+  var step=STEPS[currentStep]?STEPS[currentStep].title:'?';
+  notes.push({type:noteMode,text:txt,step:step,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
+  ta.value=''; updateFab(); renderNotes();
+}
+
+function openRecall(){
+  var quotes=notes.filter(function(n){return n.type==='quote';});
+  var all=notes.filter(function(n){return n.type==='note';});
+  var html='<div class="recall-sec"><div class="recall-lbl">THEIR EXACT WORDS — use "Earlier you told me..."</div><div class="recall-card">';
+  if(!quotes.length) html+='<div class="recall-empty">No quotes yet.</div>';
+  else quotes.forEach(function(q){html+='<div class="recall-q">'+esc(q.text)+'</div>';});
+  html+='</div></div><div class="recall-sec"><div class="recall-lbl">ALL NOTES</div><div class="recall-card">';
+  if(!all.length) html+='<div class="recall-empty">No notes yet.</div>';
+  else all.forEach(function(n){html+='<div style="font-size:15px;color:var(--text);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.5;">'+esc(n.text)+' <span style="font-size:11px;color:var(--muted);">('+n.step+')</span></div>';});
+  html+='</div></div>';
+  document.getElementById('recallBody').innerHTML=html;
+  showScreen('sRecall');
+}
+
+function closeRecall(){showScreen('sStep');}
+function restart(){stopReminders();showScreen('sSetup');}
+
+// ── Keyboard
+document.addEventListener('keydown',function(e){
+  var active=document.activeElement;
+  var inInput=active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT');
   if(inInput) return;
-  const onStep=document.getElementById('sStep').classList.contains('active');
-  const onPain=document.getElementById('sPain').classList.contains('active');
-  const onDream=document.getElementById('sDream').classList.contains('active');
+  var onStep=document.getElementById('sStep').classList.contains('active');
+  var onPain=document.getElementById('sPain').classList.contains('active');
+  var onDream=document.getElementById('sDream').classList.contains('active');
   if((e.code==='Space'||e.code==='ArrowRight')&&onStep){e.preventDefault();advance();}
   if((e.code==='Space'||e.code==='ArrowRight')&&onPain){e.preventDefault();painNext();}
   if((e.code==='Space'||e.code==='ArrowRight')&&onDream){e.preventDefault();dreamNext();}
@@ -1244,72 +1045,8 @@ document.addEventListener('keydown',e=>{
   if(e.code==='KeyD'&&onStep){e.preventDefault();activateDreamMode();}
   if(e.code==='Escape'){
     if(onPain||onDream) exitMode();
-    document.getElementById('depthOverlay').classList.remove('show');
   }
 });
-
-// ── Notes
-function addNote(type,text){
-  const step=STEPS[currentStep]?STEPS[currentStep].title:'?';
-  notes.push({type,text,step,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
-  updateFab();
-}
-function updateFab(){
-  const f=document.getElementById('notesFab');
-  if(notes.length>0){f.classList.add('has');f.textContent=notes.length;}
-  else{f.classList.remove('has');f.textContent='✎';}
-}
-function setMode(m){
-  noteMode=m;
-  document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');
-  document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');
-}
-function openNotes(){renderNotes();showScreen('sNotes');}
-function closeNotes(){showScreen('sStep');}
-function renderNotes(){
-  const el=document.getElementById('notesList');
-  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.</div>';return;}
-  const groups={};
-  notes.forEach(n=>{if(!groups[n.step])groups[n.step]=[];groups[n.step].push(n);});
-  let html='';
-  Object.entries(groups).forEach(([step,items])=>{
-    html+=`<div class="note-grp"><div class="note-grp-lbl">${step}</div>`;
-    items.forEach(n=>{
-      html+=`<div class="note-card ${n.type==='quote'?'q':'n'}">
-        <span class="nt-tag ${n.type==='quote'?'q':'n'}">${n.type==='quote'?'QUOTE':'NOTE'}</span>
-        <span class="nt-txt">${esc(n.text)}</span>
-        <span class="nt-time">${n.time}</span>
-      </div>`;
-    });
-    html+='</div>';
-  });
-  el.innerHTML=html;
-}
-function saveManual(){
-  const ta=document.getElementById('noteTa');
-  const txt=ta.value.trim();
-  if(!txt) return;
-  addNote(noteMode,txt); ta.value=''; renderNotes();
-}
-
-// ── Pitch recall
-function openRecall(){
-  const quotes=notes.filter(n=>n.type==='quote');
-  const all=notes.filter(n=>n.type==='note');
-  let html='<div class="recall-sec"><div class="recall-lbl">THEIR EXACT WORDS</div><div class="recall-card">';
-  if(!quotes.length) html+='<div class="recall-empty">No quotes yet.</div>';
-  else quotes.forEach(q=>{html+=`<div class="recall-q">${esc(q.text)}</div>`;});
-  html+='</div></div><div class="recall-sec"><div class="recall-lbl">ALL NOTES</div><div class="recall-card">';
-  if(!all.length) html+='<div class="recall-empty">No notes yet.</div>';
-  else all.forEach(n=>{
-    html+=`<div style="font-size:16px;color:var(--text);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.5;">${esc(n.text)} <span style="font-size:11px;color:var(--muted);">(${n.step})</span></div>`;
-  });
-  html+='</div></div>';
-  document.getElementById('recallBody').innerHTML=html;
-  showScreen('sPitchRecall');
-}
-function closeRecall(){showScreen('sStep');}
-function restart(){stopReminders();showScreen('sSetup');}
 </script>
 </body>
 </html>
