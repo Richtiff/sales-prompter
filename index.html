@@ -80,8 +80,8 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .lead-lbl{font-size:9px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:8px;opacity:0.7;}
 .lead-q{font-size:22px;color:#fff;line-height:1.45;font-weight:500;}
 .followup-wrap{background:var(--surface2);border-radius:12px;padding:12px 16px;margin-bottom:12px;}
-.followup-lbl{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
-.fq{font-size:17px;color:rgba(255,255,255,0.6);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.followup-lbl{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:8px;}
+.fq{font-size:20px;color:rgba(255,255,255,0.82);padding:11px 0;border-bottom:1px solid var(--border);line-height:1.4;}
 .fq:last-child{border-bottom:none;}
 .fq::before{content:"↳ ";color:var(--muted);}
 
@@ -589,13 +589,21 @@ render:function(){return `
 
 {id:9,phase:'STEP 9',title:'SUPPORT',tc:'',hs:true,ib:false,
 render:function(){return `
-<div class="whisper"><div class="whisper-txt">"Find hidden decision makers now. The 'need to speak to my partner' objection lives here."</div></div>
-<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">Are you in a relationship?</div></div>
-<div class="followup-wrap"><div class="followup-lbl">THEN DIG DEEPER</div>
+<div class="whisper"><div class="whisper-txt">"Ease into this naturally. Get them talking about their life — the decision maker comes out on its own."</div></div>
+<div class="lead-card"><div class="lead-lbl">ASK THIS FIRST</div><div class="lead-q">Tell me a bit about yourself outside of work — are you married, got kids?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">IF IN A RELATIONSHIP</div>
 <div class="fq">Does your partner know you're on this call — or are we on a secret mission?</div>
-<div class="fq">Are they supportive?</div>
-<div class="fq">Who else benefits if you solve this?</div>
+<div class="fq">Are they supportive of you making a change?</div>
+<div class="fq">How would they feel if you finally cracked this?</div>
 <div class="fq">If today felt right — could you make that call yourself?</div></div>
+<div class="followup-wrap"><div class="followup-lbl">IF SINGLE</div>
+<div class="fq">So decisions like this — you make them yourself?</div>
+<div class="fq">Is there anyone else whose opinion you'd value?</div>
+<div class="fq">Who else would benefit if you solved this?</div>
+<div class="fq">If today felt right — is that a decision you could make yourself?</div></div>
+<div class="followup-wrap" style="border:1px solid rgba(255,149,0,0.15);"><div class="followup-lbl" style="color:var(--amber);">ALWAYS FINISH WITH</div>
+<div class="fq">How do you normally make a decision like this?</div>
+<div class="fq">Is there anyone else who'd be part of that conversation?</div></div>
 <div class="quan-box"><div class="quan-line">FIND THE DECISION MAKERS NOW.</div><div class="quan-line">THE 'I NEED TO SPEAK TO MY PARTNER' OBJECTION LIVES HERE.</div></div>
 <div class="rule-banner green"><div class="rule-txt green">✓ SUPPORT DISCOVERED?</div></div>`;}},
 
