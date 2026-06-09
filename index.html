@@ -503,28 +503,7 @@ const DREAM_Qs = [
 ];
 
 // ── Reminders
-const REMINDERS = [
-  "Curious is king. When you're genuinely curious, it never sounds like an interrogation.",
-  "Never assume you understand. Keep asking until you're certain.",
-  "The pause is the most powerful thing you have. Use it.",
-  "Their third answer is always better than their first.",
-  "You're not questioning them. You're trying to understand their world.",
-  "One question at a time. Always.",
-  "Silence after they speak isn't awkward. It's working.",
-  "Don't jump in. Let it land. Then respond.",
-  "You're here to understand, not to impress.",
-  "The sale happens in discovery. The pitch just confirms it.",
-  "Every objection at the end is a discovery question you skipped.",
-  "Their exact words are gold. Write them down.",
-  "When emotion appears — stay there. Don't move on.",
-  "Bad discovery creates objections. Good discovery removes them.",
-  "You cannot solve a problem you don't fully understand yet.",
-  "They should be doing most of the talking. Always.",
-  "Curiosity sounds different to questioning. They can feel the difference.",
-  "The first answer is rarely the real answer. Go deeper.",
-  "Your job right now is to understand their world completely.",
-  "Ask one question. Listen. Let it land. Then one more."
-];
+
 
 // ── Steps
 const STEPS = [
@@ -949,3 +928,300 @@ const STEPS = [
       <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ DONE?</div></div>`; }
   }
 ];
+// ── Helpers
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── Setup
+function beginCall(){
+  prospectName=document.getElementById('inProspect').value.trim()||'Bob';
+  yourName=document.getElementById('inYourName').value.trim()||'Richard Stokes';
+  yourRole=document.getElementById('inYourRole').value.trim()||'your advisor today';
+  currentStep=0; notes=[];
+  painIdx=0; dreamIdx=0;
+  buildDots(); renderStep();
+  showScreen('sStep');
+  startReminderRotation();
+}
+
+// ── Screens
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── Progress dots
+function buildDots(){
+  const el=document.getElementById('progDots'); el.innerHTML='';
+  for(let i=0;i<STEPS.length;i++){
+    const d=document.createElement('div');
+    d.className='pd'+(i<currentStep?' done':i===currentStep?' cur':'');
+    el.appendChild(d);
+  }
+}
+
+// ── Render step
+function renderStep(){
+  const step=STEPS[currentStep];
+  if(!step){showScreen('sEnd');stopReminders();return;}
+  document.getElementById('stepNum').textContent='STEP '+step.id+' / '+STEPS.length;
+  const next=STEPS[currentStep+1];
+  document.getElementById('nextName').textContent=next?next.title:'END OF CALL';
+  buildDots();
+  const inner=document.getElementById('stepInner');
+  inner.classList.remove('flash-in'); void inner.offsetWidth; inner.classList.add('flash-in');
+  let html=`<div class="phase-lbl">${step.phase}</div><div class="step-title ${step.titleCol||''}">${step.title}</div>`;
+  html+=step.render();
+  inner.innerHTML=html;
+  document.getElementById('stepBody').scrollTop=0;
+  if(step.id===1) startRapportTimer();
+  updateFab();
+}
+
+// ── Advance
+function advance(){
+  const step=STEPS[currentStep];
+  if(!step) return;
+  if(step.isBlock){
+    document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';
+    document.getElementById('blkSub').textContent=step.blockSub||'Below 8. Find out why.';
+    showScreen('sBlock'); return;
+  }
+  if(step.hasSilence) showSilence(()=>doAdvance());
+  else doAdvance();
+}
+
+function doAdvance(){
+  currentStep++;
+  if(currentStep>=STEPS.length){showScreen('sEnd');stopReminders();return;}
+  renderStep();
+}
+
+function goBack(){
+  if(currentStep>0){currentStep--;renderStep();}
+}
+
+function unblock(){showScreen('sStep');doAdvance();}
+
+// ── Depth check
+function showDepthCheck(step){
+  document.getElementById('depthQ').textContent=step.depthCheck||'Have you gone deep enough?';
+  document.getElementById('depthBestTxt').textContent='"'+(step.depthBestQ||'')+'"';
+  document.getElementById('depthBest').classList.remove('show');
+  document.getElementById('depthBackBtn').classList.remove('show');
+  document.getElementById('depthOverlay').classList.add('show');
+}
+function depthYes(){
+  document.getElementById('depthOverlay').classList.remove('show');
+  const step=STEPS[currentStep];
+  if(step&&step.isBlock){
+    document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';
+    document.getElementById('blkSub').textContent=step.blockSub||'';
+    showScreen('sBlock'); return;
+  }
+  if(step&&step.hasSilence) showSilence(()=>doAdvance());
+  else doAdvance();
+}
+function depthNo(){
+  document.getElementById('depthBest').classList.add('show');
+  document.getElementById('depthBackBtn').classList.add('show');
+}
+function depthGoBack(){document.getElementById('depthOverlay').classList.remove('show');}
+
+// ── Pain Mode
+function activatePainMode(){
+  painIdx=0; prevScreen='sStep';
+  renderPainQ(); showScreen('sPain');
+}
+function renderPainQ(){
+  const p=PAIN_Qs[painIdx]||PAIN_Qs[PAIN_Qs.length-1];
+  document.getElementById('painLayerLbl').textContent=p.layer;
+  document.getElementById('painQTxt').textContent=p.q;
+  document.getElementById('painWhisper').textContent=p.whisper;
+  const prog=document.getElementById('painProgress'); prog.innerHTML='';
+  PAIN_Qs.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='pain-dot'+(i<painIdx?' done':i===painIdx?' cur':'');
+    prog.appendChild(d);
+  });
+}
+function painNext(){
+  if(painIdx<PAIN_Qs.length-1) painIdx++;
+  renderPainQ();
+}
+
+// ── Dream Mode
+function activateDreamMode(){
+  dreamIdx=0; prevScreen='sStep';
+  renderDreamQ(); showScreen('sDream');
+}
+function renderDreamQ(){
+  const d=DREAM_Qs[dreamIdx]||DREAM_Qs[DREAM_Qs.length-1];
+  document.getElementById('dreamLayerLbl').textContent=d.layer;
+  document.getElementById('dreamQTxt').textContent=d.q;
+  document.getElementById('dreamWhisper').textContent=d.whisper;
+  const prog=document.getElementById('dreamProgress'); prog.innerHTML='';
+  DREAM_Qs.forEach((_,i)=>{
+    const dd=document.createElement('div');
+    dd.className='dream-dot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');
+    prog.appendChild(dd);
+  });
+}
+function dreamNext(){
+  if(dreamIdx<DREAM_Qs.length-1) dreamIdx++;
+  renderDreamQ();
+}
+function exitMode(){showScreen('sStep');}
+
+// ── Silence pause
+function showSilence(cb){
+  const ov=document.getElementById('silOv'), n=document.getElementById('silN');
+  ov.classList.add('show'); let c=2; n.textContent=c;
+  const t=setInterval(()=>{
+    c--;
+    if(c>0) n.textContent=c;
+    else{clearInterval(t); ov.classList.remove('show'); if(cb)cb();}
+  },1000);
+}
+
+// ── Rapport timer
+function startRapportTimer(){
+  if(rapportInterval) clearInterval(rapportInterval);
+  rapportSecs=60;
+  rapportInterval=setInterval(()=>{
+    rapportSecs--;
+    const el=document.getElementById('rtNum');
+    if(!el){clearInterval(rapportInterval);return;}
+    el.textContent=rapportSecs;
+    if(rapportSecs<=10) el.style.color='var(--red)';
+    if(rapportSecs<=0){clearInterval(rapportInterval);el.textContent='✓';el.style.color='var(--green)';}
+  },1000);
+}
+
+// ── Reminders
+const REMINDERS=[
+  "Curious is king. When you're genuinely curious, it never sounds like an interrogation.",
+  "Never assume you understand. Keep asking until you're certain.",
+  "The pause is the most powerful thing you have. Use it.",
+  "Their third answer is always better than their first.",
+  "One question at a time. Always.",
+  "Silence after they speak isn't awkward. It's working.",
+  "Don't jump in. Let it land. Then respond.",
+  "You're here to understand, not to impress.",
+  "The sale happens in discovery. The pitch just confirms it.",
+  "Every objection at the end is a discovery question you skipped.",
+  "Their exact words are gold. Write them down.",
+  "When emotion appears — stay there. Don't move on.",
+  "Bad discovery creates objections. Good discovery removes them.",
+  "They should be doing most of the talking. Always.",
+  "Curiosity sounds different to questioning. They can feel the difference.",
+  "The first answer is rarely the real answer. Go deeper.",
+  "Let them finish. Their next sentence is often more valuable than your next question.",
+  "You cannot solve a problem you don't fully understand yet.",
+  "Ask one question. Then wait. Really wait.",
+  "What they say after a pause is usually the real answer."
+];
+
+function startReminderRotation(){
+  if(reminderInterval) clearInterval(reminderInterval);
+  reminderIdx=0;
+  reminderInterval=setInterval(()=>{
+    const el=document.getElementById('reminderTxt');
+    if(!el) return;
+    el.classList.add('fade');
+    setTimeout(()=>{
+      reminderIdx=(reminderIdx+1)%REMINDERS.length;
+      el.textContent=REMINDERS[reminderIdx];
+      el.classList.remove('fade');
+    },500);
+  },8000);
+}
+function stopReminders(){if(reminderInterval)clearInterval(reminderInterval);}
+
+// ── Investment tick
+function tickInv(row){row.querySelector('.inv-box').classList.toggle('checked');}
+
+// ── Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  const active=document.activeElement;
+  const inInput=active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT');
+  if(inInput) return;
+  const onStep=document.getElementById('sStep').classList.contains('active');
+  const onPain=document.getElementById('sPain').classList.contains('active');
+  const onDream=document.getElementById('sDream').classList.contains('active');
+  if((e.code==='Space'||e.code==='ArrowRight')&&onStep){e.preventDefault();advance();}
+  if((e.code==='Space'||e.code==='ArrowRight')&&onPain){e.preventDefault();painNext();}
+  if((e.code==='Space'||e.code==='ArrowRight')&&onDream){e.preventDefault();dreamNext();}
+  if((e.code==='KeyB'||e.code==='ArrowLeft')&&onStep){e.preventDefault();goBack();}
+  if(e.code==='KeyP'&&onStep){e.preventDefault();activatePainMode();}
+  if(e.code==='KeyD'&&onStep){e.preventDefault();activateDreamMode();}
+  if(e.code==='Escape'){
+    if(onPain||onDream) exitMode();
+    document.getElementById('depthOverlay').classList.remove('show');
+  }
+});
+
+// ── Notes
+function addNote(type,text){
+  const step=STEPS[currentStep]?STEPS[currentStep].title:'?';
+  notes.push({type,text,step,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
+  updateFab();
+}
+function updateFab(){
+  const f=document.getElementById('notesFab');
+  if(notes.length>0){f.classList.add('has');f.textContent=notes.length;}
+  else{f.classList.remove('has');f.textContent='✎';}
+}
+function setMode(m){
+  noteMode=m;
+  document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');
+  document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');
+}
+function openNotes(){renderNotes();showScreen('sNotes');}
+function closeNotes(){showScreen('sStep');}
+function renderNotes(){
+  const el=document.getElementById('notesList');
+  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.</div>';return;}
+  const groups={};
+  notes.forEach(n=>{if(!groups[n.step])groups[n.step]=[];groups[n.step].push(n);});
+  let html='';
+  Object.entries(groups).forEach(([step,items])=>{
+    html+=`<div class="note-grp"><div class="note-grp-lbl">${step}</div>`;
+    items.forEach(n=>{
+      html+=`<div class="note-card ${n.type==='quote'?'q':'n'}">
+        <span class="nt-tag ${n.type==='quote'?'q':'n'}">${n.type==='quote'?'QUOTE':'NOTE'}</span>
+        <span class="nt-txt">${esc(n.text)}</span>
+        <span class="nt-time">${n.time}</span>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+function saveManual(){
+  const ta=document.getElementById('noteTa');
+  const txt=ta.value.trim();
+  if(!txt) return;
+  addNote(noteMode,txt); ta.value=''; renderNotes();
+}
+
+// ── Pitch recall
+function openRecall(){
+  const quotes=notes.filter(n=>n.type==='quote');
+  const all=notes.filter(n=>n.type==='note');
+  let html='<div class="recall-sec"><div class="recall-lbl">THEIR EXACT WORDS</div><div class="recall-card">';
+  if(!quotes.length) html+='<div class="recall-empty">No quotes yet.</div>';
+  else quotes.forEach(q=>{html+=`<div class="recall-q">${esc(q.text)}</div>`;});
+  html+='</div></div><div class="recall-sec"><div class="recall-lbl">ALL NOTES</div><div class="recall-card">';
+  if(!all.length) html+='<div class="recall-empty">No notes yet.</div>';
+  else all.forEach(n=>{
+    html+=`<div style="font-size:16px;color:var(--text);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.5;">${esc(n.text)} <span style="font-size:11px;color:var(--muted);">(${n.step})</span></div>`;
+  });
+  html+='</div></div>';
+  document.getElementById('recallBody').innerHTML=html;
+  showScreen('sPitchRecall');
+}
+function closeRecall(){showScreen('sStep');}
+function restart(){stopReminders();showScreen('sSetup');}
+</script>
+</body>
+</html>
