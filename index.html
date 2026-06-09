@@ -49,12 +49,6 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 .pd { width:6px; height:6px; border-radius:50%; background:var(--muted2); transition:all 0.3s; }
 .pd.done { background:var(--green); opacity:0.3; }
 .pd.cur { background:var(--green); width:20px; border-radius:3px; }
-.mic-row { display:flex; align-items:center; gap:7px; }
-.mic-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); }
-.mic-dot.on { background:var(--green); animation:mp 2s infinite; }
-.mic-dot.flash { background:var(--amber); animation:none; }
-.mic-txt { font-size:12px; letter-spacing:2px; color:var(--muted); }
-.mic-txt.on { color:var(--green); }
 @keyframes mp { 0%,100%{opacity:1}50%{opacity:0.2} }
 
 .step-body { flex:1; overflow-y:auto; padding:28px 64px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
@@ -300,6 +294,14 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 
 .flash-in { animation:fi 0.25s ease-out; }
 @keyframes fi { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+
+/* question list */
+.q-list { display:flex; flex-direction:column; margin-bottom:16px; }
+.q-list-item {
+  font-size:22px; color:rgba(255,255,255,0.72); padding:14px 20px;
+  border-bottom:1px solid var(--border); line-height:1.4; text-align:center;
+}
+.q-list-item:last-child { border-bottom:none; }
 </style>
 </head>
 <body>
@@ -332,10 +334,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
   <div class="top-bar">
     <span class="step-num" id="stepNum">STEP 1 / 22</span>
     <div class="prog-dots" id="progDots"></div>
-    <div class="mic-row">
-      <div class="mic-dot" id="micDot"></div>
-      <span class="mic-txt" id="micTxt">MIC OFF</span>
-    </div>
+
   </div>
   <div class="step-body" id="stepBody">
     <div class="step-inner" id="stepInner"></div>
@@ -400,12 +399,18 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 
 <!-- DEPTH CHECK -->
 <div class="depth-overlay" id="depthOverlay">
-  <div class="depth-title">DEPTH CHECK</div>
-  <div class="depth-q" id="depthQ">Have you found the emotional reason yet?</div>
-  <button class="depth-yes" onclick="depthYes()">YES — MOVE ON</button>
+  <div class="depth-title">BEFORE YOU MOVE ON</div>
+  <div class="depth-q" id="depthQ">Do you genuinely understand what brought them here today?</div>
+  <div class="q-list" style="width:100%;max-width:560px;margin-bottom:28px;">
+    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What's really driving this for you right now?</div>
+    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What happened recently that made this feel important?</div>
+    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What would you want to be different 6 months from now?</div>
+    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What have you tried so far — and what was missing from that?</div>
+  </div>
+  <button class="depth-yes" onclick="depthYes()">YES — READY TO MOVE ON</button>
   <button class="depth-no" onclick="depthNo()">NOT YET — GO BACK</button>
   <div class="depth-best" id="depthBest">
-    <div class="depth-best-lbl">GO BACK WITH THIS QUESTION</div>
+    <div class="depth-best-lbl">GO BACK WITH THIS</div>
     <div class="depth-best-txt" id="depthBestTxt"></div>
   </div>
   <button class="depth-back-btn" id="depthBackBtn" onclick="depthGoBack()">← GO BACK</button>
@@ -480,7 +485,6 @@ let yourRole = '';
 let currentStep = 0;
 let notes = [];
 let noteMode = 'note';
-let recog = null;
 let rapportInterval = null;
 let rapportSecs = 60;
 let reminderInterval = null;
@@ -571,113 +575,126 @@ const STEPS = [
       </div>
       <div class="rule-banner green"><div class="rule-txt green">✓ AGREED?</div></div>`; }
   },
-  { id:3, phase:'DISCOVERY — STEP 3', title:'DISCOVERY', titleCol:'', type:'questions', minAnswered:3, qType:'neutral',
-    whisper:"Listen more than you speak. Don't assume you understand — keep asking.",
-    depthCheck:"Do you genuinely understand what brought them here today?",
-    depthBestQ:"Tell me more about that. What's really going on?",
-    openingMain:'"What made you book the call today?"', openingAlt:'"What would you say is your biggest challenge right now?"',
-    instrLines:['LISTEN.','TAKE NOTES.','DO NOT SOLVE.','DO NOT TEACH.'],
-    questions:[
-      "Tell me more about that.",
-      "What do you mean by that exactly?",
-      "How long has that been going on?",
-      "Walk me through what's been happening.",
-      "What's the biggest part of that for you?",
-      "And how has that been affecting you?",
-      "What have you tried so far?",
-      "Why has that become important now?"
-    ],
-    hasSilence:true, isBlock:false
+      { id:3, phase:'DISCOVERY STARTS HERE — STEP 3', title:'DISCOVERY', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Listen more than you speak. Pick the question that fits the moment.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Listen more than you speak. Pick the question that fits the moment."</div></div>
+      <div class="rule-banner blue"><div class="rule-txt blue">LISTEN. TAKE NOTES. DO NOT SOLVE. DO NOT TEACH.</div></div>
+      <div class="q-list">
+        <div class="q-list-item">What made you reach out today — what was the moment that made you pick up the phone?</div>
+        <div class="q-list-item">What's been going on for you lately?</div>
+        <div class="q-list-item">If you're honest with yourself, what's the real challenge right now?</div>
+        <div class="q-list-item">What would you say is sitting heaviest on you at the moment?</div>
+        <div class="q-list-item">Tell me more about that.</div>
+        <div class="q-list-item">What do you mean when you say that?</div>
+        <div class="q-list-item">How long has that been going on?</div>
+        <div class="q-list-item">And how has that been making you feel?</div>
+        <div class="q-list-item">What's the thing that's frustrating you most right now?</div>
+        <div class="q-list-item">Why has this become important now — what changed?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
   },
-  { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'', type:'questions', minAnswered:4, qType:'pain',
-    whisper:"If it doesn't feel uncomfortable, you haven't gone deep enough. Stay curious — not clinical.",
-    depthCheck:"Have you found the emotional reason? Do you know what this is really costing them?",
-    depthBestQ:"What happens if nothing changes?",
-    questions:[
-      "Why is that important to you?",
-      "How has that been affecting you day to day?",
-      "What's the worst part of it?",
-      "What frustrates you most about where you are?",
-      "How long have you felt like this?",
-      "What does that stop you from doing?",
-      "How has that affected the people around you?",
-      "What happens if nothing changes?"
-    ],
-    hasSilence:true, isBlock:false
+,
+  { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Stay here until emotion appears. Don\'t rush.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Stay here until emotion appears. Don\'t rush."</div></div>
+      <div class="rule-banner amber"><div class="rule-txt amber">&#9888; STAY HERE UNTIL EMOTION APPEARS</div></div>
+      <div class="q-list">
+        <div class="q-list-item">Why does that matter to you?</div>
+        <div class="q-list-item">How is that affecting you day to day?</div>
+        <div class="q-list-item">What's the hardest part of it?</div>
+        <div class="q-list-item">How long have you been carrying this?</div>
+        <div class="q-list-item">What does that actually cost you — not just financially, but personally?</div>
+        <div class="q-list-item">Who else is feeling the impact of this?</div>
+        <div class="q-list-item">What are you most fed up with?</div>
+        <div class="q-list-item">If nothing changes — what does life look like in 12 months?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; FOUND PAIN?</div></div>`; }
   },
-  { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green', type:'questions', minAnswered:3, qType:'dream',
-    whisper:"Vague dreams don't close. Get specific. Make them feel it.",
-    depthCheck:"Is their dream specific? Do you know exactly what success looks like to them?",
-    depthBestQ:"Paint me a picture of that. What does it actually look like?",
-    openingMain:'"What do you actually want?"',
-    questions:[
-      "Why is that important to you?",
-      "What would that actually look like?",
-      "What would that allow you to do that you can't do right now?",
-      "How would life feel different?",
-      "Who else would that affect?",
-      "What would change about your day to day?",
-      "If we were speaking 6 months from now and it had worked — what would be different?",
-      "Paint me a picture of that."
-    ],
-    hasSilence:true, isBlock:false
+  { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Vague dreams don\'t close. Get specific. Make them feel it.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Vague dreams don\'t close. Get specific. Make them feel it."</div></div>
+      <div class="rule-banner green"><div class="rule-txt green">GOAL: DISCOVER THE DREAM</div></div>
+      <div class="q-list">
+        <div class="q-list-item">So what does the other side of this look like for you?</div>
+        <div class="q-list-item">What would success actually feel like?</div>
+        <div class="q-list-item">What would change about your life if this was solved?</div>
+        <div class="q-list-item">What would you be able to do that you can't do right now?</div>
+        <div class="q-list-item">Who else would benefit if you got this right?</div>
+        <div class="q-list-item">What does freedom look like to you?</div>
+        <div class="q-list-item">If we were talking 6 months from now and everything had worked — walk me through what's different.</div>
+        <div class="q-list-item">Paint me a picture of that life.</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; CLEAR ON DREAM?</div></div>`; }
   },
-  { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'', type:'questions', minAnswered:2, qType:'neutral',
-    whisper:"Understand their current reality completely before moving on. No assumptions.",
-    depthCheck:"Do you have a clear picture of where they are right now?",
-    depthBestQ:"How long has this been going on?",
-    questions:[
-      "What does a normal week look like for you right now?",
-      "What's not working the way you want it to?",
-      "What are you doing at the moment to try and solve this?",
-      "What's been the hardest part of where you are?",
-      "What does that actually cost you?",
-      "How long have things been like this?"
-    ],
-    hasSilence:true, isBlock:false
+  { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Understand their current reality completely. No assumptions.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Understand their current reality completely. No assumptions."</div></div>
+      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER CURRENT REALITY</div></div>
+      <div class="q-list">
+        <div class="q-list-item">Walk me through what a normal week looks like for you right now.</div>
+        <div class="q-list-item">What's not working the way you want it to?</div>
+        <div class="q-list-item">What are you doing at the moment to try and move this forward?</div>
+        <div class="q-list-item">What's been the hardest part of where you are?</div>
+        <div class="q-list-item">What's that actually costing you?</div>
+        <div class="q-list-item">How long have things felt like this?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
   },
-  { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'', type:'questions', minAnswered:2, qType:'neutral',
-    whisper:"Failed attempts are pitch ammunition. Every answer here is a pillar waiting to happen.",
-    depthCheck:"Do you know what they've tried and exactly why it didn't work?",
-    depthBestQ:"What was missing from everything you've tried?",
-    questions:[
-      "What have you already tried?",
-      "Why do you think that didn't work?",
-      "What was missing from that?",
-      "Have you invested in solving this before?",
-      "What did you learn from that?",
-      "What would need to be different this time?"
-    ],
-    hasSilence:true, isBlock:false
+  { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Failed attempts are pitch ammunition. Every answer here is a pillar.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Failed attempts are pitch ammunition. Every answer here is a pillar."</div></div>
+      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER FAILED SOLUTIONS</div></div>
+      <div class="q-list">
+        <div class="q-list-item">What have you already tried?</div>
+        <div class="q-list-item">What happened — why didn't that work?</div>
+        <div class="q-list-item">What was missing from that?</div>
+        <div class="q-list-item">Have you ever invested in getting help with this before?</div>
+        <div class="q-list-item">What did you take from that experience?</div>
+        <div class="q-list-item">What would need to feel different this time for you to really commit?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
   },
-  { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'', type:'questions', minAnswered:2, qType:'pain',
-    whisper:"No urgency means no decision. Don't move on until you've found it.",
-    depthCheck:"Do you know why this has become a priority right now?",
-    depthBestQ:"What happens if nothing changes in the next 12 months?",
-    questions:[
-      "Why are we having this conversation today?",
-      "What changed recently that made this a priority?",
-      "Why not leave it another 6 months?",
-      "What happens if nothing changes?",
-      "What's staying where you are actually costing you?",
-      "Is there a deadline or something coming up?",
-      "What would it mean to you if you solved this?"
-    ],
-    hasSilence:true, isBlock:false
+  { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"No urgency means no decision. Stay here until you find it.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"No urgency means no decision. Stay here until you find it."</div></div>
+      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER URGENCY</div></div>
+      <div class="q-list">
+        <div class="q-list-item">What made you decide to do something about this now?</div>
+        <div class="q-list-item">What changed that made this feel urgent?</div>
+        <div class="q-list-item">What's the cost of leaving it another 6 months?</div>
+        <div class="q-list-item">What happens if nothing changes?</div>
+        <div class="q-list-item">Is there something coming up — a deadline, an event — that's making this feel more pressing?</div>
+        <div class="q-list-item">What would it mean to you personally if you actually solved this?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; FOUND URGENCY?</div></div>`; }
   },
-  { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'', type:'questions', minAnswered:2, qType:'neutral',
-    whisper:"Find hidden decision makers now. The 'I need to speak to my partner' objection lives here.",
-    depthCheck:"Do you know who else is involved in this decision?",
-    depthBestQ:"If this made sense today, would you be comfortable making a decision?",
-    questions:[
-      "Are you married or in a relationship?",
-      "Does your partner know you're on this call — or are we on a secret mission?",
-      "Are they supportive of you making a change?",
-      "How would they feel if you achieved what we've been talking about?",
-      "Is there anyone else involved in a decision like this?",
-      "If this made sense today — could you make that call yourself?"
-    ],
-    hasSilence:true, isBlock:false
+  { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Find hidden decision makers now. The need to speak to my partner objection lives here.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Find hidden decision makers now. The need to speak to my partner objection lives here."</div></div>
+      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER DECISION MAKERS</div></div>
+      <div class="q-list">
+        <div class="q-list-item">Are you married or in a relationship?</div>
+        <div class="q-list-item">Does your partner know you're on this call — or are we on a secret mission?</div>
+        <div class="q-list-item">Are they behind you on this?</div>
+        <div class="q-list-item">How would they feel if you finally cracked this?</div>
+        <div class="q-list-item">Is there anyone else who'd be part of a decision like this?</div>
+        <div class="q-list-item">If today felt right — is that a call you could make yourself?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; SUPPORT DISCOVERED?</div></div>`; }
   },
   { id:10, phase:'STEP 10', title:'QUALIFICATION', titleCol:'amber', type:'standard', hasSilence:true, isBlock:false,
     whisper:"Don't hunt for money. Hunt for the truth. If this is right, are they ready?",
@@ -879,7 +896,7 @@ function beginCall(){
   painIdx=0;dreamIdx=0;
   buildDots();renderStep();
   showScreen('sStep');
-  startRecog();startReminderRotation();
+  startReminderRotation();
 }
 
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
@@ -891,7 +908,7 @@ function buildDots(){
 
 function renderStep(){
   const step=STEPS[currentStep];
-  if(!step){showScreen('sEnd');stopRecog();stopReminders();return;}
+  if(!step){showScreen('sEnd');stopReminders();return;}
   document.getElementById('stepNum').textContent='STEP '+step.id+' / '+STEPS.length;
   
   const next=STEPS[currentStep+1];
@@ -996,7 +1013,7 @@ function advance(){
 
 function doAdvance(){
   currentStep++;
-  if(currentStep>=STEPS.length){showScreen('sEnd');stopRecog();stopReminders();return;}
+  if(currentStep>=STEPS.length){showScreen('sEnd');stopReminders();return;}
   renderStep();
 }
 
@@ -1126,26 +1143,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// ── Speech recognition
-function startRecog(){
-  if(!('webkitSpeechRecognition'in window||'SpeechRecognition'in window)){document.getElementById('micTxt').textContent='NO MIC';return;}
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recog=new SR();recog.continuous=true;recog.interimResults=true;recog.lang='en-GB';
-  recog.onstart=()=>{document.getElementById('micDot').className='mic-dot on';document.getElementById('micTxt').className='mic-txt on';document.getElementById('micTxt').textContent='LISTENING';};
-  recog.onresult=(e)=>{
-    let final='',interim='';
-    for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript.toLowerCase().trim();if(e.results[i].isFinal)final+=t+' ';else interim+=t;}
-    const combined=(final+interim).toLowerCase();
-    // Voice trigger removed
-    if(/^note\s+\w/.test(final.trim())){const txt=final.trim().replace(/^note\s+/i,'').trim();if(txt.length>2){addNote('note',txt);flashMic();}return;}
-    if(/^quote\s+\w/.test(final.trim())){const txt=final.trim().replace(/^quote\s+/i,'').trim();if(txt.length>2){addNote('quote',txt);flashMic();}return;}
-  };
-  recog.onerror=(e)=>{if(e.error!=='no-speech')setTimeout(startRecog,1000);};
-  recog.onend=()=>{if(document.getElementById('sStep').classList.contains('active'))setTimeout(startRecog,300);};
-  recog.start();
-}
-function stopRecog(){if(recog)recog.stop();}
-function flashMic(){const d=document.getElementById('micDot');d.className='mic-dot flash';setTimeout(()=>{d.className='mic-dot on';},700);}
+// mic removed
 
 // ── Notes
 function addNote(type,text){const step=STEPS[currentStep]?STEPS[currentStep].title:'?';notes.push({type,text,step,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});updateFab();}
