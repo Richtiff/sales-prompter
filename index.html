@@ -55,7 +55,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 .step-inner { width:100%; max-width:100%; }
 
 .phase-lbl { font-size:10px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:6px; text-align:center; }
-.step-title { font-size:38px; font-weight:700; letter-spacing:-1px; line-height:1; margin-bottom:14px; text-align:center; }
+.step-title { font-size:44px; font-weight:800; letter-spacing:-1.5px; line-height:1; margin-bottom:14px; text-align:center; }
 .step-title.amber { color:var(--amber); }
 .step-title.green { color:var(--green); }
 .step-title.red { color:var(--red); }
@@ -82,8 +82,8 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 .main-card.green-l { border-left:4px solid var(--green); }
 .main-card.amber-l { border-left:4px solid var(--amber); }
 .main-card.red-l { border-left:4px solid var(--red); }
-.main-q { font-size:20px; color:var(--text); line-height:1.5; font-weight:400; }
-.main-q.big { font-size:22px; }
+.main-q { font-size:20px; color:var(--text); line-height:1.55; font-weight:400; }
+.main-q.big { font-size:24px; font-weight:500; }
 .main-q2 { font-size:24px; color:rgba(255,255,255,0.55); line-height:1.5; }
 .or-div { font-size:12px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin:14px 0; text-align:center; }
 
@@ -279,8 +279,9 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 /* question list */
 .q-list { display:flex; flex-direction:column; margin-bottom:16px; }
 .q-list-item {
-  font-size:18px; color:rgba(255,255,255,0.75); padding:11px 16px;
-  border-bottom:1px solid var(--border); line-height:1.4; text-align:center;
+  font-size:20px; color:rgba(255,255,255,0.88); padding:13px 16px;
+  border-bottom:1px solid var(--border); line-height:1.45; text-align:center;
+  font-weight:400; letter-spacing:0.1px;
 }
 .q-list-item:last-child { border-bottom:none; }
 </style>
@@ -382,10 +383,10 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
   <div class="depth-title">BEFORE YOU MOVE ON</div>
   <div class="depth-q" id="depthQ">Do you genuinely understand what brought them here today?</div>
   <div class="q-list" style="width:100%;max-width:560px;margin-bottom:28px;">
-    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What's really driving this for you right now?</div>
-    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What happened recently that made this feel important?</div>
-    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What would you want to be different 6 months from now?</div>
-    <div class="q-list-item" style="font-size:20px;color:rgba(255,255,255,0.8);">What have you tried so far — and what was missing from that?</div>
+    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What's really driving this for you right now?</div>
+    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What happened recently that made this feel important?</div>
+    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What would you want to be different 6 months from now?</div>
+    <div class="q-list-item" style="font-size:19px;color:rgba(255,255,255,0.9);font-weight:500;">What have you tried so far — and what was missing from that?</div>
   </div>
   <button class="depth-yes" onclick="depthYes()">YES — READY TO MOVE ON</button>
   <button class="depth-no" onclick="depthNo()">NOT YET — GO BACK</button>
@@ -554,7 +555,7 @@ const STEPS = [
       </div>
       <div class="rule-banner green"><div class="rule-txt green">✓ AGREED?</div></div>`; }
   },
-      { id:3, phase:'DISCOVERY STARTS HERE — STEP 3', title:'DISCOVERY', titleCol:'',
+  { id:3, phase:'STEP 3', title:'DISCOVERY', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Listen more than you speak. Pick the question that fits the moment.",
     render() { return `
@@ -572,7 +573,8 @@ const STEPS = [
         <div class="q-list-item">What's the thing that's frustrating you most right now?</div>
         <div class="q-list-item">Why has this become important now — what changed?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">LISTEN MORE THAN YOU SPEAK.</div><div class="quan-line">THE PROSPECT SHOULD TALK 70–80% OF THE TIME.</div></div>
+      &#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
   },
   { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
@@ -590,7 +592,8 @@ const STEPS = [
         <div class="q-list-item">What are you most fed up with?</div>
         <div class="q-list-item">If nothing changes — what does life look like in 12 months?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; FOUND PAIN?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">STAY HERE UNTIL EMOTION APPEARS.</div><div class="quan-line">IF IT DOESN'T FEEL UNCOMFORTABLE YOU HAVEN'T GONE DEEP ENOUGH.</div></div>
+      &#10003; FOUND PAIN?</div></div>`; }
   },
   { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green',
     type:'standard', hasSilence:true, isBlock:false,
@@ -608,7 +611,8 @@ const STEPS = [
         <div class="q-list-item">If we were talking 6 months from now and everything had worked — walk me through what's different.</div>
         <div class="q-list-item">Paint me a picture of that life.</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; CLEAR ON DREAM?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">VAGUE DREAMS DON'T CLOSE.</div><div class="quan-line">GET SPECIFIC. MAKE THEM FEEL IT.</div></div>
+      &#10003; CLEAR ON DREAM?</div></div>`; }
   },
   { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
@@ -624,7 +628,8 @@ const STEPS = [
         <div class="q-list-item">What's that actually costing you?</div>
         <div class="q-list-item">How long have things felt like this?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">DISCOVER CURRENT REALITY.</div><div class="quan-line">NO ASSUMPTIONS. UNDERSTAND THEIR WORLD COMPLETELY.</div></div>
+      &#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
   },
   { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
@@ -640,7 +645,8 @@ const STEPS = [
         <div class="q-list-item">What did you take from that experience?</div>
         <div class="q-list-item">What would need to feel different this time for you to really commit?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">FAILED ATTEMPTS ARE PITCH AMMUNITION.</div><div class="quan-line">EVERY ANSWER HERE IS A PILLAR WAITING TO HAPPEN.</div></div>
+      &#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
   },
   { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
@@ -656,7 +662,8 @@ const STEPS = [
         <div class="q-list-item">Is there something coming up — a deadline, an event — that's making this feel more pressing?</div>
         <div class="q-list-item">What would it mean to you personally if you actually solved this?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; FOUND URGENCY?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">NO URGENCY MEANS NO DECISION.</div><div class="quan-line">STAY HERE UNTIL YOU FIND IT.</div></div>
+      &#10003; FOUND URGENCY?</div></div>`; }
   },
   { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
@@ -672,37 +679,132 @@ const STEPS = [
         <div class="q-list-item">Is there anyone else who'd be part of a decision like this?</div>
         <div class="q-list-item">If today felt right — is that a call you could make yourself?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">&#10003; SUPPORT DISCOVERED?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">FIND THE DECISION MAKERS NOW.</div><div class="quan-line">THE 'I NEED TO SPEAK TO MY PARTNER' OBJECTION LIVES HERE.</div></div>
+      &#10003; SUPPORT DISCOVERED?</div></div>`; }
   },
-  { id:10, phase:'STEP 10', title:'QUALIFICATION', titleCol:'amber', type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Don't hunt for money. Hunt for the truth. If this is right, are they ready?",
+    { id:10, phase:'STEP 10', title:'MONEY', titleCol:'amber',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Don\'t hunt for money. Hunt for the truth.",
     render() { return `
-      <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
-      <div class="qual-section"><div class="qs-q">"On a scale of 1–10… 1 being money is a genuine concern and 10 being if you found the right solution you'd move forward immediately… where would you put yourself today?"</div>
-        <div class="qs-fu-title">FOLLOW UPS</div>
-        <div class="qs-fu">What makes you say that?</div><div class="qs-fu">Why that number specifically?</div><div class="qs-fu">What's keeping it from being a 10?</div>
-        <div class="qs-fu">Is that more of a money thing or a certainty thing?</div><div class="qs-fu">Is that because of finances or because you need to believe it'll work?</div>
+      <div class="whisper"><div class="whisper-txt">"Don\'t hunt for money. Hunt for the truth."</div></div>
+      <div class="main-card amber-l">
+        <div class="main-q big">On a scale of 1–10… 1 being money is a genuine concern, 10 being if you found the right solution you'd move forward immediately… where would you put yourself today?</div>
       </div>
-      <div class="qual-section"><div class="qs-q">"If we found exactly what you were looking for today… would you feel ready to move forward? Or would you still need some time?"</div>
-        <div class="qs-fu-title">FOLLOW UPS</div>
-        <div class="qs-fu">Totally fair. What would you need to think about?</div><div class="qs-fu">What's normally your process for a decision like this?</div>
+      <div class="q-list">
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's keeping it at that number rather than a 10?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is that more of a money thing or a certainty thing?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is it finances — or do you need to believe it'll actually work?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What makes you say that?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Help me understand that.</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Interesting… tell me more about that.</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would it take to move that number up?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">If money wasn't a factor — would you move forward?</div>
       </div>
-      <div class="qual-section"><div class="qs-q">"Let's say we find the perfect solution. What's more likely to stop you: Time? Money? Or believing it'll actually work?"</div>
-        <div class="qs-fu-title">FOLLOW UPS</div>
-        <div class="qs-fu">Interesting. Why that one?</div><div class="qs-fu">Have you had a bad experience before?</div><div class="qs-fu">Is there anything you'd want to avoid this time?</div>
+      <div class="quan-box" style="margin-top:12px;">
+        <div class="quan-line">DON\'T HUNT FOR MONEY.</div>
+        <div class="quan-line">HUNT FOR THE TRUTH.</div>
+        <div class="quan-line" style="margin-top:6px;">"IF THIS IS THE RIGHT SOLUTION — ARE THEY READY?"</div>
       </div>
-      <div class="qual-section"><div class="qs-q">"Just curious… have you invested in yourself before?"</div>
-        <div class="qs-fu-title">FOLLOW UPS</div>
-        <div class="qs-fu">How did that go?</div><div class="qs-fu">What did you like? What didn't you like?</div><div class="qs-fu">What would you want differently this time?</div>
-      </div>
-      <div class="qual-section"><div class="qs-q">"Be honest with me… if this solved the problem we've been discussing, would you find a way or would you find a reason?"</div>
-        <div class="qs-fu-title">FOLLOW UPS</div>
-        <div class="qs-fu">What makes you say that?</div><div class="qs-fu">How serious are you about solving this?</div><div class="qs-fu">Why has this become important now?</div>
-      </div>
-      <div class="quan-box"><div class="quan-line">⚠ QUAN REMINDER</div><div class="quan-line">DON'T HUNT FOR MONEY. HUNT FOR THE TRUTH.</div><div class="quan-line" style="margin-top:8px;">"IF THIS IS THE RIGHT SOLUTION, ARE THEY READY TO MOVE FORWARD?"</div><div class="quan-line">🚨 STOP BEFORE PITCHING 🚨</div></div>
-      <div class="rule-banner green"><div class="rule-txt green">✓ QUALIFICATION DONE?</div></div>`; }
+      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; MONEY QUALIFIED?</div></div>`; }
   },
-  { id:11, phase:'STEP 11', title:'TEMP CHECK #1', titleCol:'', type:'standard', hasSilence:false, isBlock:true,
+    { id:11, phase:'STEP 11', title:'READINESS', titleCol:'amber',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Are they ready to decide — or do they still need something?",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Are they ready to decide — or do they still need something?"</div></div>
+      <div class="main-card amber-l">
+        <div class="main-q big">If we found exactly what you were looking for today… would you feel ready to move forward — or would you still need some time?</div>
+      </div>
+      <div class="q-list">
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to feel different for this to feel like a yes?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's the one thing that's still sitting with you?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is there something specific you'd want clarity on first?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to happen for you to feel completely ready?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's your process normally for a decision like this?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's holding you back — is it logic or is it feeling?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">If you knew it would work — would you do it today?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would make this a no-brainer for you?</div>
+      </div>
+      <div class="quan-box" style="margin-top:12px;">
+        <div class="quan-line">CURIOUS IS KING.</div>
+        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; READINESS CLEAR?</div></div>`; }
+  },
+    { id:12, phase:'STEP 12', title:'WHAT STOPS YOU', titleCol:'amber',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"Find the real blocker before it becomes an objection at the end.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"Find the real blocker before it becomes an objection at the end."</div></div>
+      <div class="main-card amber-l">
+        <div class="main-q big">Let's say we find the perfect solution. What's more likely to stop you — time, money, or believing it'll actually work?</div>
+      </div>
+      <div class="q-list">
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Interesting. Why that one?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Tell me more about that.</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How long has that been a concern?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Have you had a bad experience before?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What happened there?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What was missing from that?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would you want to be different this time?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Is there anything you'd want to avoid?</div>
+      </div>
+      <div class="quan-box" style="margin-top:12px;">
+        <div class="quan-line">CURIOUS IS KING.</div>
+        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; BLOCKER IDENTIFIED?</div></div>`; }
+  },
+    { id:13, phase:'STEP 13', title:'PAST INVESTMENT', titleCol:'amber',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"How they\'ve invested before tells you how serious they are now.",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"How they\'ve invested before tells you how serious they are now."</div></div>
+      <div class="main-card amber-l">
+        <div class="main-q big">Just curious… have you ever invested in getting help with this before?</div>
+      </div>
+      <div class="q-list">
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How did that go?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What did you like about it?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What didn't work?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What was missing from that experience?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What did you take from it?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would need to feel different this time?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">Did you feel supported throughout?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would have made it better?</div>
+      </div>
+      <div class="quan-box" style="margin-top:12px;">
+        <div class="quan-line">CURIOUS IS KING.</div>
+        <div class="quan-line">THE FIRST ANSWER IS RARELY THE REAL ANSWER.</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; HISTORY UNDERSTOOD?</div></div>`; }
+  },
+    { id:14, phase:'STEP 14', title:'COMMITMENT', titleCol:'amber',
+    type:'standard', hasSilence:true, isBlock:false,
+    whisper:"This is the moment of truth. Buyer or browser?",
+    render() { return `
+      <div class="whisper"><div class="whisper-txt">"This is the moment of truth. Buyer or browser?"</div></div>
+      <div class="main-card amber-l">
+        <div class="main-q big">Be honest with me… if this solved the problem we've been discussing — would you find a way, or would you find a reason?</div>
+      </div>
+      <div class="q-list">
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What makes you say that?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How serious are you about solving this?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would it mean to you if you finally cracked this?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's the cost of not solving it?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">How much longer can you keep going the way things are?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What would your life look like if this was sorted?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">On a scale of 1–10 — how badly do you want to fix this?</div>
+        <div class="q-list-item" style="font-size:16px;color:rgba(255,255,255,0.6);">What's stopping you from saying yes to yourself right now?</div>
+      </div>
+      <div class="quan-box" style="margin-top:12px;">
+        <div class="quan-line">DON\'T HUNT FOR MONEY.</div>
+        <div class="quan-line">HUNT FOR THE TRUTH.</div>
+        <div class="quan-line" style="margin-top:6px;">"IF THIS IS THE RIGHT SOLUTION — ARE THEY READY?"</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:12px;"><div class="rule-txt green">&#10003; COMMITMENT ASSESSED?</div></div>`; }
+  },
+  { id:15, phase:'STEP 15', title:'TEMP CHECK #1', titleCol:'', type:'standard', hasSilence:false, isBlock:true,
     blockTitle:'DO NOT PITCH', blockSub:'Below 8. Find out why before moving forward.',
     whisper:"Don't pitch into uncertainty. If they're not bought in, find out why first.",
     render() { return `
@@ -714,7 +816,7 @@ const STEPS = [
       <div class="rule-banner red" style="margin-top:18px;"><div class="rule-txt red">⚠ BELOW 8? DO NOT PITCH. FIND OUT WHY.</div><div class="rule-txt red" style="margin-top:6px;">ASK: "What would make it a 10?"</div></div>
       <div class="rule-banner green" style="margin-top:10px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`; }
   },
-  { id:12, phase:'STEP 12', title:'PRE-PITCH', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
+  { id:16, phase:'STEP 16', title:'PRE-PITCH', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Last chance to find anything you missed. Ask and really listen to the answer.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -723,7 +825,7 @@ const STEPS = [
       <div style="font-size:22px;color:rgba(255,255,255,0.5);text-align:center;padding:13px 0;">Have I got the full picture?</div>
       <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ READY?</div></div>`; }
   },
-  { id:13, phase:'STEP 13', title:'TRANSITION', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:17, phase:'STEP 17', title:'TRANSITION', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"You earned this. Everything from here flows from what they told you.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -735,7 +837,7 @@ const STEPS = [
       <button class="recall-btn" onclick="openRecall()">★ SEE THEIR EXACT WORDS</button>
       <div class="rule-banner green"><div class="rule-txt green">WAIT FOR YES</div></div>`; }
   },
-  { id:14, phase:'STEP 14', title:'GOLDEN PROMISE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:18, phase:'STEP 18', title:'GOLDEN PROMISE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Result not process. One or two sentences. Use their exact words.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -749,19 +851,19 @@ const STEPS = [
       </div>
       <div class="rule-banner green"><div class="rule-txt green">✓ PROMISE DELIVERED?</div></div>`; }
   },
-  { id:15, phase:'STEP 15', title:'PILLAR 1', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:19, phase:'STEP 19', title:'PILLAR 1', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Earlier you told me... Connect every feature to something they said.",
     render() { return renderPillar(this.whisper,'SOLVE PROBLEM #1'); }
   },
-  { id:16, phase:'STEP 16', title:'PILLAR 2', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:20, phase:'STEP 20', title:'PILLAR 2', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Earlier you told me... Go back to your notes. Use their exact words.",
     render() { return renderPillar(this.whisper,'SOLVE PROBLEM #2'); }
   },
-  { id:17, phase:'STEP 17', title:'PILLAR 3', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:21, phase:'STEP 21', title:'PILLAR 3', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Earlier you told me... Every pillar should feel like it was built specifically for them.",
     render() { return renderPillar(this.whisper,'SOLVE PROBLEM #3'); }
   },
-  { id:18, phase:'STEP 18', title:'DELIVERY', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
+  { id:22, phase:'STEP 22', title:'DELIVERY', titleCol:'', type:'standard', hasSilence:false, isBlock:false,
     whisper:"High level only. The more you explain, the more questions you create.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -773,7 +875,7 @@ const STEPS = [
       <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;">Support · Access · Check-ins</div>
       <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ UNDERSTOOD?</div></div>`; }
   },
-  { id:19, phase:'🚨 STEP 19', title:'TEMP CHECK #2', titleCol:'red', type:'standard', hasSilence:false, isBlock:true,
+  { id:23, phase:'STEP 23', title:'TEMP CHECK #2', titleCol:'red', type:'standard', hasSilence:false, isBlock:true,
     blockTitle:'DO NOT DISCUSS PRICE', blockSub:'Below 8. Stop. Find out why.',
     whisper:"Do not discuss price until they are bought in. Full stop.",
     render() { return `
@@ -786,7 +888,7 @@ const STEPS = [
       <div class="rule-banner red" style="margin-top:18px;"><div class="rule-txt red">⚠ BELOW 8? STOP. DO NOT DISCUSS PRICE.</div><div class="rule-txt red" style="margin-top:6px;">ASK: "What would make it a 10?" · "What's holding you back?"</div></div>
       <div class="rule-banner green" style="margin-top:10px;"><div class="rule-txt green">✓ BOUGHT IN?</div></div>`; }
   },
-  { id:20, phase:'🚨 STEP 20', title:'COMMITTING PHASE', titleCol:'amber', type:'standard', hasSilence:false, isBlock:false,
+  { id:24, phase:'STEP 24', title:'COMMITTING PHASE', titleCol:'amber', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Clarify before you answer. Every time. The question is never just the question.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -814,7 +916,7 @@ const STEPS = [
       </div>
       <div class="rule-banner green"><div class="rule-txt green">✓ CONCERNS HANDLED?</div></div>`; }
   },
-  { id:21, phase:'STEP 21', title:'FUTURE PACE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
+  { id:25, phase:'STEP 25', title:'FUTURE PACE', titleCol:'green', type:'standard', hasSilence:false, isBlock:false,
     whisper:"Make success feel real and close. They should be able to picture it.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -827,7 +929,7 @@ const STEPS = [
       <div style="font-size:20px;color:rgba(255,255,255,0.6);text-align:center;padding:12px 0;">Once you're getting results…</div>
       <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ EXCITED?</div></div>`; }
   },
-  { id:22, phase:'STEP 22', title:'INVESTMENT', titleCol:'', type:'standard', hasSilence:false, isBlock:false, isLast:true,
+  { id:26, phase:'STEP 26', title:'INVESTMENT', titleCol:'', type:'standard', hasSilence:false, isBlock:false, isLast:true,
     whisper:"You earned this moment. Everything they told you got you here.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"${this.whisper}"</div></div>
@@ -847,239 +949,3 @@ const STEPS = [
       <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ DONE?</div></div>`; }
   }
 ];
-
-function renderPillar(whisper, goal) {
-  return `
-    <div class="whisper"><div class="whisper-txt">"${whisper}"</div></div>
-    <div class="rule-banner green"><div class="rule-txt green">GOAL: ${goal}</div></div>
-    <div class="rule-banner amber"><div class="rule-txt amber">FORMULA: EARLIER YOU TOLD ME...</div></div>
-    <div class="main-card amber-l">
-      <div class="main-q" style="font-size:28px;font-weight:700;">EARLIER YOU TOLD ME…</div>
-      <div style="height:14px"></div>
-      <div class="main-q" style="color:var(--amber);">↓ PROBLEM</div>
-      <div style="height:10px"></div><div class="main-q" style="color:var(--blue);">↓ SOLUTION</div>
-      <div style="height:10px"></div><div class="main-q" style="color:var(--green);">↓ BENEFIT</div>
-    </div>
-    <div style="font-size:18px;color:rgba(255,255,255,0.5);text-align:center;padding:12px 0;border-bottom:1px solid var(--border);">Does that make sense?</div>
-    <div style="font-size:18px;color:rgba(255,255,255,0.5);text-align:center;padding:12px 0;">Can you see how that would help?</div>
-    <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green">✓ AGREEMENT RECEIVED?</div></div>`;
-}
-
-// ── Setup
-function beginCall(){
-  prospectName=document.getElementById('inProspect').value.trim()||'Bob';
-  yourName=document.getElementById('inYourName').value.trim()||'Richard Stokes';
-  yourRole=document.getElementById('inYourRole').value.trim()||'your advisor today';
-  currentStep=0;notes=[];
-  painIdx=0;dreamIdx=0;
-  buildDots();renderStep();
-  showScreen('sStep');
-  startReminderRotation();
-}
-
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-
-function buildDots(){
-  const el=document.getElementById('progDots');el.innerHTML='';
-  for(let i=0;i<STEPS.length;i++){const d=document.createElement('div');d.className='pd'+(i<currentStep?' done':i===currentStep?' cur':'');el.appendChild(d);}
-}
-
-function renderStep(){
-  const step=STEPS[currentStep];
-  if(!step){showScreen('sEnd');stopReminders();return;}
-  document.getElementById('stepNum').textContent='STEP '+step.id+' / '+STEPS.length;
-  
-  const next=STEPS[currentStep+1];
-  document.getElementById('nextName').textContent=next?next.title:'END OF CALL';
-  buildDots();
-  const inner=document.getElementById('stepInner');
-  inner.classList.remove('flash-in');void inner.offsetWidth;inner.classList.add('flash-in');
-  let html=`<div class="phase-lbl">${step.phase}</div><div class="step-title ${step.titleCol||''}">${step.title}</div>`;
-  html+=step.render();
-  inner.innerHTML=html;
-  document.getElementById('stepBody').scrollTop=0;
-  if(step.id===1)startRapportTimer();
-  updateFab();
-}
-
-
-
-
-
-
-function advance(){
-  const step=STEPS[currentStep];
-  if(!step)return;
-
-  if(step.isBlock){
-    document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';
-    document.getElementById('blkSub').textContent=step.blockSub||'Below 8. Find out why.';
-    showScreen('sBlock');return;
-  }
-  if(step.hasSilence)showSilence(()=>doAdvance());
-  else doAdvance();
-}
-
-function doAdvance(){
-  currentStep++;
-  if(currentStep>=STEPS.length){showScreen('sEnd');stopReminders();return;}
-  renderStep();
-}
-
-function goBack(){
-  if(currentStep>0){currentStep--;renderStep();}
-}
-
-function unblock(){showScreen('sStep');doAdvance();}
-
-// ── Depth check
-function showDepthCheck(step){
-  document.getElementById('depthQ').textContent=step.depthCheck||'Have you gone deep enough?';
-  document.getElementById('depthBestTxt').textContent='"'+step.depthBestQ+'"';
-  document.getElementById('depthBest').classList.remove('show');
-  document.getElementById('depthBackBtn').classList.remove('show');
-  document.getElementById('depthOverlay').classList.add('show');
-}
-function depthYes(){
-  document.getElementById('depthOverlay').classList.remove('show');
-  const step=STEPS[currentStep];
-  if(step&&step.isBlock){document.getElementById('blkTitle').textContent=step.blockTitle||'DO NOT PITCH';document.getElementById('blkSub').textContent=step.blockSub||'';showScreen('sBlock');return;}
-  if(step&&step.hasSilence)showSilence(()=>doAdvance());
-  else doAdvance();
-}
-function depthNo(){document.getElementById('depthBest').classList.add('show');document.getElementById('depthBackBtn').classList.add('show');}
-function depthGoBack(){document.getElementById('depthOverlay').classList.remove('show');}
-
-function renderPainQ(){
-  const p=PAIN_Qs[painIdx]||PAIN_Qs[PAIN_Qs.length-1];
-  document.getElementById('painLayerLbl').textContent=p.layer;
-  document.getElementById('painQTxt').textContent=p.q;
-  document.getElementById('painWhisper').textContent=p.whisper;
-  // dots
-  const prog=document.getElementById('painProgress');prog.innerHTML='';
-  PAIN_Qs.forEach((_,i)=>{const d=document.createElement('div');d.className='pain-dot'+(i<painIdx?' done':i===painIdx?' cur':'');prog.appendChild(d);});
-}
-function painNext(){
-  showAck();
-  if(painIdx<PAIN_Qs.length-1)painIdx++;
-  renderPainQ();
-}
-
-// ── Dream Mode
-function activateDreamMode(){
-  dreamIdx=0;
-  prevScreen='sStep';
-  renderDreamQ();
-  showScreen('sDream');
-}
-function renderDreamQ(){
-  const d=DREAM_Qs[dreamIdx]||DREAM_Qs[DREAM_Qs.length-1];
-  document.getElementById('dreamLayerLbl').textContent=d.layer;
-  document.getElementById('dreamQTxt').textContent=d.q;
-  document.getElementById('dreamWhisper').textContent=d.whisper;
-  const prog=document.getElementById('dreamProgress');prog.innerHTML='';
-  DREAM_Qs.forEach((_,i)=>{const dd=document.createElement('div');dd.className='dream-dot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');prog.appendChild(dd);});
-}
-function dreamNext(){
-  showAck();
-  if(dreamIdx<DREAM_Qs.length-1)dreamIdx++;
-  renderDreamQ();
-}
-
-function exitMode(){showScreen('sStep');}
-
-// ── Silence
-function showSilence(cb){
-  const ov=document.getElementById('silOv'),n=document.getElementById('silN');
-  ov.classList.add('show');let c=2;n.textContent=c;
-  const t=setInterval(()=>{c--;if(c>0)n.textContent=c;else{clearInterval(t);ov.classList.remove('show');if(cb)cb();}},1000);
-}
-
-// ── Rapport timer
-function startRapportTimer(){
-  if(rapportInterval)clearInterval(rapportInterval);rapportSecs=60;
-  rapportInterval=setInterval(()=>{rapportSecs--;const el=document.getElementById('rtNum');if(!el){clearInterval(rapportInterval);return;}el.textContent=rapportSecs;if(rapportSecs<=10)el.style.color='var(--red)';if(rapportSecs<=0){clearInterval(rapportInterval);el.textContent='✓';el.style.color='var(--green)';}},1000);
-}
-
-// ── Reminders
-function startReminderRotation(){
-  if(reminderInterval)clearInterval(reminderInterval);reminderIdx=0;
-  reminderInterval=setInterval(()=>{
-    const el=document.getElementById('reminderTxt');if(!el)return;
-    el.classList.add('fade');
-    setTimeout(()=>{reminderIdx=(reminderIdx+1)%REMINDERS.length;el.textContent=REMINDERS[reminderIdx];el.classList.remove('fade');},500);
-  },8000);
-}
-function stopReminders(){if(reminderInterval)clearInterval(reminderInterval);}
-
-function tickInv(row){row.querySelector('.inv-box').classList.toggle('checked');}
-
-// ── Keyboard
-document.addEventListener('keydown',e=>{
-  const active=document.activeElement;
-  const inInput=active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT');
-  if(inInput)return;
-
-  const onStep=document.getElementById('sStep').classList.contains('active');
-  const onPain=document.getElementById('sPain').classList.contains('active');
-  const onDream=document.getElementById('sDream').classList.contains('active');
-
-  // Advance — spacebar, right arrow, volume up (MediaTrackNext)
-  if((e.code==='Space'||e.code==='ArrowRight'||e.code==='AudioVolumeUp'||e.key==='MediaTrackNext')&&onStep){e.preventDefault();advance();}
-  if((e.code==='Space'||e.code==='ArrowRight')&&onPain){e.preventDefault();painNext();}
-  if((e.code==='Space'||e.code==='ArrowRight')&&onDream){e.preventDefault();dreamNext();}
-
-  // Back
-  if((e.code==='KeyB'||e.code==='ArrowLeft')&&onStep){e.preventDefault();goBack();}
-
-  // Pain mode
-  if(e.code==='KeyP'&&onStep){e.preventDefault();activatePainMode();}
-
-  // Dream mode
-  if(e.code==='KeyD'&&onStep){e.preventDefault();activateDreamMode();}
-
-  // Escape — exit modes or depth check
-  if(e.code==='Escape'){
-    if(onPain||onDream){exitMode();}
-    if(document.getElementById('depthOverlay').classList.contains('show')){document.getElementById('depthOverlay').classList.remove('show');}
-  }
-});
-
-// mic removed
-
-// ── Notes
-function addNote(type,text){const step=STEPS[currentStep]?STEPS[currentStep].title:'?';notes.push({type,text,step,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});updateFab();}
-function updateFab(){const f=document.getElementById('notesFab');if(notes.length>0){f.classList.add('has');f.textContent=notes.length;}else{f.classList.remove('has');f.textContent='✎';}}
-function setMode(m){noteMode=m;document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');}
-function openNotes(){renderNotes();showScreen('sNotes');}
-function closeNotes(){showScreen('sStep');}
-function renderNotes(){
-  const el=document.getElementById('notesList');
-  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.<br>Say "NOTE" or "QUOTE"<br>to capture hands-free.</div>';return;}
-  const groups={};notes.forEach(n=>{if(!groups[n.step])groups[n.step]=[];groups[n.step].push(n);});
-  let html='';
-  Object.entries(groups).forEach(([step,items])=>{
-    html+=`<div class="note-grp"><div class="note-grp-lbl">${step}</div>`;
-    items.forEach(n=>{html+=`<div class="note-card ${n.type==='quote'?'q':'n'}"><span class="nt-tag ${n.type==='quote'?'q':'n'}">${n.type==='quote'?'QUOTE':'NOTE'}</span><span class="nt-txt">${esc(n.text)}</span><span class="nt-time">${n.time}</span></div>`;});
-    html+='</div>';
-  });
-  el.innerHTML=html;
-}
-function saveManual(){const ta=document.getElementById('noteTa');const txt=ta.value.trim();if(!txt)return;addNote(noteMode,txt);ta.value='';renderNotes();}
-function openRecall(){
-  const quotes=notes.filter(n=>n.type==='quote'),all=notes.filter(n=>n.type==='note');
-  let html='<div class="recall-sec"><div class="recall-lbl">THEIR EXACT WORDS — use "Earlier you told me..."</div><div class="recall-card">';
-  if(!quotes.length)html+='<div class="recall-empty">No quotes captured yet.</div>';
-  else quotes.forEach(q=>{html+=`<div class="recall-q">${esc(q.text)}</div>`;});
-  html+='</div></div><div class="recall-sec"><div class="recall-lbl">ALL NOTES</div><div class="recall-card">';
-  if(!all.length)html+='<div class="recall-empty">No notes yet.</div>';
-  else all.forEach(n=>{html+=`<div style="font-size:18px;color:var(--text);padding:10px 0;border-bottom:1px solid var(--border);line-height:1.5;">${esc(n.text)} <span style="font-size:12px;color:var(--muted);">(${n.step})</span></div>`;});
-  html+='</div></div>';
-  document.getElementById('recallBody').innerHTML=html;showScreen('sPitchRecall');
-}
-function closeRecall(){showScreen('sStep');}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function restart(){stopReminders();showScreen('sSetup');}
-</script>
-</body>
-</html>
