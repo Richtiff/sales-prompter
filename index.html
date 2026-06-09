@@ -179,6 +179,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 /* ══ PAIN MODE ══ */
 #sPain {
   background:#0a0000;
+  display:flex;
   align-items:center; justify-content:center;
   padding:48px 64px;
 }
@@ -189,7 +190,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 .pain-q-txt { font-size:38px; color:#ffffff; line-height:1.45; font-weight:500; }
 .pain-layer-lbl { font-size:12px; letter-spacing:3px; color:rgba(255,59,59,0.45); text-transform:uppercase; margin-bottom:16px; }
 .pain-next-btn { background:rgba(255,59,59,0.1); border:1px solid rgba(255,59,59,0.3); border-radius:16px; padding:18px 40px; color:var(--red); font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:1px; margin-bottom:12px; }
-.pain-exit-btn { background:transparent; border:1px solid var(--border); border-radius:14px; padding:13px 28px; color:var(--muted); font-size:14px; cursor:pointer; font-family:inherit; letter-spacing:1px; }
+.pain-exit-btn { background:rgba(255,59,59,0.08); border:1px solid rgba(255,59,59,0.3); border-radius:14px; padding:14px 32px; color:var(--red); font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; letter-spacing:1px; }
 .pain-whisper { font-size:14px; color:rgba(255,59,59,0.4); font-style:italic; margin-top:20px; max-width:500px; line-height:1.6; text-align:center; }
 .pain-progress { display:flex; gap:6px; justify-content:center; margin-bottom:28px; }
 .pain-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,59,59,0.15); transition:all 0.3s; }
@@ -199,6 +200,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 /* ══ DREAM MODE ══ */
 #sDream {
   background:#000a04;
+  display:flex;
   align-items:center; justify-content:center;
   padding:48px 64px;
 }
@@ -209,7 +211,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
 .dream-q-txt { font-size:38px; color:#ffffff; line-height:1.45; font-weight:500; }
 .dream-layer-lbl { font-size:12px; letter-spacing:3px; color:rgba(0,210,106,0.45); text-transform:uppercase; margin-bottom:16px; }
 .dream-next-btn { background:rgba(0,210,106,0.08); border:1px solid rgba(0,210,106,0.3); border-radius:16px; padding:18px 40px; color:var(--green); font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:1px; margin-bottom:12px; }
-.dream-exit-btn { background:transparent; border:1px solid var(--border); border-radius:14px; padding:13px 28px; color:var(--muted); font-size:14px; cursor:pointer; font-family:inherit; letter-spacing:1px; }
+.dream-exit-btn { background:rgba(0,210,106,0.08); border:1px solid rgba(0,210,106,0.3); border-radius:14px; padding:14px 32px; color:var(--green); font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; letter-spacing:1px; }
 .dream-whisper { font-size:14px; color:rgba(0,210,106,0.4); font-style:italic; margin-top:20px; max-width:500px; line-height:1.6; text-align:center; }
 .dream-progress { display:flex; gap:6px; justify-content:center; margin-bottom:28px; }
 .dream-dot { width:8px; height:8px; border-radius:50%; background:rgba(0,210,106,0.15); transition:all 0.3s; }
@@ -284,6 +286,50 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
   font-weight:400; letter-spacing:0.2px;
 }
 .q-list-item:last-child { border-bottom:none; }
+
+/* ── LEAD QUESTION + FOLLOW-UPS ── */
+.lead-question-card {
+  background:var(--surface);
+  border-radius:16px;
+  padding:20px 22px;
+  margin-bottom:14px;
+  border-left:4px solid var(--green);
+}
+.lead-q-label {
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--green);
+  text-transform:uppercase;
+  margin-bottom:8px;
+  opacity:0.7;
+}
+.lead-q-text {
+  font-size:24px;
+  color:#ffffff;
+  line-height:1.45;
+  font-weight:500;
+}
+.followup-section {
+  background:var(--surface2);
+  border-radius:14px;
+  padding:14px 18px;
+  margin-bottom:10px;
+}
+.followup-label {
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.q-followup {
+  font-size:17px;
+  color:rgba(255,255,255,0.65);
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+  line-height:1.4;
+}
+.q-followup:last-child { border-bottom:none; }
 </style>
 </head>
 <body>
@@ -366,7 +412,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
       <div class="pain-q-txt" id="painQTxt">What's the biggest challenge right now?</div>
     </div>
     <button class="pain-next-btn" onclick="painNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="pain-exit-btn" onclick="exitMode()">ESC — RETURN TO CALL</button>
+    <button class="pain-exit-btn" onclick="exitMode()">← RETURN TO CALL</button>
     <div class="pain-whisper" id="painWhisper">Stay here. Let them go deeper. You don't need to move on yet.</div>
   </div>
 </div>
@@ -381,7 +427,7 @@ html,body { background:var(--bg); color:var(--text); font-family:-apple-system,B
       <div class="dream-q-txt" id="dreamQTxt">What do you actually want?</div>
     </div>
     <button class="dream-next-btn" onclick="dreamNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="dream-exit-btn" onclick="exitMode()">ESC — RETURN TO CALL</button>
+    <button class="dream-exit-btn" onclick="exitMode()">← RETURN TO CALL</button>
     <div class="dream-whisper" id="dreamWhisper">Make the dream bigger and more specific with every question.</div>
   </div>
 </div>
@@ -554,127 +600,141 @@ const STEPS = [
       </div>
       <div class="rule-banner green"><div class="rule-txt green">✓ AGREED?</div></div>`; }
   },
-  { id:3, phase:'STEP 3', title:'DISCOVERY', titleCol:'',
+  { id:3, phase:'DISCOVERY STARTS HERE — STEP 3', title:'DISCOVERY', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Listen more than you speak. Pick the question that fits the moment.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"Listen more than you speak. Pick the question that fits the moment."</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">LISTEN. TAKE NOTES. DO NOT SOLVE. DO NOT TEACH.</div></div>
-      <div class="q-list">
-        <div class="q-list-item">What's been going on?</div>
-        <div class="q-list-item">What made you decide to jump on a call?</div>
-        <div class="q-list-item">Fill me in.</div>
-        <div class="q-list-item">Help me understand where you're at.</div>
-        <div class="q-list-item">Tell me more.</div>
-        <div class="q-list-item">What do you mean by that?</div>
-        <div class="q-list-item">Can you expand on that?</div>
-        <div class="q-list-item">Walk me through that.</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">What's been going on?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">LISTEN MORE THAN YOU SPEAK.</div><div class="quan-line">THE PROSPECT SHOULD TALK 70–80% OF THE TIME.</div></div>
-      &#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ What made you decide to jump on a call?</div>
+        <div class="q-followup">↳ Fill me in.</div>
+        <div class="q-followup">↳ Help me understand where you're at.</div>
+        <div class="q-followup">↳ What do you mean by that?</div>
+        <div class="q-followup">↳ Walk me through that.</div>
+      </div>
+      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">LISTEN. TAKE NOTES. DO NOT SOLVE. DO NOT TEACH.</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND THE PROBLEM?</div></div>`; }
   },
-  { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'',
+    { id:4, phase:'STEP 4', title:'GO DEEPER', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Stay here until emotion appears. Don\'t rush.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"Stay here until emotion appears. Don\'t rush."</div></div>
-      <div class="rule-banner amber"><div class="rule-txt amber">&#9888; STAY HERE UNTIL EMOTION APPEARS</div></div>
-      <div class="q-list">
-        <div class="q-list-item">What's the hardest part about that?</div>
-        <div class="q-list-item">What's been most frustrating?</div>
-        <div class="q-list-item">What's that been like for you?</div>
-        <div class="q-list-item">How long have you been dealing with that?</div>
-        <div class="q-list-item">What's that costing you?</div>
-        <div class="q-list-item">How has that affected things?</div>
-        <div class="q-list-item">What happens if nothing changes?</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">What's the hardest part about that?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">STAY HERE UNTIL EMOTION APPEARS.</div><div class="quan-line">IF IT DOESN'T FEEL UNCOMFORTABLE YOU HAVEN'T GONE DEEP ENOUGH.</div></div>
-      &#10003; FOUND PAIN?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ What's been most frustrating?</div>
+        <div class="q-followup">↳ How long have you been dealing with that?</div>
+        <div class="q-followup">↳ What's that costing you?</div>
+        <div class="q-followup">↳ What happens if nothing changes?</div>
+      </div>
+      <div class="rule-banner amber" style="margin-top:14px;"><div class="rule-txt amber">&#9888; STAY HERE UNTIL EMOTION APPEARS</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; FOUND PAIN?</div></div>`; }
   },
-  { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green',
+    { id:5, phase:'STEP 5', title:'DREAM WORLD', titleCol:'green',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Vague dreams don\'t close. Get specific. Make them feel it.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"Vague dreams don\'t close. Get specific. Make them feel it."</div></div>
-      <div class="rule-banner green"><div class="rule-txt green">GOAL: DISCOVER THE DREAM</div></div>
-      <div class="q-list">
-        <div class="q-list-item">Best case scenario — what would you love to happen?</div>
-        <div class="q-list-item">If we were having this conversation a year from now and everything worked out perfectly — what would life look like?</div>
-        <div class="q-list-item">What are you really aiming for?</div>
-        <div class="q-list-item">What would success look like for you?</div>
-        <div class="q-list-item">What would that allow you to do?</div>
-        <div class="q-list-item">Why is that important?</div>
-        <div class="q-list-item">How would that feel?</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">Best case scenario — what would you love to happen?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">VAGUE DREAMS DON'T CLOSE.</div><div class="quan-line">GET SPECIFIC. MAKE THEM FEEL IT.</div></div>
-      &#10003; CLEAR ON DREAM?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ If we were having this conversation a year from now and everything worked out — what would life look like?</div>
+        <div class="q-followup">↳ What would that allow you to do?</div>
+        <div class="q-followup">↳ Why is that important?</div>
+        <div class="q-followup">↳ How would that feel?</div>
+      </div>
+      <div class="rule-banner green" style="margin-top:14px;"><div class="rule-txt green">GOAL: DISCOVER THE DREAM</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; CLEAR ON DREAM?</div></div>`; }
   },
-  { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'',
+    { id:6, phase:'STEP 6', title:'SITUATION', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Understand their current reality completely. No assumptions.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"Understand their current reality completely. No assumptions."</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER CURRENT REALITY</div></div>
-      <div class="q-list">
-        <div class="q-list-item">Paint me a picture of where things are today.</div>
-        <div class="q-list-item">What does a normal week look like?</div>
-        <div class="q-list-item">What's working?</div>
-        <div class="q-list-item">What's not working?</div>
-        <div class="q-list-item">What's life looking like right now?</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">What does a normal week look like right now?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">DISCOVER CURRENT REALITY.</div><div class="quan-line">NO ASSUMPTIONS. UNDERSTAND THEIR WORLD COMPLETELY.</div></div>
-      &#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ What's working?</div>
+        <div class="q-followup">↳ What's not working?</div>
+        <div class="q-followup">↳ What's been the hardest part of it?</div>
+        <div class="q-followup">↳ How long has it been like this?</div>
+      </div>
+      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER CURRENT REALITY</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND CURRENT SITUATION?</div></div>`; }
   },
-  { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'',
+    { id:7, phase:'STEP 7', title:'ATTEMPTS', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Failed attempts are pitch ammunition. Every answer here is a pillar.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"Failed attempts are pitch ammunition. Every answer here is a pillar."</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER FAILED SOLUTIONS</div></div>
-      <div class="q-list">
-        <div class="q-list-item">What have you done so far to try and fix this?</div>
-        <div class="q-list-item">How did that go?</div>
-        <div class="q-list-item">What did you learn from it?</div>
-        <div class="q-list-item">What was missing?</div>
-        <div class="q-list-item">What would you want differently this time?</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">What have you done so far to try and fix this?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">FAILED ATTEMPTS ARE PITCH AMMUNITION.</div><div class="quan-line">EVERY ANSWER HERE IS A PILLAR WAITING TO HAPPEN.</div></div>
-      &#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ How did that go?</div>
+        <div class="q-followup">↳ What was missing?</div>
+        <div class="q-followup">↳ What did you learn from it?</div>
+        <div class="q-followup">↳ What would need to feel different this time?</div>
+      </div>
+      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER FAILED SOLUTIONS</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; UNDERSTAND ATTEMPTS?</div></div>`; }
   },
-  { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'',
+    { id:8, phase:'STEP 8', title:'WHY NOW', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"No urgency means no decision. Stay here until you find it.",
     render() { return `
       <div class="whisper"><div class="whisper-txt">"No urgency means no decision. Stay here until you find it."</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER URGENCY</div></div>
-      <div class="q-list">
-        <div class="q-list-item">What changed?</div>
-        <div class="q-list-item">Why has this become important recently?</div>
-        <div class="q-list-item">Why not six months from now?</div>
-        <div class="q-list-item">What happens if nothing changes?</div>
-        <div class="q-list-item">How would you feel if you were still here next year?</div>
-        <div class="q-list-item">What's staying stuck costing you?</div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">What changed — why now?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">NO URGENCY MEANS NO DECISION.</div><div class="quan-line">STAY HERE UNTIL YOU FIND IT.</div></div>
-      &#10003; FOUND URGENCY?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ Why not six months from now?</div>
+        <div class="q-followup">↳ What happens if nothing changes?</div>
+        <div class="q-followup">↳ How would you feel if you were still here next year?</div>
+        <div class="q-followup">↳ What's staying stuck costing you?</div>
+      </div>
+      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER URGENCY</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; FOUND URGENCY?</div></div>`; }
   },
-  { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'',
+    { id:9, phase:'STEP 9', title:'SUPPORT', titleCol:'',
     type:'standard', hasSilence:true, isBlock:false,
-    whisper:"Find hidden decision makers now. The need to speak to my partner objection lives here.",
+    whisper:"Find hidden decision makers now.",
     render() { return `
-      <div class="whisper"><div class="whisper-txt">"Find hidden decision makers now. The need to speak to my partner objection lives here."</div></div>
-      <div class="rule-banner blue"><div class="rule-txt blue">GOAL: DISCOVER DECISION MAKERS</div></div>
-      <div class="q-list">
-        <div class="q-list-item">Are you in a relationship?</div>
-        <div class="q-list-item">Does your partner know you're on this call or are we on a secret mission?</div>
-        <div class="q-list-item">What do they think about all this?</div>
-        <div class="q-list-item">Are they supportive?</div>
-        <div class="q-list-item">Who else benefits if you solve this?</div>
+      <div class="whisper"><div class="whisper-txt">"Find hidden decision makers now."</div></div>
+      <div class="lead-question-card">
+        <div class="lead-q-label">ASK THIS FIRST</div>
+        <div class="lead-q-text">Are you in a relationship?</div>
       </div>
-      <div class="rule-banner green" style="margin-top:18px;"><div class="rule-txt green"><div class="quan-box" style="margin-top:12px;"><div class="quan-line">FIND THE DECISION MAKERS NOW.</div><div class="quan-line">THE 'I NEED TO SPEAK TO MY PARTNER' OBJECTION LIVES HERE.</div></div>
-      &#10003; SUPPORT DISCOVERED?</div></div>`; }
+      <div class="followup-section">
+        <div class="followup-label">THEN DIG DEEPER</div>
+        <div class="q-followup">↳ Does your partner know you're on this call — or are we on a secret mission?</div>
+        <div class="q-followup">↳ Are they supportive?</div>
+        <div class="q-followup">↳ Who else benefits if you solve this?</div>
+        <div class="q-followup">↳ If today felt right — could you make that call yourself?</div>
+      </div>
+      <div class="rule-banner blue" style="margin-top:14px;"><div class="rule-txt blue">GOAL: DISCOVER DECISION MAKERS</div></div>
+      <div class="rule-banner green" style="margin-top:8px;"><div class="rule-txt green">&#10003; SUPPORT DISCOVERED?</div></div>`; }
   },
-    { id:10, phase:'STEP 10', title:'MONEY', titleCol:'amber',
+  { id:10, phase:'STEP 10', title:'MONEY', titleCol:'amber',
     type:'standard', hasSilence:true, isBlock:false,
     whisper:"Don\'t hunt for money. Hunt for the truth.",
     render() { return `
