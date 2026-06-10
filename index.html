@@ -66,51 +66,60 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .hk.d{border-color:rgba(0,210,106,0.4);color:rgba(0,210,106,0.6);}
 
 /* Reminder */
-.reminder-wrap{flex-shrink:0;padding:0;}
-.reminder-card{
-  background:var(--surface2);
-  border-bottom:1px solid var(--border);
-  padding:0;
-  display:flex;
-  align-items:stretch;
-  min-height:72px;
-}
-.reminder-accent{width:4px;flex-shrink:0;}
-.reminder-content{flex:1;padding:16px 20px;display:flex;align-items:center;}
-.reminder-txt{
-  font-size:22px;
-  font-weight:600;
-  color:#fff;
-  line-height:1.4;
-  letter-spacing:-0.3px;
-  transition:opacity 0.5s;
-}
-.reminder-txt.fade{opacity:0;}
-.reminder-counter{font-size:10px;letter-spacing:2px;color:var(--muted);padding:0 16px;display:flex;align-items:center;flex-shrink:0;}
+
 
 /* Rules grid */
-.rules-grid{
+.questions-wrap{
   flex:1;
   overflow-y:auto;
   padding:16px 20px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  align-content:start;
+  -webkit-overflow-scrolling:touch;
 }
-.rule-card{
+.q-section-title{
+  font-size:9px;letter-spacing:3px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:10px;margin-top:4px;
+}
+.pq{
+  font-size:22px;font-weight:500;color:#fff;
+  padding:14px 0;border-bottom:1px solid var(--border);
+  line-height:1.4;
+}
+.pq:last-child{border-bottom:none;}
+.pq.lead{font-size:26px;font-weight:700;color:#fff;}
+.pq.sub{font-size:19px;color:rgba(255,255,255,0.65);}
+
+.reminders-strip{
+  flex-shrink:0;
+  border-top:2px solid var(--border);
   background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px 16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
+  padding:10px 0;
+  overflow:hidden;
+  white-space:nowrap;
+  position:relative;
 }
-.rule-card.active-rule{border-color:rgba(255,149,0,0.4);background:var(--amber-dim);}
-.rule-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.rule-txt{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;font-weight:500;}
-.rule-card.active-rule .rule-txt{color:var(--amber);}
+.reminders-inner{
+  display:inline-block;
+  white-space:nowrap;
+  animation:scrollReminders 120s linear infinite;
+}
+.reminders-inner:hover{animation-play-state:paused;}
+@keyframes scrollReminders{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+.reminder-pill{
+  display:inline-block;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:7px 16px;
+  font-size:12px;
+  font-weight:700;
+  color:rgba(255,255,255,0.55);
+  margin-right:12px;
+  letter-spacing:0.5px;
+  white-space:nowrap;
+}
 
 /* Bottom bar */
 .botbar{padding:12px 20px 16px;flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:12px;}
@@ -259,6 +268,25 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   </div>
 </div>
 
+
+<!-- FRAME -->
+<div id="sFrame" class="screen">
+  <div class="rapport-inner">
+    <div class="rapport-phase">STEP 2 — FRAME</div>
+    <div class="rapport-title">FRAME</div>
+    <div class="rapport-card">
+      <div class="rapport-q">"Today's call is simple. We have approximately 1 hour."</div>
+      <div style="height:14px"></div>
+      <div class="rapport-q2">"I just want to understand where you're at, where you'd like to get to, and most importantly see whether we can genuinely help."</div>
+      <div style="height:14px"></div>
+      <div class="rapport-q2">"If we can, I'll explain how. If we can't, I'll point you in the right direction."</div>
+      <div style="height:16px"></div>
+      <div class="rapport-q" style="color:var(--green);">"Sound fair?"</div>
+    </div>
+    <div class="rapport-skip">FOOT PEDAL / SPACEBAR — MOVE TO CALL SCREEN</div>
+  </div>
+</div>
+
 <!-- MAIN CALL SCREEN -->
 <div id="sMain" class="screen">
   <div class="topbar">
@@ -272,28 +300,51 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     </div>
   </div>
 
-  <div class="reminder-wrap">
-    <div class="reminder-card">
-      <div class="reminder-accent" id="reminderAccent" style="background:var(--amber);"></div>
-      <div class="reminder-content">
-        <div class="reminder-txt" id="reminderTxt">Shut up and let them finish.</div>
-      </div>
-      <div class="reminder-counter" id="reminderCounter">1 / 10</div>
-    </div>
+
+
+  <div class="questions-wrap" id="questionsWrap">
+    <div class="q-section-title">OPENING</div>
+    <div class="pq lead">What made you book the call today?</div>
+    <div class="pq sub">What would you say is your biggest challenge right now?</div>
+
+    <div class="q-section-title" style="margin-top:16px;">POWER QUESTIONS</div>
+    <div class="pq">Tell me more.</div>
+    <div class="pq">What do you mean?</div>
+    <div class="pq">Can you expand on that?</div>
+    <div class="pq">Walk me through that.</div>
+    <div class="pq">Help me understand that.</div>
+
+    <div class="q-section-title" style="margin-top:16px;">GO DEEPER</div>
+    <div class="pq">Why is that important?</div>
+    <div class="pq">How has that affected you?</div>
+    <div class="pq">What's the worst part?</div>
+    <div class="pq">What frustrates you most?</div>
+    <div class="pq">How has that affected your confidence?</div>
+    <div class="pq">How has that affected your family?</div>
+
+    <div class="q-section-title" style="margin-top:16px;">DREAM</div>
+    <div class="pq">What do you actually want?</div>
+    <div class="pq">Why do you want that?</div>
+    <div class="pq">What would success look like?</div>
+    <div class="pq">What would that allow you to do?</div>
+    <div class="pq">How would life change?</div>
+    <div class="pq">Paint me a picture of that.</div>
+
+    <div class="q-section-title" style="margin-top:16px;">URGENCY</div>
+    <div class="pq">Why now?</div>
+    <div class="pq">What changed?</div>
+    <div class="pq">Why not another year?</div>
+    <div class="pq">What happens if nothing changes?</div>
+    <div class="pq">What's staying stuck costing you?</div>
+
+    <div class="q-section-title" style="margin-top:16px;">CLARIFY BEFORE ANSWERING</div>
+    <div class="pq">What made you ask that?</div>
+    <div class="pq">What are you trying to work out?</div>
+    <div class="pq">Is there something behind that question?</div>
+    <div class="pq">Tell me more.</div>
   </div>
 
-  <div class="rules-grid">
-    <div class="rule-card" id="rule0"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Shut up and let them finish.</div></div>
-    <div class="rule-card" id="rule1"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Repeat their last word back. Then wait.</div></div>
-    <div class="rule-card" id="rule2"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Their next sentence is better than your next question.</div></div>
-    <div class="rule-card" id="rule3"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">You don't need another question. You need another pause.</div></div>
-    <div class="rule-card" id="rule4"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Ask one. Wait. Then maybe one more.</div></div>
-    <div class="rule-card" id="rule5"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Stop. They haven't finished yet.</div></div>
-    <div class="rule-card" id="rule6"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">What did they just say? Go deeper on that.</div></div>
-    <div class="rule-card" id="rule7"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Silence is not awkward. It's working.</div></div>
-    <div class="rule-card" id="rule8"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">The gold comes after the pause.</div></div>
-    <div class="rule-card" id="rule9"><div class="rule-dot" style="background:var(--amber);"></div><div class="rule-txt">Don't rescue them. Let it sit.</div></div>
-  </div>
+  <div class="reminders-strip" id="remindersStrip"></div>
 
   <div class="botbar">
     <div class="mode-btns">
@@ -383,22 +434,33 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 <script>
 var yourName='Richard Stokes', yourRole='', prospectName='Bob';
+var pedalCount=0;
 var painIdx=0, dreamIdx=0;
 var noteMode='note', notes=[];
 var rapportInterval=null, rapportSecs=60;
 var reminderInterval=null, reminderIdx=0;
 
 var REMINDERS=[
-  "Shut up and let them finish.",
-  "Repeat their last word back. Then wait.",
-  "Their next sentence is better than your next question.",
-  "You don't need another question. You need another pause.",
-  "Ask one. Wait. Then maybe one more.",
-  "Stop. They haven't finished yet.",
-  "What did they just say? Go deeper on that.",
-  "Silence is not awkward. It's working.",
-  "The gold comes after the pause.",
-  "Don't rescue them. Let it sit."
+  "DO NOT SOLVE",
+  "DO NOT TEACH",
+  "DISCOVER FIRST · PITCH SECOND",
+  "WAIT 2 SECONDS AFTER EVERY ANSWER",
+  "HUNT FOR UNDERSTANDING NOT QUESTIONS",
+  "CLARIFY FIRST · ANSWER SECOND",
+  "USE 'EARLIER YOU TOLD ME...' THROUGHOUT",
+  "THE PROSPECT TALKS 70–80%",
+  "I DO NOT NEED TO BE MORE IMPRESSIVE",
+  "I NEED TO BE MORE CURIOUS",
+  "SHUT UP AND LET THEM FINISH",
+  "REPEAT THEIR LAST WORD BACK. THEN WAIT.",
+  "THEIR NEXT SENTENCE IS BETTER THAN YOUR NEXT QUESTION",
+  "YOU DON'T NEED ANOTHER QUESTION. YOU NEED ANOTHER PAUSE.",
+  "ASK ONE. WAIT. THEN MAYBE ONE MORE.",
+  "STOP. THEY HAVEN'T FINISHED YET.",
+  "WHAT DID THEY JUST SAY? GO DEEPER ON THAT.",
+  "SILENCE IS NOT AWKWARD. IT'S WORKING.",
+  "THE GOLD COMES AFTER THE PAUSE.",
+  "DON'T RESCUE THEM. LET IT SIT."
 ];
 
 var PAIN_Qs=[
@@ -459,8 +521,13 @@ function startRapportTimer(){
   },1000);
 }
 
-function goToMain(){
+function goToFrame(){
   if(rapportInterval) clearInterval(rapportInterval);
+  showScreen('sFrame');
+}
+
+function goToMain(){
+  pedalCount=0;
   showScreen('sMain');
   startReminderRotation();
 }
@@ -468,33 +535,28 @@ function goToMain(){
 function startReminderRotation(){
   if(reminderInterval) clearInterval(reminderInterval);
   reminderIdx=0;
-  updateReminderDisplay();
-  reminderInterval=setInterval(function(){
-    var el=document.getElementById('reminderTxt');
-    if(!el) return;
-    el.classList.add('fade');
-    setTimeout(function(){
-      reminderIdx=(reminderIdx+1)%REMINDERS.length;
-      updateReminderDisplay();
-      el.classList.remove('fade');
-    },400);
-  },6000);
+  buildRemindersStrip();
 }
 
-function updateReminderDisplay(){
-  var el=document.getElementById('reminderTxt');
-  var counter=document.getElementById('reminderCounter');
-  if(el) el.textContent=REMINDERS[reminderIdx];
-  if(counter) counter.textContent=(reminderIdx+1)+' / '+REMINDERS.length;
-  // Highlight matching rule card
-  for(var i=0;i<10;i++){
-    var card=document.getElementById('rule'+i);
-    if(card){
-      if(i===reminderIdx) card.classList.add('active-rule');
-      else card.classList.remove('active-rule');
-    }
-  }
+function buildRemindersStrip(){
+  var strip=document.getElementById('remindersStrip');
+  if(!strip) return;
+  // Create inner div for animation
+  var inner=document.createElement('div');
+  inner.className='reminders-inner';
+  // Duplicate pills for seamless loop
+  var allPills='';
+  [REMINDERS,REMINDERS].forEach(function(set){
+    set.forEach(function(r){
+      allPills+='<span class="reminder-pill">'+r+'</span>';
+    });
+  });
+  inner.innerHTML=allPills;
+  strip.innerHTML='';
+  strip.appendChild(inner);
 }
+
+// reminders shown as static strip
 
 function stopReminders(){if(reminderInterval)clearInterval(reminderInterval);}
 
@@ -608,16 +670,26 @@ document.addEventListener('keydown',function(e){
   if(inInput) return;
 
   var onRapport=document.getElementById('sRapport').classList.contains('active');
+  var onFrame=document.getElementById('sFrame').classList.contains('active');
   var onMain=document.getElementById('sMain').classList.contains('active');
   var onPain=document.getElementById('sPain').classList.contains('active');
   var onDream=document.getElementById('sDream').classList.contains('active');
 
   // FORWARD — spacebar, right arrow, volume up
-  if(e.code==='Space'||e.code==='ArrowRight'||e.code==='AudioVolumeUp'){
+  if(e.code==='Space'||e.code==='ArrowRight'||e.code==='AudioVolumeUp'||e.code==='PageDown'||e.code==='Enter'||e.code==='NumpadEnter'||e.code==='KeyB'||e.code==='F5'||e.code==='F8'||e.code==='F9'||e.key==='MediaPlayPause'){
     e.preventDefault();
-    if(onRapport) goToMain();
+    if(onRapport) goToFrame();
+    else if(onFrame) goToMain();
     else if(onPain) painNext();
     else if(onDream) dreamNext();
+    else if(onMain){
+      pedalCount++;
+      if(pedalCount>=3){
+        pedalCount=0;
+        var qWrap=document.getElementById('questionsWrap');
+        if(qWrap) qWrap.scrollBy({top:150,behavior:'smooth'});
+      }
+    }
     return;
   }
 
