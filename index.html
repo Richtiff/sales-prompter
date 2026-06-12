@@ -8,10 +8,10 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#000;--surface:#0d0d0d;--surface2:#141414;--border:#1e1e1e;
-  --text:#fff;--muted:#555;--muted2:#222;
+  --text:#fff;--muted:#444;
   --green:#00d26a;--green-dim:#061510;
-  --red:#ff3b3b;--red-dim:#1a0707;
   --amber:#ff9500;--amber-dim:#1a0e00;
+  --red:#ff3b3b;--red-dim:#1a0707;
   --blue:#0a84ff;
   --purple:#bf5af2;--purple-dim:#130a1a;
 }
@@ -21,200 +21,189 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 /* ── SETUP ── */
 #sSetup{background:var(--bg);overflow-y:auto;align-items:center;justify-content:center;padding:40px 24px;}
-.sw{width:100%;max-width:520px;}
+.sw{width:100%;max-width:500px;}
 .s-logo{font-size:11px;letter-spacing:4px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;}
-.s-title{font-size:42px;font-weight:700;letter-spacing:-1.5px;margin-bottom:4px;}
-.s-sub{font-size:14px;color:var(--muted);margin-bottom:32px;}
-.s-sec{margin-bottom:20px;}
+.s-title{font-size:40px;font-weight:700;letter-spacing:-1.5px;margin-bottom:4px;}
+.s-sub{font-size:14px;color:var(--muted);margin-bottom:28px;}
+.s-sec{margin-bottom:18px;}
 .s-lbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
 .s-inp{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--text);font-size:18px;font-family:inherit;outline:none;}
 .s-inp:focus{border-color:var(--green);}
-.dpb{background:var(--purple-dim);border:1px solid rgba(191,90,242,0.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;}
-.dpb-title{font-size:9px;letter-spacing:3px;color:rgba(191,90,242,0.5);text-transform:uppercase;margin-bottom:8px;}
-.dpb-text{font-size:14px;color:rgba(191,90,242,0.9);line-height:1.65;font-style:italic;}
+.dpb{background:var(--purple-dim);border:1px solid rgba(191,90,242,0.2);border-radius:12px;padding:14px 18px;margin-bottom:18px;}
+.dpb-title{font-size:9px;letter-spacing:3px;color:rgba(191,90,242,0.4);text-transform:uppercase;margin-bottom:6px;}
+.dpb-text{font-size:14px;color:rgba(191,90,242,0.85);line-height:1.65;font-style:italic;}
 .dpb-text strong{color:#fff;font-style:normal;}
-.hints{background:var(--surface);border-radius:12px;padding:14px 16px;margin-bottom:20px;}
-.hint-row{font-size:13px;color:var(--muted);margin-bottom:6px;line-height:1.5;}
+.hints{background:var(--surface);border-radius:12px;padding:13px 16px;margin-bottom:18px;}
+.hint-row{font-size:13px;color:var(--muted);margin-bottom:5px;line-height:1.5;}
 .hint-row:last-child{margin-bottom:0;}
-.hint-row strong{color:var(--text);}
+.hint-row strong{color:rgba(255,255,255,0.6);}
 .begin-btn{width:100%;background:var(--green);border:none;border-radius:14px;padding:18px;color:#000;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:1px;}
 
-/* ── RAPPORT SCREEN ── */
-#sRapport{background:var(--bg);align-items:center;justify-content:center;padding:40px 32px;}
-.rapport-inner{width:100%;max-width:680px;text-align:center;}
-.rapport-phase{font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
-.rapport-title{font-size:52px;font-weight:800;letter-spacing:-2px;margin-bottom:24px;}
-.rapport-timer-wrap{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px;}
-.rt-circle{width:72px;height:72px;border-radius:50%;background:var(--surface);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--amber);}
-.rt-lbl{font-size:14px;font-weight:700;color:var(--amber);letter-spacing:0.5px;line-height:1.7;text-align:left;}
-.rapport-card{background:var(--surface);border-radius:18px;padding:28px 32px;margin-bottom:20px;border-left:4px solid var(--green);text-align:left;}
-.rapport-q{font-size:26px;color:#fff;line-height:1.5;font-weight:500;margin-bottom:12px;}
-.rapport-q2{font-size:20px;color:rgba(255,255,255,0.6);line-height:1.5;}
-.rapport-skip{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;letter-spacing:1px;}
+/* ── SIMPLE SCREENS (Rapport / Frame) ── */
+.simple-screen{background:var(--bg);align-items:center;justify-content:center;padding:32px 24px;}
+.si{width:100%;max-width:680px;text-align:center;}
+.si-phase{font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.si-title{font-size:48px;font-weight:800;letter-spacing:-2px;margin-bottom:22px;}
+.si-title.g{color:var(--green);}
+.si-card{background:var(--surface);border-radius:16px;padding:24px 28px;margin-bottom:14px;border-left:4px solid var(--green);text-align:left;}
+.si-q{font-size:22px;color:#fff;line-height:1.5;font-weight:500;margin-bottom:10px;}
+.si-q:last-child{margin-bottom:0;}
+.si-q2{font-size:18px;color:rgba(255,255,255,0.5);line-height:1.5;}
+.si-skip{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:1.5px;text-transform:uppercase;}
+.rt-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px;}
+.rt-circle{width:60px;height:60px;border-radius:50%;background:var(--surface);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--amber);flex-shrink:0;}
+.rt-lbl{font-size:12px;font-weight:700;color:var(--amber);letter-spacing:0.5px;line-height:1.8;text-align:left;}
 
-/* ── MAIN CALL SCREEN ── */
-#sMain{background:var(--bg);}
+/* ── CALL SCREEN ── */
+#sCall{background:var(--bg);}
 
-/* Top bar */
-.topbar{padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface);}
-.topbar-left{display:flex;flex-direction:column;gap:2px;}
-.prospect-name{font-size:16px;font-weight:700;color:var(--text);}
-.call-status{font-size:11px;color:var(--green);letter-spacing:2px;text-transform:uppercase;}
-.topbar-right{display:flex;gap:8px;align-items:center;}
-.hk{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10px;color:var(--muted);font-family:monospace;letter-spacing:0.5px;}
-.hk.p{border-color:rgba(255,59,59,0.4);color:rgba(255,59,59,0.6);}
-.hk.d{border-color:rgba(0,210,106,0.4);color:rgba(0,210,106,0.6);}
+.topbar{padding:9px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface);}
+.prospect-name{font-size:16px;font-weight:700;}
+.call-live{font-size:10px;color:var(--green);letter-spacing:2px;margin-top:2px;}
+.topbar-right{display:flex;gap:6px;}
+.hk{background:rgba(0,0,0,0.5);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10px;color:var(--muted);font-family:monospace;}
+.hk.p{border-color:rgba(255,59,59,0.4);color:rgba(255,59,59,0.5);}
+.hk.d{border-color:rgba(0,210,106,0.4);color:rgba(0,210,106,0.5);}
 
-/* Reminder */
+.gold-bar{padding:8px 16px;background:var(--amber-dim);border-bottom:1px solid rgba(255,149,0,0.15);flex-shrink:0;text-align:center;}
+.gold-bar-txt{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;}
 
+.trigger-row{padding:6px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;gap:6px;align-items:center;overflow-x:auto;}
+.trigger-row::-webkit-scrollbar{display:none;}
+.trig-lbl{font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
+.tw{display:inline-block;border-radius:14px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.5px;white-space:nowrap;flex-shrink:0;border:1px solid rgba(255,59,59,0.3);color:var(--red);background:var(--red-dim);}
 
-/* Rules grid */
-.questions-wrap{
-  flex:1;
-  overflow-y:auto;
-  padding:16px 20px;
-  -webkit-overflow-scrolling:touch;
-}
-.q-section-title{
-  font-size:9px;letter-spacing:3px;color:var(--muted);
-  text-transform:uppercase;margin-bottom:10px;margin-top:4px;
-}
-.pq{
-  font-size:22px;font-weight:500;color:#fff;
-  padding:14px 0;border-bottom:1px solid var(--border);
-  line-height:1.4;
-}
-.pq:last-child{border-bottom:none;}
-.pq.lead{font-size:26px;font-weight:700;color:#fff;}
-.pq.sub{font-size:19px;color:rgba(255,255,255,0.65);}
+/* Main question area */
+.q-area{flex:1;overflow-y:auto;padding:24px 20px;-webkit-overflow-scrolling:touch;}
 
-.reminders-strip{
-  flex-shrink:0;
-  border-top:2px solid var(--border);
-  background:var(--surface);
-  padding:10px 0;
-  overflow:hidden;
-  white-space:nowrap;
-  position:relative;
-}
-.reminders-inner{
-  display:inline-block;
-  white-space:nowrap;
-  animation:scrollReminders 120s linear infinite;
-}
-.reminders-inner:hover{animation-play-state:paused;}
-@keyframes scrollReminders{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-.reminder-pill{
-  display:inline-block;
-  background:var(--surface2);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:7px 16px;
-  font-size:12px;
-  font-weight:700;
-  color:rgba(255,255,255,0.55);
-  margin-right:12px;
-  letter-spacing:0.5px;
-  white-space:nowrap;
-}
+.q-section{margin-bottom:28px;padding-bottom:28px;border-bottom:2px solid var(--border);}
+.q-section-name{font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:16px;padding:6px 12px;background:var(--surface2);border-radius:6px;display:inline-block;font-weight:600;}
+
+.main-q{font-size:13px;font-weight:700;color:rgba(255,149,0,0.5);line-height:1.4;margin-bottom:12px;letter-spacing:1px;text-transform:uppercase;}
+.main-q span{font-size:18px;color:var(--amber);font-weight:600;text-transform:none;letter-spacing:0;display:block;margin-top:4px;}
+
+.follow-ups{display:flex;flex-direction:column;gap:0;}
+.fu{font-size:21px;color:#fff;padding:13px 0;border-bottom:1px solid var(--border);line-height:1.45;}
+.fu:last-child{border-bottom:none;}
+.fu.dim{font-size:21px;color:rgba(255,255,255,0.65);}
 
 /* Bottom bar */
-.botbar{padding:12px 20px 16px;flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.mode-btns{display:flex;gap:8px;}
-.pain-trigger{background:var(--red-dim);border:1px solid rgba(255,59,59,0.3);border-radius:10px;padding:10px 18px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;}
-.dream-trigger{background:var(--green-dim);border:1px solid rgba(0,210,106,0.3);border-radius:10px;padding:10px 18px;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;}
-.notes-btn{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
+.botbar{padding:10px 16px 14px;flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pain-btn{background:var(--red-dim);border:1px solid rgba(255,59,59,0.3);border-radius:10px;padding:10px 16px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.dream-btn{background:var(--green-dim);border:1px solid rgba(0,210,106,0.3);border-radius:10px;padding:10px 16px;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.notes-btn{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
 .notes-btn.has{border-color:var(--amber);color:var(--amber);}
-.end-btn{background:transparent;border:1px solid rgba(255,59,59,0.3);border-radius:10px;padding:10px 16px;color:rgba(255,59,59,0.6);font-size:13px;cursor:pointer;font-family:inherit;}
+.end-btn{background:transparent;border:1px solid rgba(255,59,59,0.15);border-radius:10px;padding:10px 12px;color:rgba(255,59,59,0.4);font-size:13px;cursor:pointer;font-family:inherit;}
 
-/* ── PAIN MODE ── */
+/* Reminders strip */
+.rem-strip{flex-shrink:0;border-top:1px solid var(--border);background:var(--surface2);padding:8px 0;overflow:hidden;}
+.rem-inner{display:inline-block;white-space:nowrap;animation:scrollR 90s linear infinite;}
+.rem-inner:hover{animation-play-state:paused;}
+@keyframes scrollR{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.rem-pill{display:inline-block;border-radius:16px;padding:5px 14px;font-size:11px;font-weight:600;margin-right:10px;white-space:nowrap;color:rgba(255,255,255,0.35);letter-spacing:0.3px;}
+.rem-pill.hot{color:var(--amber);}
+
+/* ── PAIN / DREAM MODE ── */
 #sPain{background:#060000;align-items:center;justify-content:center;padding:32px;}
-.mode-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;}
-.mode-label.pain{color:rgba(255,59,59,0.4);}
-.mode-label.dream{color:rgba(0,210,106,0.4);}
-.mode-wrap{width:100%;max-width:680px;text-align:center;}
-.mode-layer{font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
-.mode-layer.pain{color:rgba(255,59,59,0.4);}
-.mode-layer.dream{color:rgba(0,210,106,0.4);}
-.mode-prog{display:flex;gap:5px;justify-content:center;margin-bottom:18px;}
-.pdot{width:7px;height:7px;border-radius:50%;background:rgba(255,59,59,0.15);transition:all 0.3s;}
-.pdot.done{background:rgba(255,59,59,0.35);}
-.pdot.cur{background:var(--red);width:20px;border-radius:4px;}
-.ddot{width:7px;height:7px;border-radius:50%;background:rgba(0,210,106,0.15);transition:all 0.3s;}
-.ddot.done{background:rgba(0,210,106,0.35);}
-.ddot.cur{background:var(--green);width:20px;border-radius:4px;}
-.mode-card{border-radius:20px;padding:40px 36px;margin-bottom:20px;min-height:160px;display:flex;align-items:center;justify-content:center;}
-.mode-card.pain{background:rgba(255,59,59,0.06);border:1px solid rgba(255,59,59,0.2);}
-.mode-card.dream{background:rgba(0,210,106,0.05);border:1px solid rgba(0,210,106,0.2);}
-.mode-q{font-size:32px;color:#fff;line-height:1.45;font-weight:400;}
-.mode-whisper{font-size:13px;font-style:italic;margin-bottom:18px;line-height:1.6;}
-.mode-whisper.pain{color:rgba(255,59,59,0.4);}
-.mode-whisper.dream{color:rgba(0,210,106,0.4);}
-.mode-next-btn{border-radius:14px;padding:15px 36px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;margin-bottom:10px;width:100%;border:none;}
-.mode-next-btn.pain{background:rgba(255,59,59,0.12);color:var(--red);border:1px solid rgba(255,59,59,0.3);}
-.mode-next-btn.dream{background:rgba(0,210,106,0.08);color:var(--green);border:1px solid rgba(0,210,106,0.3);}
-.mode-ret-btn{background:transparent;border-radius:12px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
-.mode-ret-btn.pain{border:1px solid rgba(255,59,59,0.3);color:var(--red);}
-.mode-ret-btn.dream{border:1px solid rgba(0,210,106,0.3);color:var(--green);}
-
-/* ── DREAM MODE ── */
 #sDream{background:#000603;align-items:center;justify-content:center;padding:32px;}
+.mode-lbl{font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;}
+.mode-lbl.p{color:rgba(255,59,59,0.4);}
+.mode-lbl.d{color:rgba(0,210,106,0.4);}
+.mode-wrap{width:100%;max-width:680px;text-align:center;}
+.mode-prog{display:flex;gap:5px;justify-content:center;margin-bottom:16px;}
+.pdot{width:7px;height:7px;border-radius:50%;background:rgba(255,59,59,0.12);transition:all 0.3s;}
+.pdot.done{background:rgba(255,59,59,0.3);}
+.pdot.cur{background:var(--red);width:20px;border-radius:4px;}
+.ddot{width:7px;height:7px;border-radius:50%;background:rgba(0,210,106,0.12);transition:all 0.3s;}
+.ddot.done{background:rgba(0,210,106,0.3);}
+.ddot.cur{background:var(--green);width:20px;border-radius:4px;}
+.mode-layer{font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.mode-layer.p{color:rgba(255,59,59,0.4);}
+.mode-layer.d{color:rgba(0,210,106,0.4);}
+.mode-card{border-radius:20px;padding:36px;margin-bottom:18px;min-height:150px;display:flex;align-items:center;justify-content:center;}
+.mode-card.p{background:rgba(255,59,59,0.06);border:1px solid rgba(255,59,59,0.2);}
+.mode-card.d{background:rgba(0,210,106,0.05);border:1px solid rgba(0,210,106,0.2);}
+.mode-q{font-size:30px;color:#fff;line-height:1.45;}
+.mode-whisper{font-size:13px;font-style:italic;margin-bottom:16px;line-height:1.6;}
+.mode-whisper.p{color:rgba(255,59,59,0.4);}
+.mode-whisper.d{color:rgba(0,210,106,0.4);}
+.mode-next{border-radius:14px;padding:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;width:100%;}
+.mode-next.p{background:rgba(255,59,59,0.1);color:var(--red);border:1px solid rgba(255,59,59,0.3);}
+.mode-next.d{background:rgba(0,210,106,0.08);color:var(--green);border:1px solid rgba(0,210,106,0.3);}
+.mode-ret{background:transparent;border-radius:12px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
+.mode-ret.p{border:1px solid rgba(255,59,59,0.3);color:var(--red);}
+.mode-ret.d{border:1px solid rgba(0,210,106,0.3);color:var(--green);}
 
-/* ── FLASH ── */
+/* Flash */
 #painFlash,#dreamFlash{display:none;position:fixed;inset:0;z-index:90;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
 #painFlash{background:rgba(6,0,0,0.97);}
 #dreamFlash{background:rgba(0,6,3,0.97);}
-.flash-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:8px;}
-.flash-label.red{color:rgba(255,59,59,0.5);}
-.flash-label.green{color:rgba(0,210,106,0.5);}
-.flash-title{font-size:60px;font-weight:800;letter-spacing:-2px;text-align:center;}
-.flash-title.red{color:var(--red);}
-.flash-title.green{color:var(--green);}
-.flash-sub{font-size:15px;font-style:italic;text-align:center;line-height:1.6;}
-.flash-sub.red{color:rgba(255,59,59,0.6);}
-.flash-sub.green{color:rgba(0,210,106,0.6);}
+.fl{font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:8px;}
+.fl.r{color:rgba(255,59,59,0.5);}
+.fl.g{color:rgba(0,210,106,0.5);}
+.ft{font-size:56px;font-weight:800;letter-spacing:-2px;}
+.ft.r{color:var(--red);}
+.ft.g{color:var(--green);}
+.fs{font-size:15px;font-style:italic;text-align:center;line-height:1.6;}
+.fs.r{color:rgba(255,59,59,0.6);}
+.fs.g{color:rgba(0,210,106,0.6);}
 
-/* ── NOTES ── */
+/* Notes */
 #sNotes{background:var(--bg);}
-.notes-hdr{padding:18px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
-.notes-hdr-title{font-size:22px;font-weight:700;}
-.notes-back{background:var(--surface2);border:none;border-radius:10px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
-.notes-list{flex:1;overflow-y:auto;padding:16px 20px;}
-.note-grp{margin-bottom:20px;}
-.note-grp-lbl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
-.note-card{background:var(--surface);border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
+.notes-hdr{padding:16px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+.notes-hdr-title{font-size:20px;font-weight:700;}
+.nback{background:var(--surface2);border:none;border-radius:10px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
+.notes-list{flex:1;overflow-y:auto;padding:14px 20px;}
+.note-card{background:var(--surface);border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
 .note-card.q{border-left:3px solid var(--amber);background:var(--amber-dim);}
 .note-card.n{border-left:3px solid var(--blue);}
-.nt-tag{font-size:10px;font-weight:700;letter-spacing:1px;flex-shrink:0;margin-top:1px;}
+.nt-tag{font-size:10px;font-weight:700;letter-spacing:1px;flex-shrink:0;}
 .nt-tag.q{color:var(--amber);}
 .nt-tag.n{color:var(--blue);}
 .nt-txt{font-size:15px;color:var(--text);line-height:1.4;flex:1;}
 .nt-time{font-size:11px;color:var(--muted);flex-shrink:0;}
 .no-notes{text-align:center;color:var(--muted);font-size:15px;padding:40px 0;line-height:2;}
-.notes-inp{padding:12px 20px 24px;border-top:1px solid var(--border);flex-shrink:0;}
+.notes-inp{padding:12px 20px 20px;border-top:1px solid var(--border);flex-shrink:0;}
 .mode-row{display:flex;gap:8px;margin-bottom:10px;}
-.mode-btn{flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;text-align:center;font-family:inherit;}
+.mode-btn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit;}
 .mode-btn.mn{border-color:var(--blue);background:rgba(10,132,255,0.1);color:var(--blue);}
 .mode-btn.mq{border-color:var(--amber);background:var(--amber-dim);color:var(--amber);}
-.note-ta{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:16px;font-family:inherit;outline:none;resize:none;height:90px;}
+.note-ta{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:16px;font-family:inherit;outline:none;resize:none;height:80px;}
 .note-ta:focus{border-color:var(--blue);}
-.save-btn{width:100%;background:var(--blue);border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;}
+.save-btn{width:100%;background:var(--blue);border:none;border-radius:12px;padding:13px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;}
 
-/* ── END ── */
+/* End */
 #sEnd{background:var(--bg);align-items:center;justify-content:center;padding:48px 32px;overflow-y:auto;}
-.end-title{font-size:60px;font-weight:700;color:var(--green);letter-spacing:-2.5px;margin-bottom:6px;}
-.end-sub{font-size:15px;color:var(--muted);margin-bottom:32px;text-align:center;}
-.end-rules{width:100%;max-width:500px;background:var(--surface);border-radius:16px;padding:20px 24px;margin-bottom:24px;}
-.end-rules-lbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
-.end-rule{font-size:15px;font-weight:700;color:var(--amber);padding:8px 0;border-bottom:1px solid var(--border);letter-spacing:0.3px;}
+.end-title{font-size:52px;font-weight:700;color:var(--green);letter-spacing:-2px;margin-bottom:6px;}
+.end-sub{font-size:14px;color:var(--muted);margin-bottom:24px;text-align:center;}
+.end-box{width:100%;max-width:500px;border-radius:16px;padding:20px 24px;margin-bottom:20px;}
+.end-box.cv{background:var(--purple-dim);border:1px solid rgba(191,90,242,0.2);}
+.end-box.rules{background:var(--surface);border:1px solid var(--border);}
+.end-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+.end-lbl.cv{color:rgba(191,90,242,0.4);}
+.end-lbl.rules{color:var(--muted);}
+.end-cv-line{font-size:16px;color:rgba(191,90,242,0.9);padding:4px 0;line-height:1.5;}
+.end-cv-line.wh{color:#fff;font-weight:700;margin-top:6px;}
+.end-rule{font-size:14px;font-weight:700;color:var(--amber);padding:7px 0;border-bottom:1px solid var(--border);}
 .end-rule:last-child{border-bottom:none;}
-.restart-btn{background:var(--green);border:none;border-radius:16px;padding:18px 48px;color:#000;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
+.restart-btn{background:var(--green);border:none;border-radius:16px;padding:16px 48px;color:#000;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
 
-.flash-in{animation:fi 0.2s ease-out;}
-@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Phase headers */
+.phase-header{
+  padding:12px 16px;
+  margin:0 -20px 20px -20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.phase-header.discovery{background:rgba(0,210,106,0.08);border-top:2px solid rgba(0,210,106,0.3);border-bottom:2px solid rgba(0,210,106,0.3);}
+.phase-header.pain{background:rgba(255,59,59,0.08);border-top:2px solid rgba(255,59,59,0.3);border-bottom:2px solid rgba(255,59,59,0.3);}
+.phase-header.atm{background:rgba(10,132,255,0.08);border-top:2px solid rgba(10,132,255,0.3);border-bottom:2px solid rgba(10,132,255,0.3);}
+.phase-header-txt{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;}
+.phase-header-txt.discovery{color:var(--green);}
+.phase-header-txt.pain{color:var(--red);}
+.phase-header-txt.atm{color:var(--blue);}
+.phase-header-sub{font-size:11px;color:var(--muted);letter-spacing:0.5px;}
 </style>
 </head>
 <body>
@@ -224,185 +213,401 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <div class="sw">
   <div class="s-logo">RICHARD STOKES</div>
   <div class="s-title">Sales Call Flow</div>
-  <div class="s-sub">Active listening · Pain Mode · Dream Mode</div>
-  <div class="s-sec">
-    <div class="s-lbl">Your Name</div>
-    <input class="s-inp" id="inName" value="Richard Stokes" autocomplete="off">
-  </div>
-  <div class="s-sec">
-    <div class="s-lbl">Your Role</div>
-    <input class="s-inp" id="inRole" placeholder="e.g. Lead Sales Advisor at XYZ" autocomplete="off">
-  </div>
-  <div class="s-sec">
-    <div class="s-lbl">Prospect Name</div>
-    <input class="s-inp" id="inProspect" placeholder="e.g. Bob" autocomplete="off">
-  </div>
+  <div class="s-sub">Stay on the gold.</div>
+  <div class="s-sec"><div class="s-lbl">Your Name</div><input class="s-inp" id="inName" value="Richard Stokes" autocomplete="off"></div>
+  <div class="s-sec"><div class="s-lbl">Your Role</div><input class="s-inp" id="inRole" placeholder="e.g. Lead Advisor at Digital Closers" autocomplete="off"></div>
+  <div class="s-sec"><div class="s-lbl">Prospect Name</div><input class="s-inp" id="inProspect" placeholder="e.g. Bob" autocomplete="off"></div>
   <div class="dpb">
     <div class="dpb-title">BEFORE YOU START</div>
     <div class="dpb-text">Add 2–3 emotion points. Bigger curiosity. Bigger surprise.<br><strong>Become a bigger version of yourself.</strong></div>
   </div>
   <div class="hints">
-    <div class="hint-row"><strong>Foot pedal / spacebar / → arrow</strong> — advance</div>
-    <div class="hint-row"><strong>P key</strong> — Pain Mode (after 5 pain points on your pad)</div>
-    <div class="hint-row"><strong>D key</strong> — Dream Mode (after 5 dream points on your pad)</div>
-    <div class="hint-row"><strong>Escape</strong> — return to main screen</div>
+    <div class="hint-row"><strong>Pedal / Space / Enter / B</strong> — advance (3 presses scrolls questions)</div>
+    <div class="hint-row"><strong>P key</strong> — Pain Mode deep dive</div>
+    <div class="hint-row"><strong>D key</strong> — Dream Mode deep dive</div>
+    <div class="hint-row"><strong>Escape</strong> — return to call screen</div>
   </div>
   <button class="begin-btn" onclick="beginCall()">BEGIN CALL</button>
 </div>
 </div>
 
 <!-- RAPPORT -->
-<div id="sRapport" class="screen">
-  <div class="rapport-inner">
-    <div class="rapport-phase">STEP 1 — RAPPORT</div>
-    <div class="rapport-title">RAPPORT</div>
-    <div class="rapport-timer-wrap">
+<div id="sRapport" class="screen simple-screen">
+  <div class="si">
+    <div class="si-phase">STEP 1</div>
+    <div class="si-title">RAPPORT</div>
+    <div class="rt-wrap">
       <div class="rt-circle" id="rtNum">60</div>
-      <div class="rt-lbl">⚠ MAX 60 SECONDS<br>THEN MOVE ON</div>
+      <div class="rt-lbl">⚠ MAX 60 SECONDS<br>YOU'VE GOT THIS<br>JUST BE YOURSELF</div>
     </div>
-    <div class="rapport-card">
-      <div class="rapport-q" id="rapportQ">"Hey Bob — good to speak with you. I'm Richard Stokes."</div>
-      <div class="rapport-q2">"How are you doing today?"</div>
+    <div class="si-card">
+      <div class="si-q" id="rapportQ">"Hey Bob — good to speak with you. I'm Richard Stokes."</div>
+      <div style="height:10px"></div>
+      <div class="si-q2">"How are you doing today?"</div>
     </div>
-    <div class="rapport-skip">FOOT PEDAL / SPACEBAR TO MOVE TO CALL SCREEN</div>
+    <div class="si-skip">PEDAL → FRAME</div>
   </div>
 </div>
 
-
 <!-- FRAME -->
-<div id="sFrame" class="screen">
-  <div class="rapport-inner">
-    <div class="rapport-phase">STEP 2 — FRAME</div>
-    <div class="rapport-title">FRAME</div>
-    <div class="rapport-card">
-      <div class="rapport-q">"Today's call is simple. We have approximately 1 hour."</div>
+<div id="sFrame" class="screen simple-screen">
+  <div class="si">
+    <div class="si-phase">STEP 2</div>
+    <div class="si-title">FRAME</div>
+    <div class="si-card">
+      <div class="si-q">"Today's call is simple. We have approximately 1 hour."</div>
+      <div style="height:10px"></div>
+      <div class="si-q">"I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help."</div>
+      <div style="height:10px"></div>
+      <div class="si-q">"If we can, I'll explain how. If we can't, I'll point you in the right direction."</div>
       <div style="height:14px"></div>
-      <div class="rapport-q2">"I just want to understand where you're at, where you'd like to get to, and most importantly see whether we can genuinely help."</div>
-      <div style="height:14px"></div>
-      <div class="rapport-q2">"If we can, I'll explain how. If we can't, I'll point you in the right direction."</div>
-      <div style="height:16px"></div>
-      <div class="rapport-q" style="color:var(--green);">"Sound fair?"</div>
+      <div class="si-q" style="color:var(--green);">"Sound fair?"</div>
     </div>
-    <div class="rapport-skip">FOOT PEDAL / SPACEBAR — MOVE TO CALL SCREEN</div>
+    <div class="si-skip">PEDAL → CALL SCREEN</div>
   </div>
 </div>
 
 <!-- MAIN CALL SCREEN -->
-<div id="sMain" class="screen">
+<div id="sCall" class="screen">
   <div class="topbar">
-    <div class="topbar-left">
-      <div class="prospect-name" id="mainProspectName">Bob</div>
-      <div class="call-status">● LIVE CALL</div>
+    <div>
+      <div class="prospect-name" id="callProspect">Bob</div>
+      <div class="call-live">● LIVE CALL</div>
     </div>
     <div class="topbar-right">
-      <span class="hk p">P = PAIN MODE</span>
-      <span class="hk d">D = DREAM MODE</span>
+      <span class="hk p">P=PAIN</span>
+      <span class="hk d">D=DREAM</span>
     </div>
   </div>
 
-
-
-  <div class="questions-wrap" id="questionsWrap">
-    <div class="q-section-title">OPENING</div>
-    <div class="pq lead">What made you book the call today?</div>
-    <div class="pq sub">What would you say is your biggest challenge right now?</div>
-
-    <div class="q-section-title" style="margin-top:16px;">POWER QUESTIONS</div>
-    <div class="pq lead">[Their word]?</div>
-    <div class="pq lead">What do you mean by [their word]?</div>
-    <div class="pq">Say more about that.</div>
-    <div class="pq">What does that actually look like?</div>
-    <div class="pq sub">Tell me more.</div>
-    <div class="pq sub">Help me understand that.</div>
-    <div class="pq sub">Walk me through that.</div>
-
-    <div class="q-section-title" style="margin-top:16px;">GO DEEPER</div>
-    <div class="pq">Why is that important?</div>
-    <div class="pq">How has that affected you?</div>
-    <div class="pq">What's the worst part?</div>
-    <div class="pq">What frustrates you most?</div>
-    <div class="pq">How has that affected your confidence?</div>
-    <div class="pq">How has that affected your family?</div>
-
-    <div class="q-section-title" style="margin-top:16px;">DREAM</div>
-    <div class="pq">What do you actually want?</div>
-    <div class="pq">Why do you want that?</div>
-    <div class="pq">What would success look like?</div>
-    <div class="pq">What would that allow you to do?</div>
-    <div class="pq">How would life change?</div>
-    <div class="pq">Paint me a picture of that.</div>
-
-    <div class="q-section-title" style="margin-top:16px;">URGENCY</div>
-    <div class="pq">Why now?</div>
-    <div class="pq">What changed?</div>
-    <div class="pq">Why not another year?</div>
-    <div class="pq">What happens if nothing changes?</div>
-    <div class="pq">What's staying stuck costing you?</div>
-
-    <div class="q-section-title" style="margin-top:16px;">CLARIFY BEFORE ANSWERING</div>
-    <div class="pq">What made you ask that?</div>
-    <div class="pq">What are you trying to work out?</div>
-    <div class="pq">Is there something behind that question?</div>
-    <div class="pq">Tell me more.</div>
+  <div class="gold-bar">
+    <div class="gold-bar-txt">⚡ STAY ON THE GOLD — WHEN YOU HEAR EMOTION, ASK 2–3 MORE QUESTIONS</div>
   </div>
 
-  <div class="reminders-strip" id="remindersStrip"></div>
+  <div class="trigger-row">
+    <span class="trig-lbl">STOP &amp; DIG:</span>
+    <span class="tw">TIME</span>
+    <span class="tw">FREEDOM</span>
+    <span class="tw">FAMILY</span>
+    <span class="tw">FRUSTRATION</span>
+    <span class="tw">REGRET</span>
+    <span class="tw">STUCK</span>
+    <span class="tw">BURNOUT</span>
+    <span class="tw">POTENTIAL</span>
+  </div>
+
+  <div class="q-area" id="qArea">
+
+    <div class="phase-header discovery">
+      <span class="phase-header-txt discovery">◆ DISCOVERY</span>
+      <span class="phase-header-sub">Understand why they are really here · Not the surface answer · The real thing</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">OPENING</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What made you decide to jump on the call today?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What got you interested in this?</div>
+        <div class="fu">How long has this been on your mind?</div>
+        <div class="fu">What are you hoping this could do for you?</div>
+        <div class="fu">What made now the right time?</div>
+        <div class="fu">Have you been looking into this for a while?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">ABOUT THEM</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Tell me a bit about yourself."</span></div>
+      <div class="follow-ups">
+        <div class="fu">Tell me a bit about life outside work.</div>
+        <div class="fu">What do you do day to day?</div>
+        <div class="fu">How long have you been doing that?</div>
+        <div class="fu">What does a normal week look like for you?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">POWER QUESTIONS</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"[Their word]?" · "What do you mean by [their word]?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">Tell me more about that.</div>
+        <div class="fu">Say more about that.</div>
+        <div class="fu">What do you mean by that?</div>
+        <div class="fu">Can you expand on that?</div>
+        <div class="fu">Walk me through that.</div>
+        <div class="fu">Help me understand that.</div>
+        <div class="fu">Earlier you mentioned ________ — what did you mean by that?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">CURRENT SITUATION</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What's happening right now?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What's not working?</div>
+        <div class="fu">What's stopping you?</div>
+        <div class="fu">How long has this been happening?</div>
+        <div class="fu">What frustrates you most?</div>
+        <div class="fu">What's the thing that's sitting heaviest on you?</div>
+      </div>
+    </div>
+
+    <div class="phase-header pain">
+      <span class="phase-header-txt pain">◆ PAIN</span>
+      <span class="phase-header-sub">Find current pain · Current frustration · Current dissatisfaction · Get emotional truth</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">PAIN — SURFACE</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What's the hardest part about that?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What's frustrating about that?</div>
+        <div class="fu">What impact is that having on your life?</div>
+        <div class="fu">What's the real cost of staying where you are?</div>
+        <div class="fu">What's that costing you?</div>
+        <div class="fu">What's the most frustrating part of all this?</div>
+      </div>
+    </div>
+
+    <div class="phase-header pain">
+      <span class="phase-header-txt pain">◆ IN DEPTH — TTT</span>
+      <span class="phase-header-sub">Stay here · This is where most beginners fail · Time · Tried · Consequence</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">T — TIME</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"How long have you been dealing with this?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">How many years have you been living with this?</div>
+        <div class="fu">When did you first realise this was becoming a problem?</div>
+        <div class="fu">You've already been dealing with this for [X] years — could you realistically do another [X]?</div>
+        <div class="fu">What would another 5 years of this look like?</div>
+        <div class="fu">How much longer are you willing to tolerate this?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">T — TRIED</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What have you tried so far?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What happened?</div>
+        <div class="fu">Why didn't that work?</div>
+        <div class="fu">What was missing from that?</div>
+        <div class="fu">Have you worked with anyone before?</div>
+        <div class="fu">What's stopping you from figuring this out on your own?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">T — CONSEQUENCE</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What happens if nothing changes?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What happens if you're still here next year?</div>
+        <div class="fu">How would you feel if nothing changed?</div>
+        <div class="fu">What's the cost of staying here?</div>
+        <div class="fu">How much longer can you realistically keep doing this?</div>
+        <div class="fu">At what point does staying where you are become harder than making a change?</div>
+        <div class="fu">What's the hardest part about knowing you're capable of more but still stuck in this cycle?</div>
+        <div class="fu">If we're having this exact same conversation a year from now — what does that look like?</div>
+      </div>
+    </div>
+
+    <div class="phase-header discovery">
+      <span class="phase-header-txt discovery">◆ DREAM</span>
+      <span class="phase-header-sub">New Vision · Move them forward · Get emotionally attached to a better future</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">NEW VISION</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"If this worked perfectly — what would change first?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What would life look like if this problem disappeared?</div>
+        <div class="fu">What would become possible?</div>
+        <div class="fu">What would a great day look like?</div>
+        <div class="fu">What would having that freedom mean to you?</div>
+        <div class="fu">What would you be doing more of?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">MAKE IT PERSONAL</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What would your family notice?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">How would your confidence change?</div>
+        <div class="fu">Who else would benefit if you got this right?</div>
+        <div class="fu">What would getting this right mean for you personally?</div>
+        <div class="fu">What excites you most about that future?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">MAKE IT REAL</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"If we were having this conversation 12 months from now and everything had gone perfectly — what would you be telling me?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">How different would life feel if that became reality?</div>
+        <div class="fu">What would that mean for you and your family?</div>
+        <div class="fu">What would change first?</div>
+        <div class="fu">What's the part of that future that excites you most?</div>
+      </div>
+    </div>
+
+    <div class="phase-header discovery">
+      <span class="phase-header-txt discovery">◆ KINDRED — TRUST</span>
+      <span class="phase-header-sub">Discover why they already trust you · Get them telling you why they chose you</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">KINDRED</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"What made you reach out to us?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What stood out?</div>
+        <div class="fu">Why this instead of trying to figure it out yourself?</div>
+        <div class="fu">Why this instead of another programme?</div>
+        <div class="fu">What is it about this that feels right?</div>
+      </div>
+    </div>
+
+    <div class="phase-header atm">
+      <span class="phase-header-txt atm">◆ ATM — QUALIFYING</span>
+      <span class="phase-header-sub">Authority · Time · Money · Handle now or handle as objections later</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">A — AUTHORITY</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Tell me a bit about yourself outside of work."</span></div>
+      <div class="follow-ups">
+        <div class="fu">Married, in a relationship, or flying solo these days?</div>
+        <div class="fu">How long have you guys been together?</div>
+        <div class="fu">Got any kids?</div>
+        <div class="fu">Does she know you're on this call — or are we on a secret mission?</div>
+        <div class="fu">When you make bigger decisions like this — do you take the lead or talk it through together?</div>
+        <div class="fu">If today felt right — is that a call you could make yourself?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">T — TIME COMMITMENT</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"If this takes a few hours a week — could you realistically make that happen?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What would need to change for you to make time?</div>
+        <div class="fu">If this was important enough — could you make time for it?</div>
+        <div class="fu">You've been dealing with this for [X] years. If you can't make it a priority now — when will you ever?</div>
+        <div class="fu">If nothing changes, what happens?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">M — MONEY</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Have you invested in yourself before?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What was that experience like?</div>
+        <div class="fu">What did you like? What didn't you like?</div>
+        <div class="fu">What was missing?</div>
+        <div class="fu">What would you want differently this time?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">M — WILLINGNESS</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Is money actually the thing that would stop you — or is it more making sure you're making the right decision?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">If 1 is money would be a genuine concern and 10 is money wouldn't stop you — where would you put yourself?</div>
+        <div class="fu">Why that number and not lower?</div>
+        <div class="fu">What would need to happen for that number to be higher?</div>
+        <div class="fu">Is that a money thing or more of a certainty thing?</div>
+        <div class="fu">Do you see this as an expense or an investment?</div>
+      </div>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">COMMITMENT</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Be honest with me — would you find a way or would you find a reason?"</span></div>
+      <div class="follow-ups">
+        <div class="fu">What makes you say that?</div>
+        <div class="fu">How serious are you about solving this?</div>
+        <div class="fu">Why now?</div>
+        <div class="fu">Why has this become important?</div>
+      </div>
+    </div>
+
+    <div class="phase-header atm">
+      <span class="phase-header-txt atm">◆ SUMMARY</span>
+      <span class="phase-header-sub">Repeat everything back · Build trust · Create certainty · Most closers skip this</span>
+    </div>
+
+    <div class="q-section">
+      <div class="q-section-name">SUMMARY</div>
+      <div class='main-q'>FOLLOW UP WITH<span>"Bob — just so I make sure I've understood correctly..."</span></div>
+      <div class="follow-ups">
+        <div class="fu">Summarise their pain in their exact words.</div>
+        <div class="fu">Summarise their frustrations.</div>
+        <div class="fu">Summarise their failed attempts.</div>
+        <div class="fu">Summarise their dream and goals.</div>
+        <div class="fu">Summarise the consequences of doing nothing.</div>
+        <div class="fu">End with: "Have I got that right?"</div>
+        <div class="fu">Then: "Based on everything you've told me — I genuinely think we can help. Would you like me to walk you through how?"</div>
+      </div>
+    </div>
+
+  </div><!-- end q-area -->
+
+  <div class="rem-strip"><div class="rem-inner" id="remInner"></div></div>
 
   <div class="botbar">
-    <div class="mode-btns">
-      <button class="pain-trigger" onclick="activatePainMode()">🔴 PAIN MODE</button>
-      <button class="dream-trigger" onclick="activateDreamMode()">🟢 DREAM MODE</button>
+    <div style="display:flex;gap:8px;">
+      <button class="pain-btn" onclick="activatePainMode()">🔴 PAIN</button>
+      <button class="dream-btn" onclick="activateDreamMode()">🟢 DREAM</button>
     </div>
     <button class="notes-btn" id="notesBtn" onclick="openNotes()">✎ NOTES</button>
-    <button class="end-btn" onclick="endCall()">END CALL</button>
+    <button class="end-btn" onclick="endCall()">END</button>
   </div>
 </div>
 
 <!-- PAIN FLASH -->
 <div id="painFlash">
-  <div class="flash-label red">PAIN FOUNDATION</div>
-  <div class="flash-title red">STRONG</div>
-  <div class="flash-sub red">You've collected enough.<br>Now go deeper.</div>
+  <div class="fl r">PAIN FOUNDATION</div>
+  <div class="ft r">STRONG</div>
+  <div class="fs r">You've collected enough.<br>Now go deeper.</div>
 </div>
 
 <!-- DREAM FLASH -->
 <div id="dreamFlash">
-  <div class="flash-label green">DREAM FOUNDATION</div>
-  <div class="flash-title green">STRONG</div>
-  <div class="flash-sub green">You know what they want.<br>Now make it bigger.</div>
+  <div class="fl g">DREAM FOUNDATION</div>
+  <div class="ft g">STRONG</div>
+  <div class="fs g">You know what they want.<br>Now make it bigger.</div>
 </div>
 
 <!-- PAIN MODE -->
 <div id="sPain" class="screen">
-  <div class="mode-label pain">PAIN MODE</div>
+  <div class="mode-lbl p">PAIN MODE</div>
   <div class="mode-wrap">
     <div class="mode-prog" id="painProg"></div>
-    <div class="mode-layer pain" id="painLayer">LAYER 1 — SURFACE</div>
-    <div class="mode-card pain"><div class="mode-q" id="painQ">What's the hardest part about that?</div></div>
-    <div class="mode-whisper pain" id="painWhisper">Stay here. Let them keep talking.</div>
-    <button class="mode-next-btn pain" onclick="painNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="mode-ret-btn pain" onclick="exitMode()">← RETURN TO CALL</button>
+    <div class="mode-layer p" id="painLayer">LAYER 1 — SURFACE</div>
+    <div class="mode-card p"><div class="mode-q" id="painQ">What's the hardest part about that?</div></div>
+    <div class="mode-whisper p" id="painWhisper">Stay here. Let them keep talking.</div>
+    <button class="mode-next p" onclick="painNext()">THEY ANSWERED — GO DEEPER ›</button>
+    <button class="mode-ret p" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
 </div>
 
 <!-- DREAM MODE -->
 <div id="sDream" class="screen">
-  <div class="mode-label dream">DREAM MODE</div>
+  <div class="mode-lbl d">DREAM MODE</div>
   <div class="mode-wrap">
     <div class="mode-prog" id="dreamProg"></div>
-    <div class="mode-layer dream" id="dreamLayer">LAYER 1 — WHAT THEY WANT</div>
-    <div class="mode-card dream"><div class="mode-q" id="dreamQ">What do you actually want?</div></div>
-    <div class="mode-whisper dream" id="dreamWhisper">Let them dream out loud. Don't interrupt.</div>
-    <button class="mode-next-btn dream" onclick="dreamNext()">THEY ANSWERED — GO DEEPER ›</button>
-    <button class="mode-ret-btn dream" onclick="exitMode()">← RETURN TO CALL</button>
+    <div class="mode-layer d" id="dreamLayer">LAYER 1 — WHAT THEY WANT</div>
+    <div class="mode-card d"><div class="mode-q" id="dreamQ">What would life look like if this problem disappeared?</div></div>
+    <div class="mode-whisper d" id="dreamWhisper">Let them dream out loud. Don't interrupt.</div>
+    <button class="mode-next d" onclick="dreamNext()">THEY ANSWERED — GO DEEPER ›</button>
+    <button class="mode-ret d" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
 </div>
 
 <!-- NOTES -->
 <div id="sNotes" class="screen">
   <div class="notes-hdr">
-    <span class="notes-hdr-title">Your Notes</span>
-    <button class="notes-back" onclick="closeNotes()">← BACK</button>
+    <span class="notes-hdr-title">Notes</span>
+    <button class="nback" onclick="closeNotes()">← BACK</button>
   </div>
   <div class="notes-list" id="notesList"></div>
   <div class="notes-inp">
@@ -418,15 +623,19 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <!-- END -->
 <div id="sEnd" class="screen">
   <div class="end-title">GREAT CALL.</div>
-  <div class="end-sub" id="endSub">Well done.</div>
-  <div class="end-rules">
-    <div class="end-rules-lbl">RICHARD'S RULES</div>
+  <div class="end-sub">Stay on the gold.</div>
+  <div class="end-box cv">
+    <div class="end-lbl cv">THE CORE PRINCIPLE</div>
+    <div class="end-cv-line">If I am saying it — it's pressure.</div>
+    <div class="end-cv-line">If THEY are saying it — it's conviction.</div>
+    <div class="end-cv-line wh">Help the prospect convince themselves.</div>
+  </div>
+  <div class="end-box rules">
+    <div class="end-lbl rules">RICHARD'S RULES</div>
     <div class="end-rule">⚠ DO NOT SOLVE · DO NOT TEACH</div>
     <div class="end-rule">⚠ DISCOVER FIRST · PITCH SECOND</div>
     <div class="end-rule">⚠ WAIT 2 SECONDS AFTER EVERY ANSWER</div>
     <div class="end-rule">⚠ HUNT FOR UNDERSTANDING NOT QUESTIONS</div>
-    <div class="end-rule">⚠ CLARIFY FIRST · ANSWER SECOND</div>
-    <div class="end-rule">⚠ USE "EARLIER YOU TOLD ME..." THROUGHOUT</div>
     <div class="end-rule">⚠ THE PROSPECT TALKS 70–80%</div>
     <div class="end-rule">⚠ I DO NOT NEED TO BE MORE IMPRESSIVE</div>
     <div class="end-rule">⚠ I NEED TO BE MORE CURIOUS</div>
@@ -435,276 +644,193 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 </div>
 
 <script>
-var yourName='Richard Stokes', yourRole='', prospectName='Bob';
-var pedalCount=0;
-var painIdx=0, dreamIdx=0;
-var noteMode='note', notes=[];
-var rapportInterval=null, rapportSecs=60;
-var reminderInterval=null, reminderIdx=0;
+var yourName='Richard Stokes',yourRole='',prospectName='Bob';
+var painIdx=0,dreamIdx=0,noteMode='note',notes=[];
+var rapportInterval=null,rapportSecs=60,pedalCount=0;
 
 var REMINDERS=[
-  "DO NOT SOLVE",
-  "DO NOT TEACH",
-  "DISCOVER FIRST · PITCH SECOND",
-  "WAIT 2 SECONDS AFTER EVERY ANSWER",
-  "HUNT FOR UNDERSTANDING NOT QUESTIONS",
-  "CLARIFY FIRST · ANSWER SECOND",
-  "USE 'EARLIER YOU TOLD ME...' THROUGHOUT",
-  "THE PROSPECT TALKS 70–80%",
-  "I DO NOT NEED TO BE MORE IMPRESSIVE",
-  "I NEED TO BE MORE CURIOUS",
-  "SHUT UP AND LET THEM FINISH",
+  "IF I AM SAYING IT — IT'S PRESSURE. IF THEY ARE SAYING IT — IT'S CONVICTION.",
+  "STAY ON THE GOLD.",
+  "WHEN YOU HEAR EMOTION — STOP. ASK 2–3 MORE QUESTIONS.",
+  "SHUT UP AND LET THEM FINISH.",
   "REPEAT THEIR LAST WORD BACK. THEN WAIT.",
-  "THEIR NEXT SENTENCE IS BETTER THAN YOUR NEXT QUESTION",
+  "THEIR NEXT SENTENCE IS BETTER THAN YOUR NEXT QUESTION.",
   "YOU DON'T NEED ANOTHER QUESTION. YOU NEED ANOTHER PAUSE.",
-  "ASK ONE. WAIT. THEN MAYBE ONE MORE.",
-  "STOP. THEY HAVEN'T FINISHED YET.",
-  "WHAT DID THEY JUST SAY? GO DEEPER ON THAT.",
   "SILENCE IS NOT AWKWARD. IT'S WORKING.",
   "THE GOLD COMES AFTER THE PAUSE.",
-  "DON'T RESCUE THEM. LET IT SIT."
+  "DON'T RESCUE THEM. LET IT SIT.",
+  "DO NOT SOLVE. DO NOT TEACH.",
+  "DISCOVER FIRST. PITCH SECOND.",
+  "WAIT 2 SECONDS AFTER EVERY ANSWER.",
+  "THE PROSPECT TALKS 70–80%.",
+  "I DO NOT NEED TO BE MORE IMPRESSIVE. I NEED TO BE MORE CURIOUS.",
+  "STOP. THEY HAVEN'T FINISHED YET.",
+  "WHAT DID THEY JUST SAY? GO DEEPER ON THAT.",
+  "DON'T BECOME THEIR MATE. BE THEIR GUIDE."
 ];
 
 var PAIN_Qs=[
   {layer:"LAYER 1 — SURFACE",q:"What's the hardest part about that?",w:"Stay here. Let them keep talking."},
-  {layer:"LAYER 2 — MEANING",q:"What do you mean by that exactly?",w:"Make sure you understand. Don't assume."},
-  {layer:"LAYER 3 — DURATION",q:"How long have you been dealing with this?",w:"Duration builds urgency. Let that land."},
-  {layer:"LAYER 4 — IMPACT",q:"How has that been affecting you day to day?",w:"This is where it gets real. Stay here."},
-  {layer:"LAYER 5 — FRUSTRATION",q:"What are you most fed up with?",w:"Frustration is emotion. You're getting closer."},
-  {layer:"LAYER 6 — COST",q:"What's that actually costing you?",w:"Let them say the number. Don't suggest it."},
-  {layer:"LAYER 7 — PERSONAL",q:"How has this affected you personally?",w:"Personal pain is the deepest. Don't rush this."},
-  {layer:"LAYER 8 — OTHERS",q:"Who else is feeling the impact of this?",w:"Family and others make it more real. Be still."},
-  {layer:"LAYER 9 — IDENTITY",q:"How do you feel about where you are right now?",w:"Identity-level pain. The sale lives here."},
-  {layer:"LAYER 10 — CONSEQUENCE",q:"What happens if nothing changes?",w:"The cost of inaction. Let them say it out loud."}
+  {layer:"LAYER 2 — MEANING",q:"What do you mean by that exactly?",w:"Don't assume. Make sure you understand."},
+  {layer:"LAYER 3 — TIME",q:"How long have you been dealing with this?",w:"Then use double time with their answer."},
+  {layer:"LAYER 4 — THINGS TRIED",q:"What have you tried to solve this?",w:"Install doubt. They can't say they'll figure it out alone."},
+  {layer:"LAYER 5 — IMPACT",q:"What is that actually costing you?",w:"Financial and personal. Let them feel both."},
+  {layer:"LAYER 6 — REAL COST",q:"What's the real cost of staying where you are?",w:"The cost they don't talk about. Let them say it."},
+  {layer:"LAYER 7 — LONGEVITY",q:"How much longer can you realistically keep doing this?",w:"The word 'realistically' does a lot of work here."},
+  {layer:"LAYER 8 — CONSEQUENCE",q:"What do you think happens if nothing changes?",w:"Let them say it. Don't say it for them."},
+  {layer:"LAYER 9 — TIPPING POINT",q:"At what point does staying where you are become harder than making a change?",w:"This flips the risk. Staying becomes the danger."},
+  {layer:"LAYER 10 — SELF CONVICTION",q:"So what do you think needs to happen?",w:"Wait for it. The sale lives in this answer."}
 ];
 
 var DREAM_Qs=[
-  {layer:"LAYER 1 — WHAT THEY WANT",q:"What do you actually want?",w:"Let them dream out loud. Don't interrupt."},
-  {layer:"LAYER 2 — WHY IT MATTERS",q:"Why is that important to you?",w:"The reason behind the dream is more powerful than the dream."},
-  {layer:"LAYER 3 — SPECIFICS",q:"What would success actually look like?",w:"Vague dreams don't close. Get specific."},
-  {layer:"LAYER 4 — FREEDOM",q:"What would that allow you to do that you can't do right now?",w:"Freedom is the real motivator for most people."},
-  {layer:"LAYER 5 — FEELING",q:"How would that feel?",w:"Emotion drives decisions. Let them feel it."},
-  {layer:"LAYER 6 — TIMELINE",q:"If we were talking 6 months from now and it had worked — what's different?",w:"A dream with a timeline becomes a goal."},
-  {layer:"LAYER 7 — OTHERS",q:"Who else would benefit if you got this right?",w:"When family is involved the stakes are higher."},
-  {layer:"LAYER 8 — IDENTITY",q:"Who would you become if this worked?",w:"Identity-level desire is the strongest motivator."},
-  {layer:"LAYER 9 — PICTURE",q:"Paint me a picture of that life.",w:"Make the dream vivid. The more real it feels the more they want it."},
-  {layer:"LAYER 10 — GAP",q:"How far are you from that right now?",w:"The gap between here and there is where you build the sale."}
+  {layer:"LAYER 1 — WHAT THEY WANT",q:"What would life look like if this problem disappeared?",w:"Let them dream out loud. Don't interrupt."},
+  {layer:"LAYER 2 — POSSIBILITIES",q:"What would become possible?",w:"Open ended. Let them go wherever they want."},
+  {layer:"LAYER 3 — FREEDOM",q:"What would that allow you to do that you can't do now?",w:"Freedom is the real motivator for most people."},
+  {layer:"LAYER 4 — DAY TO DAY",q:"How would your day-to-day life change?",w:"Make it concrete. Make it real."},
+  {layer:"LAYER 5 — FEELING",q:"How would your confidence change?",w:"Emotion drives decisions. Let them feel it."},
+  {layer:"LAYER 6 — FAMILY",q:"What would your family notice?",w:"When family is involved the stakes are higher."},
+  {layer:"LAYER 7 — PERSONAL",q:"What would getting this right mean for you personally?",w:"The word 'personally' takes it deeper."},
+  {layer:"LAYER 8 — 12 MONTHS",q:"If we were having this conversation 12 months from now and everything had gone perfectly — what would you be telling me?",w:"A dream with a timeline becomes a goal."},
+  {layer:"LAYER 9 — EXCITEMENT",q:"What excites you most about that future?",w:"Find what lights them up. Stay there."},
+  {layer:"LAYER 10 — SELF CONVICTION",q:"How different would life feel if that became reality?",w:"Let them feel the gap between now and then."}
 ];
 
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-}
+function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
 
 function beginCall(){
   yourName=document.getElementById('inName').value.trim()||'Richard Stokes';
   yourRole=document.getElementById('inRole').value.trim();
   prospectName=document.getElementById('inProspect').value.trim()||'Bob';
-  // Set rapport screen
-  var rq=document.getElementById('rapportQ');
-  rq.textContent='"Hey '+prospectName+' — good to speak with you. I\'m '+yourName+(yourRole?', '+yourRole:'')+'."';
-  document.getElementById('mainProspectName').textContent=prospectName;
-  notes=[];
-  updateNotesBtn();
-  showScreen('sRapport');
-  startRapportTimer();
+  document.getElementById('rapportQ').textContent='"Hey '+prospectName+' — good to speak with you. I\'m '+yourName+(yourRole?', '+yourRole:'')+'."';
+  document.getElementById('callProspect').textContent=prospectName;
+  notes=[];pedalCount=0;
+  updateNotesBtn();buildReminders();
+  showScreen('sRapport');startRapportTimer();
 }
 
 function startRapportTimer(){
-  if(rapportInterval) clearInterval(rapportInterval);
+  if(rapportInterval)clearInterval(rapportInterval);
   rapportSecs=60;
   rapportInterval=setInterval(function(){
     rapportSecs--;
     var el=document.getElementById('rtNum');
     if(!el){clearInterval(rapportInterval);return;}
     el.textContent=rapportSecs;
-    if(rapportSecs<=10) el.style.color='var(--red)';
+    if(rapportSecs<=10)el.style.color='var(--red)';
     if(rapportSecs<=0){clearInterval(rapportInterval);el.textContent='✓';el.style.color='var(--green)';}
   },1000);
 }
 
-function goToFrame(){
-  if(rapportInterval) clearInterval(rapportInterval);
-  showScreen('sFrame');
-}
-
-function goToMain(){
-  pedalCount=0;
-  showScreen('sMain');
-  startReminderRotation();
-}
-
-function startReminderRotation(){
-  if(reminderInterval) clearInterval(reminderInterval);
-  reminderIdx=0;
-  buildRemindersStrip();
-}
-
-function buildRemindersStrip(){
-  var strip=document.getElementById('remindersStrip');
-  if(!strip) return;
-  // Create inner div for animation
-  var inner=document.createElement('div');
-  inner.className='reminders-inner';
-  // Duplicate pills for seamless loop
-  var allPills='';
+function buildReminders(){
+  var inner=document.getElementById('remInner');if(!inner)return;
+  var html='';
   [REMINDERS,REMINDERS].forEach(function(set){
-    set.forEach(function(r){
-      allPills+='<span class="reminder-pill">'+r+'</span>';
+    set.forEach(function(r,i){
+      html+='<span class="rem-pill'+(i<3?' hot':'')+' ">'+r+'</span>';
     });
   });
-  inner.innerHTML=allPills;
-  strip.innerHTML='';
-  strip.appendChild(inner);
+  inner.innerHTML=html;
 }
 
-// reminders shown as static strip
-
-function stopReminders(){if(reminderInterval)clearInterval(reminderInterval);}
-
-function endCall(){stopReminders();showScreen('sEnd');}
+function endCall(){showScreen('sEnd');}
 function restart(){showScreen('sSetup');}
 
-// Pain Mode
+var savedScrollPos=0;
 function activatePainMode(){
-  var flash=document.getElementById('painFlash');
-  flash.style.display='flex';
-  setTimeout(function(){
-    flash.style.display='none';
-    painIdx=0; renderPainQ(); showScreen('sPain');
-  },1500);
+  var qa=document.getElementById('qArea');
+  if(qa) savedScrollPos=qa.scrollTop;
+  var f=document.getElementById('painFlash');f.style.display='flex';
+  setTimeout(function(){f.style.display='none';painIdx=0;renderPainQ();showScreen('sPain');},1500);
 }
-
 function renderPainQ(){
   var p=PAIN_Qs[painIdx]||PAIN_Qs[PAIN_Qs.length-1];
   document.getElementById('painLayer').textContent=p.layer;
   document.getElementById('painQ').textContent=p.q;
   document.getElementById('painWhisper').textContent=p.w;
-  var prog=document.getElementById('painProg'); prog.innerHTML='';
-  PAIN_Qs.forEach(function(_,i){
-    var d=document.createElement('div');
-    d.className='pdot'+(i<painIdx?' done':i===painIdx?' cur':'');
-    prog.appendChild(d);
-  });
+  var prog=document.getElementById('painProg');prog.innerHTML='';
+  PAIN_Qs.forEach(function(_,i){var d=document.createElement('div');d.className='pdot'+(i<painIdx?' done':i===painIdx?' cur':'');prog.appendChild(d);});
 }
+function painNext(){if(painIdx<PAIN_Qs.length-1)painIdx++;renderPainQ();}
 
-function painNext(){
-  if(painIdx<PAIN_Qs.length-1) painIdx++;
-  renderPainQ();
-}
-
-// Dream Mode
 function activateDreamMode(){
-  var flash=document.getElementById('dreamFlash');
-  flash.style.display='flex';
-  setTimeout(function(){
-    flash.style.display='none';
-    dreamIdx=0; renderDreamQ(); showScreen('sDream');
-  },1500);
+  var qa=document.getElementById('qArea');
+  if(qa) savedScrollPos=qa.scrollTop;
+  var f=document.getElementById('dreamFlash');f.style.display='flex';
+  setTimeout(function(){f.style.display='none';dreamIdx=0;renderDreamQ();showScreen('sDream');},1500);
 }
-
 function renderDreamQ(){
   var d=DREAM_Qs[dreamIdx]||DREAM_Qs[DREAM_Qs.length-1];
   document.getElementById('dreamLayer').textContent=d.layer;
   document.getElementById('dreamQ').textContent=d.q;
   document.getElementById('dreamWhisper').textContent=d.w;
-  var prog=document.getElementById('dreamProg'); prog.innerHTML='';
-  DREAM_Qs.forEach(function(_,i){
-    var dd=document.createElement('div');
-    dd.className='ddot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');
-    prog.appendChild(dd);
-  });
+  var prog=document.getElementById('dreamProg');prog.innerHTML='';
+  DREAM_Qs.forEach(function(_,i){var dd=document.createElement('div');dd.className='ddot'+(i<dreamIdx?' done':i===dreamIdx?' cur':'');prog.appendChild(dd);});
+}
+function dreamNext(){if(dreamIdx<DREAM_Qs.length-1)dreamIdx++;renderDreamQ();}
+function exitMode(){
+  showScreen('sCall');
+  setTimeout(function(){
+    var qa=document.getElementById('qArea');
+    if(qa) qa.scrollTop=savedScrollPos;
+  },50);
 }
 
-function dreamNext(){
-  if(dreamIdx<DREAM_Qs.length-1) dreamIdx++;
-  renderDreamQ();
-}
-
-function exitMode(){showScreen('sMain');}
-
-// Notes
-function setMode(m){
-  noteMode=m;
-  document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');
-  document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');
-}
-
+function setMode(m){noteMode=m;document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');}
 function openNotes(){renderNotes();showScreen('sNotes');}
-function closeNotes(){showScreen('sMain');}
-
-function updateNotesBtn(){
-  var btn=document.getElementById('notesBtn');
-  if(!btn) return;
-  if(notes.length>0){btn.classList.add('has');btn.textContent='✎ NOTES ('+notes.length+')';}
-  else{btn.classList.remove('has');btn.textContent='✎ NOTES';}
-}
-
+function closeNotes(){showScreen('sCall');}
+function updateNotesBtn(){var b=document.getElementById('notesBtn');if(!b)return;if(notes.length>0){b.classList.add('has');b.textContent='✎ ('+notes.length+')';}else{b.classList.remove('has');b.textContent='✎ NOTES';}}
 function renderNotes(){
   var el=document.getElementById('notesList');
-  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.<br>Type below to add one.</div>';return;}
-  var groups={};
-  notes.forEach(function(n){if(!groups[n.time])groups[n.time]=[];groups[n.time].push(n);});
+  if(!notes.length){el.innerHTML='<div class="no-notes">No notes yet.</div>';return;}
   var html='';
-  // Just show flat list by time
-  notes.forEach(function(n){
-    html+='<div class="note-card '+n.type+'"><span class="nt-tag '+n.type+'">'+(n.type==='quote'?'QUOTE':'NOTE')+'</span><span class="nt-txt">'+esc(n.text)+'</span><span class="nt-time">'+n.time+'</span></div>';
-  });
+  notes.forEach(function(n){html+='<div class="note-card '+n.type+'"><span class="nt-tag '+n.type+'">'+(n.type==='quote'?'QUOTE':'NOTE')+'</span><span class="nt-txt">'+esc(n.text)+'</span><span class="nt-time">'+n.time+'</span></div>';});
   el.innerHTML=html;
 }
-
 function saveNote(){
-  var ta=document.getElementById('noteTa');
-  var txt=ta.value.trim();
-  if(!txt) return;
+  var ta=document.getElementById('noteTa');var txt=ta.value.trim();if(!txt)return;
   notes.push({type:noteMode,text:txt,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
-  ta.value='';
-  updateNotesBtn();
-  renderNotes();
+  ta.value='';updateNotesBtn();renderNotes();
 }
-
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// Keyboard — FORWARD ONLY for spacebar/arrows, no back function
 document.addEventListener('keydown',function(e){
   var active=document.activeElement;
-  var inInput=active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT');
-  if(inInput) return;
-
+  if(active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT'))return;
   var onRapport=document.getElementById('sRapport').classList.contains('active');
   var onFrame=document.getElementById('sFrame').classList.contains('active');
-  var onMain=document.getElementById('sMain').classList.contains('active');
+  var onCall=document.getElementById('sCall').classList.contains('active');
   var onPain=document.getElementById('sPain').classList.contains('active');
   var onDream=document.getElementById('sDream').classList.contains('active');
-
-  // FORWARD — spacebar, right arrow, volume up
-  if(e.code==='Space'||e.code==='ArrowRight'||e.code==='AudioVolumeUp'||e.code==='PageDown'||e.code==='Enter'||e.code==='NumpadEnter'||e.code==='KeyB'||e.code==='F5'||e.code==='F8'||e.code==='F9'||e.key==='MediaPlayPause'){
+  var isFwd=e.code==='Space'||e.code==='ArrowRight'||e.code==='Enter'||e.code==='NumpadEnter'||e.code==='KeyB'||e.code==='PageDown'||e.code==='F5'||e.code==='F8'||e.code==='F9'||e.code==='AudioVolumeUp';
+  if(isFwd){
     e.preventDefault();
-    if(onRapport) goToFrame();
-    else if(onFrame) goToMain();
-    else if(onPain) painNext();
-    else if(onDream) dreamNext();
-    else if(onMain){
-      pedalCount++;
-      if(pedalCount>=3){
-        pedalCount=0;
-        var qWrap=document.getElementById('questionsWrap');
-        if(qWrap) qWrap.scrollBy({top:150,behavior:'smooth'});
+    if(onRapport){if(rapportInterval)clearInterval(rapportInterval);showScreen('sFrame');}
+    else if(onFrame)showScreen('sCall');
+    else if(onPain)painNext();
+    else if(onDream)dreamNext();
+    else if(onCall){
+      // Find next section header and scroll to it
+      var qa=document.getElementById('qArea');
+      if(qa){
+        var sections=qa.querySelectorAll('.q-section,.phase-header');
+        var qaRect=qa.getBoundingClientRect();
+        var qaScroll=qa.scrollTop;
+        var nextTop=null;
+        sections.forEach(function(s){
+          var top=s.offsetTop;
+          if(top>qaScroll+40&&(nextTop===null||top<nextTop)){
+            nextTop=top;
+          }
+        });
+        if(nextTop!==null) qa.scrollTo({top:nextTop-10,behavior:'smooth'});
+        else qa.scrollTo({top:0,behavior:'smooth'});
       }
     }
     return;
   }
-
-  // P — Pain Mode (only from main screen)
-  if(e.code==='KeyP'&&onMain){e.preventDefault();activatePainMode();}
-
-  // D — Dream Mode (only from main screen)
-  if(e.code==='KeyD'&&onMain){e.preventDefault();activateDreamMode();}
-
-  // Escape — return to main
-  if(e.code==='Escape'){
-    if(onPain||onDream) exitMode();
-  }
+  if(e.code==='KeyP'&&onCall){e.preventDefault();activatePainMode();}
+  if(e.code==='KeyD'&&onCall){e.preventDefault();activateDreamMode();}
+  if(e.code==='Escape'&&(onPain||onDream))exitMode();
 });
 </script>
 </body>
