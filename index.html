@@ -38,93 +38,69 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .hint-row strong{color:rgba(255,255,255,0.6);}
 .begin-btn{width:100%;background:var(--green);border:none;border-radius:14px;padding:18px;color:#000;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;}
 
-/* SIMPLE SCREENS */
-.simple{background:var(--bg);align-items:center;justify-content:center;padding:32px 24px;}
-.si{width:100%;max-width:680px;text-align:center;}
-.si-phase{font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
-.si-title{font-size:48px;font-weight:800;letter-spacing:-2px;margin-bottom:22px;}
-.si-title.g{color:var(--green);}
-.si-card{background:var(--surface);border-radius:16px;padding:24px 28px;margin-bottom:14px;border-left:4px solid var(--green);text-align:left;}
-.si-q{font-size:22px;color:#fff;line-height:1.5;font-weight:500;margin-bottom:10px;}
-.si-q:last-child{margin-bottom:0;}
-.si-skip{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:1.5px;text-transform:uppercase;}
-.rt-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px;}
-.rt-circle{width:60px;height:60px;border-radius:50%;background:var(--surface);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--amber);flex-shrink:0;}
-.rt-lbl{font-size:12px;font-weight:700;color:var(--amber);letter-spacing:0.3px;line-height:1.8;text-align:left;}
+/* CALL SLIDE — the main template for every step */
+.call-slide{background:var(--bg);flex-direction:column;}
 
-/* CALL SCREEN */
-#sCall{background:var(--bg);}
-.topbar{padding:9px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface);}
-.prospect-name{font-size:16px;font-weight:700;}
-.call-live{font-size:10px;color:var(--green);letter-spacing:2px;margin-top:2px;}
-.hk{background:rgba(0,0,0,0.5);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10px;color:var(--muted);font-family:monospace;}
+.slide-topbar{padding:9px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface);}
+.slide-prospect{font-size:15px;font-weight:700;}
+.slide-live{font-size:10px;color:var(--green);letter-spacing:2px;margin-top:2px;}
+.slide-progress{display:flex;gap:3px;align-items:center;}
+.sp{width:5px;height:5px;border-radius:50%;background:var(--surface2);}
+.sp.done{background:rgba(0,210,106,0.3);}
+.sp.cur{background:var(--green);width:14px;border-radius:3px;}
+.slide-hks{display:flex;gap:5px;}
+.hk{background:rgba(0,0,0,0.5);border:1px solid var(--border);border-radius:5px;padding:3px 7px;font-size:10px;color:var(--muted);font-family:monospace;}
 .hk.p{border-color:rgba(255,59,59,0.4);color:rgba(255,59,59,0.5);}
 .hk.d{border-color:rgba(0,210,106,0.4);color:rgba(0,210,106,0.5);}
 
-.gold-bar{padding:7px 16px;background:var(--amber-dim);border-bottom:1px solid rgba(255,149,0,0.15);flex-shrink:0;text-align:center;}
-.gold-bar-txt{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;}
+.gold-bar{padding:7px 16px;background:var(--amber-dim);border-bottom:1px solid rgba(255,149,0,0.15);flex-shrink:0;text-align:center;font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;}
 
-.trigger-row{padding:6px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;gap:6px;align-items:center;overflow-x:auto;}
+.trigger-row{padding:5px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;gap:5px;align-items:center;overflow-x:auto;}
 .trigger-row::-webkit-scrollbar{display:none;}
-.trig-lbl{font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
-.tw{border-radius:14px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;border:1px solid rgba(255,59,59,0.3);color:var(--red);background:var(--red-dim);}
+.trig-lbl{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
+.tw{border-radius:12px;padding:3px 9px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;border:1px solid rgba(255,59,59,0.3);color:var(--red);background:var(--red-dim);}
 
-/* Question area */
-.q-area{flex:1;overflow-y:auto;padding:0 0 20px 0;-webkit-overflow-scrolling:touch;}
+/* Slide body */
+.slide-body{flex:1;overflow-y:auto;padding:20px 20px 10px;-webkit-overflow-scrolling:touch;}
 
-/* Phase dividers */
-.phase-div{padding:10px 16px;display:flex;align-items:center;gap:10px;}
-.phase-div.disc{background:rgba(0,210,106,0.07);border-bottom:1px solid rgba(0,210,106,0.15);border-top:1px solid rgba(0,210,106,0.15);}
-.phase-div.pain{background:rgba(255,59,59,0.07);border-bottom:1px solid rgba(255,59,59,0.15);border-top:1px solid rgba(255,59,59,0.15);}
-.phase-div.dream{background:rgba(0,210,106,0.07);border-bottom:1px solid rgba(0,210,106,0.15);border-top:1px solid rgba(0,210,106,0.15);}
-.phase-div.atm{background:rgba(10,132,255,0.07);border-bottom:1px solid rgba(10,132,255,0.15);border-top:1px solid rgba(10,132,255,0.15);}
-.phase-div.summary{background:rgba(191,90,242,0.07);border-bottom:1px solid rgba(191,90,242,0.15);border-top:1px solid rgba(191,90,242,0.15);}
-.phase-name{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
-.phase-name.disc{color:var(--green);}
-.phase-name.pain{color:var(--red);}
-.phase-name.dream{color:var(--green);}
-.phase-name.atm{color:var(--blue);}
-.phase-name.summary{color:var(--purple);}
-.phase-sub{font-size:11px;color:var(--muted);}
+.phase-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:10px;display:inline-block;padding:4px 10px;border-radius:6px;}
+.phase-tag.disc{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,210,106,0.2);}
+.phase-tag.pain{color:var(--red);background:var(--red-dim);border:1px solid rgba(255,59,59,0.2);}
+.phase-tag.dream{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,210,106,0.2);}
+.phase-tag.atm{color:var(--blue);background:var(--blue-dim);border:1px solid rgba(10,132,255,0.2);}
+.phase-tag.summary{color:var(--purple);background:var(--purple-dim);border:1px solid rgba(191,90,242,0.2);}
 
-/* Questions */
-.q-block{padding:12px 16px 0;}
-.q-ref{font-size:17px;color:var(--amber);font-weight:700;letter-spacing:0.2px;margin-bottom:12px;line-height:1.4;}
-.q-list{display:flex;flex-direction:column;}
-.q-item{font-size:17px;color:#fff;padding:9px 0;border-bottom:1px solid var(--border);line-height:1.4;}
-.q-item:last-child{border-bottom:none;margin-bottom:16px;}
-.q-item.deep{font-size:17px;color:rgba(255,255,255,0.55);}
-.stay-here{padding:10px 16px;text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);border-top:1px solid rgba(255,149,0,0.15);margin-top:4px;}
+.main-question{font-size:28px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:20px;padding-bottom:18px;border-bottom:2px solid var(--border);}
+.main-question.amber{color:var(--amber);}
+.main-question.green{color:var(--green);}
 
-/* ATM structured blocks */
-.atm-block{margin:0 16px 16px;background:var(--surface2);border-radius:12px;padding:14px 16px;}
-.atm-block-title{font-size:10px;letter-spacing:2px;color:var(--blue);text-transform:uppercase;font-weight:700;margin-bottom:10px;}
-.atm-q{font-size:18px;color:#fff;padding:9px 0;border-bottom:1px solid var(--border);line-height:1.4;}
-.atm-q:last-child{border-bottom:none;}
-.atm-q.ref{color:var(--amber);font-style:italic;font-size:16px;}
-.atm-note{font-size:13px;color:rgba(10,132,255,0.6);font-style:italic;margin-top:8px;line-height:1.5;}
+.follow-label{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.fu-list{display:flex;flex-direction:column;}
+.fu{font-size:22px;color:rgba(255,255,255,0.85);padding:12px 0;border-bottom:1px solid var(--border);line-height:1.45;}
+.fu:last-child{border-bottom:none;}
+.fu.amber{color:var(--amber);font-style:italic;}
+.fu.dim{color:rgba(255,255,255,0.45);font-size:16px;}
 
-/* Summary block */
-.summary-block{margin:0 16px 16px;background:var(--purple-dim);border:1px solid rgba(191,90,242,0.15);border-radius:12px;padding:16px;}
-.summary-q{font-size:18px;color:#fff;padding:9px 0;border-bottom:1px solid rgba(191,90,242,0.1);line-height:1.4;}
-.summary-q:last-child{border-bottom:none;}
-.summary-q.key{color:var(--amber);font-weight:600;}
-
-/* Reminders */
-.rem-strip{flex-shrink:0;border-top:1px solid var(--border);background:var(--surface2);padding:7px 0;overflow:hidden;}
-.rem-inner{display:inline-block;white-space:nowrap;animation:scrollR 90s linear infinite;}
-.rem-inner:hover{animation-play-state:paused;}
-@keyframes scrollR{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.rem-pill{display:inline-block;padding:4px 14px;font-size:11px;font-weight:600;margin-right:10px;white-space:nowrap;color:rgba(255,255,255,0.3);}
-.rem-pill.hot{color:var(--amber);}
+/* Rapport timer */
+.rt-wrap{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.rt-circle{width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--amber);flex-shrink:0;}
+.rt-lbl{font-size:12px;font-weight:700;color:var(--amber);line-height:1.8;}
 
 /* Bottom bar */
-.botbar{padding:10px 16px 14px;flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.pain-btn{background:var(--red-dim);border:1px solid rgba(255,59,59,0.3);border-radius:10px;padding:10px 16px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
-.dream-btn{background:var(--green-dim);border:1px solid rgba(0,210,106,0.3);border-radius:10px;padding:10px 16px;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.slide-botbar{padding:10px 16px 14px;flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pain-btn{background:var(--red-dim);border:1px solid rgba(255,59,59,0.3);border-radius:10px;padding:10px 14px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.dream-btn{background:var(--green-dim);border:1px solid rgba(0,210,106,0.3);border-radius:10px;padding:10px 14px;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
 .notes-btn{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;}
 .notes-btn.has{border-color:var(--amber);color:var(--amber);}
 .end-btn{background:transparent;border:1px solid rgba(255,59,59,0.15);border-radius:10px;padding:10px 12px;color:rgba(255,59,59,0.4);font-size:13px;cursor:pointer;font-family:inherit;}
+
+/* Reminders */
+.rem-strip{flex-shrink:0;border-top:1px solid var(--border);background:var(--surface2);padding:6px 0;overflow:hidden;}
+.rem-inner{display:inline-block;white-space:nowrap;animation:scrollR 90s linear infinite;}
+.rem-inner:hover{animation-play-state:paused;}
+@keyframes scrollR{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.rem-pill{display:inline-block;padding:3px 12px;font-size:11px;font-weight:600;margin-right:8px;white-space:nowrap;color:rgba(255,255,255,0.28);}
+.rem-pill.hot{color:var(--amber);}
 
 /* Pain/Dream modes */
 #sPain{background:#060000;align-items:center;justify-content:center;padding:32px;}
@@ -146,11 +122,11 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .mode-card{border-radius:20px;padding:36px;margin-bottom:18px;min-height:150px;display:flex;align-items:center;justify-content:center;}
 .mode-card.p{background:rgba(255,59,59,0.06);border:1px solid rgba(255,59,59,0.2);}
 .mode-card.d{background:rgba(0,210,106,0.05);border:1px solid rgba(0,210,106,0.2);}
-.mode-q{font-size:30px;color:#fff;line-height:1.45;}
+.mode-q{font-size:28px;color:#fff;line-height:1.45;}
 .mode-whisper{font-size:13px;font-style:italic;margin-bottom:16px;line-height:1.6;}
 .mode-whisper.p{color:rgba(255,59,59,0.4);}
 .mode-whisper.d{color:rgba(0,210,106,0.4);}
-.mode-next{border-radius:14px;padding:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;width:100%;}
+.mode-next{border-radius:14px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;width:100%;}
 .mode-next.p{background:rgba(255,59,59,0.1);color:var(--red);border:1px solid rgba(255,59,59,0.3);}
 .mode-next.d{background:rgba(0,210,106,0.08);color:var(--green);border:1px solid rgba(0,210,106,0.3);}
 .mode-ret{background:transparent;border-radius:12px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
@@ -228,314 +204,13 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="dpb-text">Add 2–3 emotion points. Bigger curiosity. Bigger surprise.<br><strong>Become a bigger version of yourself.</strong></div>
   </div>
   <div class="hints">
-    <div class="hint-row"><strong>Pedal / Space / Enter / B</strong> — scroll to next section</div>
+    <div class="hint-row"><strong>Pedal / Space / Enter / B</strong> — next slide</div>
     <div class="hint-row"><strong>P key</strong> — Pain Mode deep dive</div>
     <div class="hint-row"><strong>D key</strong> — Dream Mode deep dive</div>
-    <div class="hint-row"><strong>Escape</strong> — return to call screen</div>
+    <div class="hint-row"><strong>Escape</strong> — return to call</div>
   </div>
   <button class="begin-btn" onclick="beginCall()">BEGIN CALL</button>
 </div>
-</div>
-
-<!-- RAPPORT -->
-<div id="sRapport" class="screen simple">
-  <div class="si">
-    <div class="si-phase">STEP 1</div>
-    <div class="si-title">RAPPORT</div>
-    <div class="rt-wrap">
-      <div class="rt-circle" id="rtNum">60</div>
-      <div class="rt-lbl">⚠ MAX 60 SECONDS<br>YOU'VE GOT THIS<br>JUST BE YOURSELF</div>
-    </div>
-    <div class="si-card">
-      <div class="si-q" id="rapportQ">"Hey Bob — good to speak with you. I'm Richard Stokes."</div>
-      <div style="height:8px"></div>
-      <div class="si-q">"How are you doing today?"</div>
-    </div>
-    <div class="si-skip">PEDAL → FRAME</div>
-  </div>
-</div>
-
-<!-- FRAME -->
-<div id="sFrame" class="screen simple">
-  <div class="si">
-    <div class="si-phase">STEP 2</div>
-    <div class="si-title">FRAME</div>
-    <div class="si-card">
-      <div class="si-q">"Today's call is simple. We have approximately 1 hour."</div>
-      <div style="height:10px"></div>
-      <div class="si-q">"I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help."</div>
-      <div style="height:10px"></div>
-      <div class="si-q">"If we can, I'll explain how. If we can't, I'll point you in the right direction."</div>
-      <div style="height:14px"></div>
-      <div class="si-q" style="color:var(--green);">"Sound fair?"</div>
-    </div>
-    <div class="si-skip">PEDAL → CALL SCREEN</div>
-  </div>
-</div>
-
-<!-- CALL SCREEN -->
-<div id="sCall" class="screen">
-  <div class="topbar">
-    <div>
-      <div class="prospect-name" id="callProspect">Bob</div>
-      <div class="call-live">● LIVE CALL</div>
-    </div>
-    <div style="display:flex;gap:6px;">
-      <span class="hk p">P=PAIN</span>
-      <span class="hk d">D=DREAM</span>
-    </div>
-  </div>
-
-  <div class="gold-bar">
-    <div class="gold-bar-txt">⚡ STAY LONGER THAN FEELS COMFORTABLE</div>
-  </div>
-
-  <div class="trigger-row">
-    <span class="trig-lbl">DIG WHEN YOU HEAR:</span>
-    <span class="tw">TIME</span>
-    <span class="tw">FREEDOM</span>
-    <span class="tw">FAMILY</span>
-    <span class="tw">FRUSTRATION</span>
-    <span class="tw">REGRET</span>
-    <span class="tw">STUCK</span>
-    <span class="tw">BURNOUT</span>
-    <span class="tw">POTENTIAL</span>
-  </div>
-
-  <div class="q-area" id="qArea">
-
-    <!-- DISCOVERY -->
-    <div class="phase-div disc">
-      <span class="phase-name disc">◆ DISCOVERY</span>
-      <span class="phase-sub">Listen · Build rapport · Understand who they are</span>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">OPENING</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">"What made you decide to jump on the call today?"</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">What got you interested in this?</div>
-        <div class="q-item">What stood out that made you want to find out more?</div>
-        <div class="q-item">What made you choose to speak with us specifically?</div>
-        <div class="q-item">What are you hoping this could do for you?</div>
-        <div class="q-item">Why now — what made this feel like the right time?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">ABOUT THEM</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">Tell me a bit about yourself, Bob.</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">Tell me about life outside work.</div>
-        <div class="q-item">Married, in a relationship, or flying solo?</div>
-        <div class="q-item">Got any kids?</div>
-        <div class="q-item">What do you do for work?</div>
-        <div class="q-item">[Genuine reaction to their job] — that must be hard / interesting / demanding...</div>
-        <div class="q-item">How long have you been doing that?</div>
-        <div class="q-item">Do you enjoy it?</div>
-        <div class="q-item">Lots of hours? Shift work? Weekends?</div>
-        <div class="q-item">Do you commute? How long is that?</div>
-        <div class="q-item">So when do you actually get time for yourself, Bob?</div>
-        <div class="q-item">How long do you see yourself doing that for?</div>
-        <div class="q-item" style="color:rgba(255,149,0,0.6);font-style:italic;">↳ If they have no time: "What would need to change for you to make it a priority?"</div>
-        <div class="q-item" style="color:rgba(255,149,0,0.6);font-style:italic;">↳ "If this was truly important to you — could you find a way?"</div>
-      </div>
-    </div>
-
-    <!-- PAIN -->
-    <div class="phase-div pain">
-      <span class="phase-name pain">◆ PAIN</span>
-      <span class="phase-sub">Find it · Stay there · Let them feel it</span>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">PAIN — SURFACE</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">What's the hardest part about that?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">What's frustrating about that?</div>
-        <div class="q-item">What impact is that having on your life?</div>
-        <div class="q-item">What's the real cost of staying where you are?</div>
-        <div class="q-item">What's that costing you?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">TIME</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">How long have you been dealing with this?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">How many years have you been living with this?</div>
-        <div class="q-item">You've already been dealing with this for [X] years — could you do another [X]?</div>
-        <div class="q-item">What would another 5 years of this look like?</div>
-        <div class="q-item">How much longer are you willing to tolerate this?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">TRIED</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">What have you tried so far?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">Is this your first time doing anything like this online — or have you tried things before?</div>
-        <div class="q-item">What happened?</div>
-        <div class="q-item">Why do you think that didn't work?</div>
-        <div class="q-item">In your opinion Bob — what do you think was missing?</div>
-        <div class="q-item">What would have needed to be different for it to work?</div>
-        <div class="q-item">What's stopping you from figuring this out on your own?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">CONSEQUENCE</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">What happens if nothing changes?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">How would you feel if you were still here next year?</div>
-        <div class="q-item">How much longer can you realistically keep doing this?</div>
-        <div class="q-item">At what point does staying where you are become harder than making a change?</div>
-        <div class="q-item">What's the hardest part about knowing you're capable of more but still stuck?</div>
-        <div class="q-item">If we're having this exact conversation a year from now — what does that look like?</div>
-        <div class="q-item" style="color:var(--amber);font-style:italic;">If this was truly important — could you make it happen?</div>
-        <div class="q-item" style="color:var(--amber);font-style:italic;">What would have to change for you to make this a priority?</div>
-        <div class="q-item" style="color:var(--amber);font-style:italic;">At what point does this become important enough to act on?</div>
-      </div>
-    </div>
-
-    <div class="stay-here">STAY HERE LONGER THAN FEELS COMFORTABLE</div>
-
-    <!-- DREAM -->
-    <div class="phase-div dream">
-      <span class="phase-name dream">◆ DREAM</span>
-      <span class="phase-sub">New vision · Make it real · Make it personal · Make them feel it</span>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">DREAM — OPEN</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">If this worked exactly how you hoped — what would change first?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">What would life look like if this problem disappeared?</div>
-        <div class="q-item">What would become possible?</div>
-        <div class="q-item">What would a great day look like?</div>
-        <div class="q-item">What would having that freedom mean to you?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">MAKE IT PERSONAL</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">What would your family notice?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">How would your confidence change?</div>
-        <div class="q-item">Who else would benefit if you got this right?</div>
-        <div class="q-item">What would getting this right mean for you personally?</div>
-        <div class="q-item">What excites you most about that future?</div>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div style="background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:4px solid rgba(255,255,255,0.15);">
-        <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">MAKE IT REAL</div>
-        <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.35;">If we were having this conversation 12 months from now and everything had gone perfectly — what would you be telling me?</div>
-      </div>
-      <div class="q-list">
-        <div class="q-item">How different would life feel if that became reality?</div>
-        <div class="q-item">What would that mean for you and your family?</div>
-        <div class="q-item">What would change first?</div>
-      </div>
-    </div>
-
-    <div class="stay-here">STAY HERE LONGER THAN FEELS COMFORTABLE</div>
-
-    <!-- ATM -->
-    <div class="phase-div atm">
-      <span class="phase-name atm">◆ ATM — QUALIFYING</span>
-      <span class="phase-sub">Handle now or handle as objections later</span>
-    </div>
-
-    <div style="padding:12px 16px 0;">
-      <div class="q-ref" style="font-size:14px;">"Hey Bob — before we go any further, do you mind if I ask you a couple more questions about your situation?"</div>
-    </div>
-
-    <div class="atm-block">
-      <div class="atm-block-title">A — AUTHORITY</div>
-      <div class="atm-q ref">"Does she know you're on this call — or are we on a secret mission?"</div>
-      <div class="atm-q">When you make bigger decisions like this — do you take the lead or talk it through together?</div>
-      <div class="atm-q">If today felt right — is that a call you could make yourself?</div>
-    </div>
-
-    <div class="atm-block">
-      <div class="atm-block-title">T — TIME</div>
-      <div class="atm-q ref">"If we found exactly what you were looking for today — would you feel ready to move forward?"</div>
-      <div class="atm-q">Totally fair. What would you need to think about?</div>
-      <div class="atm-q">What's normally your process for a decision like this?</div>
-      <div class="atm-q">Is there anything specific you'd want clarity on first?</div>
-      <div class="atm-q">If this was important enough — could you make time for it?</div>
-      <div class="atm-note">If no time → "You've been dealing with this for [X] years. If you can't make it a priority now — when will you ever?"</div>
-    </div>
-
-    <div class="atm-block">
-      <div class="atm-block-title">M — MONEY</div>
-      <div class="atm-q ref">"Have you invested in yourself before?"</div>
-      <div class="atm-q">What was that experience like?</div>
-      <div class="atm-q">What did you like? What didn't you like?</div>
-      <div class="atm-q">What would you want differently this time?</div>
-      <div class="atm-q ref">"If you found exactly what you were looking for — is money actually the thing that would stop you? Or is it more making sure you're making the right decision?"</div>
-      <div class="atm-q">If 1 is money is a genuine concern and 10 is money wouldn't stop you — where would you put yourself?</div>
-      <div class="atm-q">Why that number and not lower?</div>
-      <div class="atm-q">What would need to happen for that number to be higher?</div>
-      <div class="atm-q">Is that a money thing or more of a certainty thing?</div>
-    </div>
-
-    <div class="atm-block">
-      <div class="atm-block-title">COMMITMENT</div>
-      <div class="atm-q ref">"Be honest with me — if this solved the problem we've been discussing, would you find a way or would you find a reason?"</div>
-      <div class="atm-q">What makes you say that?</div>
-      <div class="atm-q">How serious are you about solving this?</div>
-      <div class="atm-q">Why now?</div>
-      <div class="atm-q">Why has this become important?</div>
-    </div>
-
-    <!-- SUMMARY -->
-    <div class="phase-div summary">
-      <span class="phase-name summary">◆ SUMMARY</span>
-      <span class="phase-sub">Repeat it back · Build certainty · Most closers skip this</span>
-    </div>
-
-    <div class="summary-block">
-      <div class="summary-q key">"Bob — just so I make sure I've understood correctly..."</div>
-      <div class="summary-q">Summarise their pain in their exact words.</div>
-      <div class="summary-q">Summarise their frustrations.</div>
-      <div class="summary-q">Summarise their failed attempts.</div>
-      <div class="summary-q">Summarise their dream and goals.</div>
-      <div class="summary-q">Summarise the consequences of doing nothing.</div>
-      <div class="summary-q key">"Have I got that right?"</div>
-      <div class="summary-q key">"Based on everything you've told me — I genuinely think we can help. Would you like me to walk you through how?"</div>
-    </div>
-
-  </div>
-
-  <div class="rem-strip"><div class="rem-inner" id="remInner"></div></div>
-
-  <div class="botbar">
-    <div style="display:flex;gap:8px;">
-      <button class="pain-btn" onclick="activatePainMode()">🔴 PAIN</button>
-      <button class="dream-btn" onclick="activateDreamMode()">🟢 DREAM</button>
-    </div>
-    <button class="notes-btn" id="notesBtn" onclick="openNotes()">✎ NOTES</button>
-    <button class="end-btn" onclick="endCall()">END</button>
-  </div>
 </div>
 
 <!-- PAIN FLASH -->
@@ -557,9 +232,9 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="mode-lbl p">PAIN MODE</div>
   <div class="mode-wrap">
     <div class="mode-prog" id="painProg"></div>
-    <div class="mode-layer p" id="painLayer">LAYER 1 — SURFACE</div>
-    <div class="mode-card p"><div class="mode-q" id="painQ">What's the hardest part about that?</div></div>
-    <div class="mode-whisper p" id="painWhisper">Stay here. Let them keep talking.</div>
+    <div class="mode-layer p" id="painLayer">LAYER 1</div>
+    <div class="mode-card p"><div class="mode-q" id="painQ"></div></div>
+    <div class="mode-whisper p" id="painWhisper"></div>
     <button class="mode-next p" onclick="painNext()">THEY ANSWERED — GO DEEPER ›</button>
     <button class="mode-ret p" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
@@ -570,9 +245,9 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="mode-lbl d">DREAM MODE</div>
   <div class="mode-wrap">
     <div class="mode-prog" id="dreamProg"></div>
-    <div class="mode-layer d" id="dreamLayer">LAYER 1 — WHAT THEY WANT</div>
-    <div class="mode-card d"><div class="mode-q" id="dreamQ">What would life look like if this problem disappeared?</div></div>
-    <div class="mode-whisper d" id="dreamWhisper">Let them dream out loud. Don't interrupt.</div>
+    <div class="mode-layer d" id="dreamLayer">LAYER 1</div>
+    <div class="mode-card d"><div class="mode-q" id="dreamQ"></div></div>
+    <div class="mode-whisper d" id="dreamWhisper"></div>
     <button class="mode-next d" onclick="dreamNext()">THEY ANSWERED — GO DEEPER ›</button>
     <button class="mode-ret d" onclick="exitMode()">← RETURN TO CALL</button>
   </div>
@@ -611,16 +286,51 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="end-rule">⚠ DISCOVER FIRST · PITCH SECOND</div>
     <div class="end-rule">⚠ WAIT 2 SECONDS AFTER EVERY ANSWER</div>
     <div class="end-rule">⚠ THE PROSPECT TALKS 70–80%</div>
+    <div class="end-rule">⚠ STAY LONGER THAN FEELS COMFORTABLE</div>
     <div class="end-rule">⚠ I DO NOT NEED TO BE MORE IMPRESSIVE</div>
     <div class="end-rule">⚠ I NEED TO BE MORE CURIOUS</div>
   </div>
   <button class="restart-btn" onclick="restart()">NEW CALL</button>
 </div>
 
+<!-- CALL SLIDE TEMPLATE -->
+<div id="sCall" class="screen call-slide">
+  <div class="slide-topbar">
+    <div>
+      <div class="slide-prospect" id="slideProspect">Bob</div>
+      <div class="slide-live">● LIVE CALL</div>
+    </div>
+    <div class="slide-progress" id="slideProgress"></div>
+    <div class="slide-hks">
+      <span class="hk p">P</span>
+      <span class="hk d">D</span>
+    </div>
+  </div>
+  <div class="gold-bar">⚡ STAY LONGER THAN FEELS COMFORTABLE — WHEN YOU HEAR EMOTION, ASK 2–3 MORE</div>
+  <div class="trigger-row">
+    <span class="trig-lbl">DIG:</span>
+    <span class="tw">TIME</span><span class="tw">FREEDOM</span><span class="tw">FAMILY</span>
+    <span class="tw">FRUSTRATION</span><span class="tw">REGRET</span><span class="tw">STUCK</span>
+    <span class="tw">BURNOUT</span><span class="tw">POTENTIAL</span>
+  </div>
+  <div class="slide-body" id="slideBody"></div>
+  <div class="rem-strip"><div class="rem-inner" id="remInner"></div></div>
+  <div class="slide-botbar">
+    <div style="display:flex;gap:8px;">
+      <button class="pain-btn" onclick="activatePainMode()">🔴 PAIN</button>
+      <button class="dream-btn" onclick="activateDreamMode()">🟢 DREAM</button>
+    </div>
+    <button class="notes-btn" id="notesBtn" onclick="openNotes()">✎ NOTES</button>
+    <button class="notes-btn" onclick="goBack()">← BACK</button>
+    <button class="end-btn" onclick="endCall()">END</button>
+  </div>
+</div>
+
 <script>
-var yourName='Richard Stokes',yourRole='',prospectName='Bob';
-var painIdx=0,dreamIdx=0,noteMode='note',notes=[];
-var rapportInterval=null,rapportSecs=60,savedScrollPos=0;
+var yourName='Richard Stokes', yourRole='', prospectName='Bob';
+var painIdx=0, dreamIdx=0, noteMode='note', notes=[];
+var rapportInterval=null, rapportSecs=60;
+var currentSlide=0, savedSlide=0;
 
 var REMINDERS=[
   "IF I AM SAYING IT — IT'S PRESSURE. IF THEY ARE SAYING IT — IT'S CONVICTION.",
@@ -634,8 +344,6 @@ var REMINDERS=[
   "THE GOLD COMES AFTER THE PAUSE.",
   "DON'T RESCUE THEM. LET IT SIT.",
   "DO NOT SOLVE. DO NOT TEACH.",
-  "DISCOVER FIRST. PITCH SECOND.",
-  "WAIT 2 SECONDS AFTER EVERY ANSWER.",
   "THE PROSPECT TALKS 70–80%.",
   "DON'T BECOME THEIR MATE. BE THEIR GUIDE.",
   "I DO NOT NEED TO BE MORE IMPRESSIVE. I NEED TO BE MORE CURIOUS."
@@ -644,40 +352,244 @@ var REMINDERS=[
 var PAIN_Qs=[
   {layer:"LAYER 1 — SURFACE",q:"What's the hardest part about that?",w:"Stay here. Let them keep talking."},
   {layer:"LAYER 2 — MEANING",q:"What do you mean by that exactly?",w:"Don't assume. Make sure you understand."},
-  {layer:"LAYER 3 — TIME",q:"How long have you been dealing with this?",w:"Then use double time with their answer."},
-  {layer:"LAYER 4 — TRIED",q:"What have you tried to solve this?",w:"Build doubt. They can't say they'll figure it out alone."},
-  {layer:"LAYER 5 — COST",q:"What is that actually costing you?",w:"Financial and personal. Let them feel both."},
+  {layer:"LAYER 3 — DURATION",q:"How long have you been carrying this?",w:"Duration builds urgency. Let it land."},
+  {layer:"LAYER 4 — COST",q:"What is that actually costing you?",w:"Financial and personal. Let them feel both."},
+  {layer:"LAYER 5 — IMPACT",q:"How is that affecting the people around you?",w:"Family makes it real."},
   {layer:"LAYER 6 — REAL COST",q:"What's the real cost of staying where you are?",w:"The hidden cost. Let them say it."},
   {layer:"LAYER 7 — LONGEVITY",q:"How much longer can you realistically keep doing this?",w:"'Realistically' does a lot of work here."},
   {layer:"LAYER 8 — CONSEQUENCE",q:"What do you think happens if nothing changes?",w:"Let them say it. Don't say it for them."},
   {layer:"LAYER 9 — TIPPING POINT",q:"At what point does staying where you are become harder than making a change?",w:"This flips the risk. Staying becomes the danger."},
-  {layer:"LAYER 10 — SELF CONVICTION",q:"So what do you think needs to happen?",w:"Wait for it. The sale lives in this answer."}
+  {layer:"LAYER 10 — CONVICTION",q:"So what do you think needs to happen?",w:"Wait for it. The sale lives in this answer."}
 ];
 
 var DREAM_Qs=[
-  {layer:"LAYER 1 — WHAT THEY WANT",q:"What would life look like if this problem disappeared?",w:"Let them dream out loud. Don't interrupt."},
+  {layer:"LAYER 1 — OPEN",q:"Fast forward 12 months — if this worked out exactly how you hoped, what would day to day life look like?",w:"Let them paint the picture. Don't interrupt."},
   {layer:"LAYER 2 — POSSIBILITIES",q:"What would become possible?",w:"Open ended. Let them go wherever they want."},
-  {layer:"LAYER 3 — FREEDOM",q:"What would that allow you to do that you can't do now?",w:"Freedom is the real motivator for most people."},
-  {layer:"LAYER 4 — DAY TO DAY",q:"How would your day-to-day life change?",w:"Make it concrete. Make it real."},
-  {layer:"LAYER 5 — FEELING",q:"How would your confidence change?",w:"Emotion drives decisions. Let them feel it."},
-  {layer:"LAYER 6 — FAMILY",q:"What would your family notice?",w:"When family is involved the stakes are higher."},
-  {layer:"LAYER 7 — PERSONAL",q:"What would getting this right mean for you personally?",w:"'Personally' takes it deeper."},
-  {layer:"LAYER 8 — 12 MONTHS",q:"If we were having this conversation 12 months from now and everything had gone perfectly — what would you be telling me?",w:"A dream with a timeline becomes a goal."},
+  {layer:"LAYER 3 — FREEDOM",q:"What would you be able to do that you can't do right now?",w:"Freedom is the real motivator for most people."},
+  {layer:"LAYER 4 — LIFESTYLE",q:"Would you upgrade your lifestyle at all?",w:"Make it vivid. Make it real. Make it theirs."},
+  {layer:"LAYER 5 — MONEY",q:"Would you be able to just go out without having to think about every penny?",w:"Specific and real. Let them feel it."},
+  {layer:"LAYER 6 — FAMILY",q:"Would you have more time for the family?",w:"When family is involved the stakes are higher."},
+  {layer:"LAYER 7 — CONFIDENCE",q:"Would you feel more confident?",w:"Identity level. The sale lives here."},
+  {layer:"LAYER 8 — PERSONAL",q:"What would getting this right mean for you personally?",w:"'Personally' takes it deeper."},
   {layer:"LAYER 9 — EXCITEMENT",q:"What excites you most about that future?",w:"Find what lights them up. Stay there."},
-  {layer:"LAYER 10 — SELF CONVICTION",q:"How different would life feel if that became reality?",w:"Let them feel the gap between now and then."}
+  {layer:"LAYER 10 — CONVICTION",q:"What would that mean for you and your family?",w:"Let them feel the gap between now and then."}
 ];
 
-function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
+// SLIDES — each one is a screen in the call
+function getSlides(){
+  var p=prospectName;
+  return [
+  {tag:'disc',tagLabel:'RAPPORT',isRapport:true,
+   main:"Hey "+p+" — good to speak with you. I'm "+yourName+(yourRole?", "+yourRole:"")+".",
+   sub:"How are you doing today?",fus:[]},
+
+  {tag:'disc',tagLabel:"FRAME",
+   main:"Today's call is simple. We have approximately 1 hour.",sub:null,
+   fus:["I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help.",
+        "If we can, I'll explain how. If we can't, I'll point you in the right direction.",
+        "Sound fair?"]},
+
+  {tag:'disc',tagLabel:'OPENING',
+   main:'What made you decide to jump on the call today?',
+   fus:['What got you interested in this?',
+        'What stood out that made you want to find out more?',
+        'What made you choose to speak with us specifically?',
+        'What are you hoping this could do for you?',
+        'Why now — what made this feel like the right time?']},
+
+  {tag:'disc',tagLabel:'ABOUT THEM — LIFE',
+   main:'Tell me a bit about yourself. Tell me about your life outside of work.',
+   fus:['Married, in a relationship, or flying solo?',
+        'How long have you guys been together?',
+        'Got any kids?']},
+
+  {tag:'disc',tagLabel:'ABOUT THEM — WORK',
+   main:'What do you do for work?',
+   fus:['[Genuine reaction — that must be hard / demanding / interesting...]',
+        'How long have you been doing that?',
+        'Do you still enjoy it?',
+        'Lots of hours? Shift work? Weekends?',
+        'Do you commute? How long is that?',
+        'So when do you actually get time for yourself?']},
+
+  {tag:'disc',tagLabel:'TIME BRIDGE',
+   main:'How long do you see yourself doing that for?',
+   fus:['What makes you say that?',
+        '[X] years — ⏸ PAUSE',
+        "What's life going to look like then?",
+        'And what if it goes longer than that?',
+        'What if [X] years becomes [X+5]? What then?']},
+
+  {tag:'disc',tagLabel:'TIME COMMITMENT',
+   main:'Do you think, given that schedule, you could commit [X] hours a week to a programme like this?',
+   fus:['Most students do anywhere between 4 and 10 hours a week and see very good results.',
+        'What would need to change for you to make that work?',
+        'If this was truly important to you — could you find a way?']},
+
+  {tag:'pain',tagLabel:'PAIN — SURFACE',amber:true,
+   main:'You mentioned [the hours / the work / the situation] — what impact is that actually having on your life?',
+   fus:["What's the hardest part about that?",
+        "What's frustrating about it?",
+        "What's that costing you?",
+        'How does it affect the family?']},
+
+  {tag:'pain',tagLabel:'CONSEQUENCE',
+   main:'What happens if nothing changes?',
+   fus:['How would you feel if you were still here next year?',
+        'At what point does staying where you are become harder than making a change?',
+        'Can I ask you a personal question — what does it feel like knowing you are capable of more but still stuck?',
+        'How much longer do you think you could live like this?']},
+
+  {tag:'pain',tagLabel:'TRIED',
+   main:'Is this the first time you have reached out to a programme like this — or have you tried things before?',
+   fus:['What have you done in the past?',
+        'What happened?',
+        "Why do you think that didn't work?",
+        'In your opinion — what do you think was missing?',
+        'So if that was part of this programme — do you think this would work for you?']},
+
+  {tag:'dream',tagLabel:'THE FLIP',green:true,
+   main:'If you went ahead with a programme like this and we were having this exact conversation a year from now — what would that look like?',
+   fus:['What would be different?',
+        'What would have changed?',
+        'How would that feel?']},
+
+
+
+  {tag:'dream',tagLabel:'DREAM — PIVOT',green:true,
+   main:'If we fast forward 12 months and this all works out exactly how you hoped — what would your day to day life look like?',
+   fus:['What would actually become possible?',
+        'What would you be able to do that you cannot do right now?',
+        'You mentioned freedom — can you see how powerful something like this could potentially be for the right person?',
+        'What would you do with all that freedom?']},
+
+  {tag:'dream',tagLabel:'DREAM — LIFESTYLE',
+   main:'Would you upgrade your lifestyle?',
+   fus:['Would you be able to go out without thinking about every penny?',
+        'Do you think you would treat yourself a bit more?',
+        'New car? New house? More holidays?',
+        'What would be the first thing you would do?']},
+
+  {tag:'dream',tagLabel:'DREAM — PERSONAL',amber:true,
+   main:'You mentioned the family earlier — would you be more available to them?',
+   fus:['Would you have more time for the kids?',
+        'Would you feel more confident?',
+        'What would your family notice first?',
+        'Who else benefits if you get this right?',
+        'What excites you most about that future?']},
+
+  {tag:'atm',tagLabel:'A — AUTHORITY',
+   main:"Does she know you're on this call — or are we on a secret mission?",
+   fus:['When you make bigger decisions like this — do you take the lead or talk it through together?',
+        'If you found exactly what you were looking for today — how would you normally make a decision like that?',
+        'If today felt right — is that a call you could make yourself?']},
+
+  {tag:'atm',tagLabel:'T — TIME',
+   main:'If we found exactly what you were looking for today — would you feel ready to move forward?',
+   fus:['Totally fair. What would you need to think about?',
+        "What's normally your process for a decision like this?",
+        "Is there anything specific you'd want clarity on first?",
+        'If this was important enough — could you make time for it?',
+        "[If stalling] You've been dealing with this for [X] years. If you can't make it a priority now — when will you ever?"]},
+
+  {tag:'atm',tagLabel:'M — MONEY',
+   main:'Have you invested in yourself before?',
+   fus:['What was that experience like?',
+        "What did you like? What didn't you like?",
+        'What would you want differently this time?']},
+
+  {tag:'atm',tagLabel:'M — WILLINGNESS',
+   main:"If you found exactly what you were looking for — is money actually the thing that would stop you? Or is it more making sure you're making the right decision?",
+   fus:["If 1 is money is a genuine concern and 10 is money wouldn't stop you — where would you put yourself?",
+        'Why that number and not lower?',
+        'What would need to happen for that number to be higher?',
+        'Is that a money thing or more of a certainty thing?']},
+
+  {tag:'atm',tagLabel:'COMMITMENT',
+   main:"Be honest with me — if this solved the problem we've been discussing, would you find a way or would you find a reason?",
+   fus:['What makes you say that?',
+        'How serious are you about solving this?',
+        'Why now?',
+        'Why has this become important?']},
+
+  {tag:'summary',tagLabel:'SUMMARY',
+   main:"Just so I make sure I've understood correctly…",
+   fus:['Summarise their pain in their exact words.',
+        'Summarise their frustrations.',
+        'Summarise their failed attempts.',
+        'Summarise their dream and goals.',
+        'Summarise the consequences of doing nothing.',
+        '"Have I got that right?"',
+        "Based on everything you've told me — I genuinely think we can help. Would you like me to walk you through how?"]}
+  ];
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
 
 function beginCall(){
   yourName=document.getElementById('inName').value.trim()||'Richard Stokes';
   yourRole=document.getElementById('inRole').value.trim();
   prospectName=document.getElementById('inProspect').value.trim()||'Bob';
-  document.getElementById('rapportQ').textContent='"Hey '+prospectName+' — good to speak with you. I\'m '+yourName+(yourRole?', '+yourRole:'')+'."';
-  document.getElementById('callProspect').textContent=prospectName;
-  notes=[];savedScrollPos=0;
+  notes=[];currentSlide=0;
   updateNotesBtn();buildReminders();
-  showScreen('sRapport');startRapportTimer();
+  renderSlide();
+  showScreen('sCall');
+  startRapportTimer();
+}
+
+function renderSlide(){
+  var slides=getSlides();
+  var s=slides[currentSlide];
+  if(!s){endCall();return;}
+
+  // Progress dots
+  var prog=document.getElementById('slideProgress');
+  prog.innerHTML='';
+  slides.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='sp'+(i<currentSlide?' done':i===currentSlide?' cur':'');
+    prog.appendChild(d);
+  });
+
+  document.getElementById('slideProspect').textContent=prospectName;
+
+  var body=document.getElementById('slideBody');
+  var mainClass='main-question'+(s.amber?' amber':s.green?' green':'');
+
+  var fuHtml='';
+  if(s.fus&&s.fus.length){
+    fuHtml='<div class="follow-label">FOLLOW UP WITH</div><div class="fu-list">';
+    s.fus.forEach(function(f){fuHtml+='<div class="fu">'+f+'</div>';});
+    fuHtml+='</div>';
+  }
+
+  var rapportHtml='';
+  if(s.isRapport){
+    rapportHtml='<div class="rt-wrap"><div class="rt-circle" id="rtNum">60</div><div class="rt-lbl">⚠ MAX 60 SECONDS<br>JUST BE YOURSELF</div></div>';
+  }
+
+  var subHtml=s.sub?'<div style="font-size:18px;color:rgba(255,255,255,0.5);margin-bottom:18px;line-height:1.5;">'+s.sub+'</div>':'';
+
+  body.innerHTML=
+    '<span class="phase-tag '+s.tag+'">'+s.tagLabel+'</span>'+
+    rapportHtml+
+    '<div class="'+mainClass+'">'+s.main+'</div>'+
+    subHtml+
+    fuHtml;
+}
+
+function goBack(){
+  if(currentSlide>0){currentSlide--;renderSlide();}
+}
+
+function advance(){
+  var slides=getSlides();
+  currentSlide++;
+  if(currentSlide>=slides.length){endCall();return;}
+  renderSlide();
 }
 
 function startRapportTimer(){
@@ -705,9 +617,9 @@ function buildReminders(){
 function endCall(){showScreen('sEnd');}
 function restart(){showScreen('sSetup');}
 
+// Pain Mode
 function activatePainMode(){
-  var qa=document.getElementById('qArea');
-  if(qa)savedScrollPos=qa.scrollTop;
+  savedSlide=currentSlide;
   var f=document.getElementById('painFlash');f.style.display='flex';
   setTimeout(function(){f.style.display='none';painIdx=0;renderPainQ();showScreen('sPain');},1500);
 }
@@ -721,9 +633,9 @@ function renderPainQ(){
 }
 function painNext(){if(painIdx<PAIN_Qs.length-1)painIdx++;renderPainQ();}
 
+// Dream Mode
 function activateDreamMode(){
-  var qa=document.getElementById('qArea');
-  if(qa)savedScrollPos=qa.scrollTop;
+  savedSlide=currentSlide;
   var f=document.getElementById('dreamFlash');f.style.display='flex';
   setTimeout(function(){f.style.display='none';dreamIdx=0;renderDreamQ();showScreen('sDream');},1500);
 }
@@ -738,13 +650,12 @@ function renderDreamQ(){
 function dreamNext(){if(dreamIdx<DREAM_Qs.length-1)dreamIdx++;renderDreamQ();}
 
 function exitMode(){
+  currentSlide=savedSlide;
+  renderSlide();
   showScreen('sCall');
-  setTimeout(function(){
-    var qa=document.getElementById('qArea');
-    if(qa)qa.scrollTop=savedScrollPos;
-  },50);
 }
 
+// Notes
 function setMode(m){noteMode=m;document.getElementById('modeN').className='mode-btn'+(m==='note'?' mn':'');document.getElementById('modeQ').className='mode-btn'+(m==='quote'?' mq':'');}
 function openNotes(){renderNotes();showScreen('sNotes');}
 function closeNotes(){showScreen('sCall');}
@@ -758,45 +669,31 @@ function renderNotes(){
 }
 function saveNote(){
   var ta=document.getElementById('noteTa');var txt=ta.value.trim();if(!txt)return;
-  notes.push({type:noteMode,text:txt,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
+  var slides=getSlides();
+  var label=slides[currentSlide]?slides[currentSlide].tagLabel:'';
+  notes.push({type:noteMode,text:txt,step:label,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:Date.now()});
   ta.value='';updateNotesBtn();renderNotes();
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+// Keyboard
 document.addEventListener('keydown',function(e){
   var active=document.activeElement;
   if(active&&(active.tagName==='TEXTAREA'||active.tagName==='INPUT'))return;
-  var onRapport=document.getElementById('sRapport').classList.contains('active');
-  var onFrame=document.getElementById('sFrame').classList.contains('active');
   var onCall=document.getElementById('sCall').classList.contains('active');
   var onPain=document.getElementById('sPain').classList.contains('active');
   var onDream=document.getElementById('sDream').classList.contains('active');
   var isFwd=e.code==='Space'||e.code==='ArrowRight'||e.code==='Enter'||e.code==='NumpadEnter'||e.code==='KeyB'||e.code==='PageDown'||e.code==='F5'||e.code==='F8'||e.code==='F9'||e.code==='AudioVolumeUp';
   if(isFwd){
     e.preventDefault();
-    if(onRapport){if(rapportInterval)clearInterval(rapportInterval);showScreen('sFrame');}
-    else if(onFrame)showScreen('sCall');
-    else if(onPain)painNext();
-    else if(onDream)dreamNext();
-    else if(onCall){
-      var qa=document.getElementById('qArea');
-      if(qa){
-        var dividers=qa.querySelectorAll('.phase-div,.q-block,.stay-here,.atm-block,.summary-block');
-        var currentScroll=qa.scrollTop;
-        var nextTop=null;
-        dividers.forEach(function(el){
-          if(el.offsetTop>currentScroll+60&&(nextTop===null||el.offsetTop<nextTop)){
-            nextTop=el.offsetTop;
-          }
-        });
-        if(nextTop!==null)qa.scrollTo({top:nextTop-8,behavior:'smooth'});
-      }
-    }
+    if(onCall) advance();
+    else if(onPain) painNext();
+    else if(onDream) dreamNext();
     return;
   }
   if(e.code==='KeyP'&&onCall){e.preventDefault();activatePainMode();}
   if(e.code==='KeyD'&&onCall){e.preventDefault();activateDreamMode();}
-  if(e.code==='Escape'&&(onPain||onDream))exitMode();
+  if(e.code==='Escape'&&(onPain||onDream)) exitMode();
 });
 </script>
 </body>
