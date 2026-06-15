@@ -383,7 +383,7 @@ function getSlides(){
    main:"Hey "+p+" — good to speak with you. I'm "+yourName+(yourRole?", "+yourRole:"")+".",
    sub:"How are you doing today?",fus:[]},
 
-  {tag:'disc',tagLabel:"FRAME",
+  {tag:'disc',tagLabel:'FRAME',
    main:"Today's call is simple. We have approximately 1 hour.",sub:null,
    fus:["I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help.",
         "If we can, I'll explain how. If we can't, I'll point you in the right direction.",
@@ -395,7 +395,18 @@ function getSlides(){
         'What stood out that made you want to find out more?',
         'What made you choose to speak with us specifically?',
         'What are you hoping this could do for you?',
-        'Why now — what made this feel like the right time?']},
+        'Why now — what made this feel like the right time?',
+        'What’s the biggest reason in your life right now you’d be looking to make a change?']},
+
+  {tag:'disc',tagLabel:'LOOP REMINDER',amber:true,
+   main:'THE LOOP — use on any loaded word',
+   fus:['WHAT — "What do you mean by that?" / "How so?"',
+        'HOW LONG — "How long has that been going on?"',
+        'WHY — "Why does that matter to you?" / "Why do you think that hasn’t changed?"',
+        'IMPACT — "How’s that showing up in your day to day / family / health?"',
+        'FUTURE — "If nothing changes, where does that leave you?"',
+        'Context + Question — repeat their word back first: "[word]?" then ask.',
+        'DON’T MOVE ON until you get a definitive.']},
 
   {tag:'disc',tagLabel:'ABOUT THEM — LIFE',
    main:'Tell me a bit about yourself. Tell me about your life outside of work.',
@@ -431,14 +442,24 @@ function getSlides(){
    fus:["What's the hardest part about that?",
         "What's frustrating about it?",
         "What's that costing you?",
-        'How does it affect the family?']},
+        'How does it affect the family?',
+        'How’s that showing up for you day to day?']},
+
+  {tag:'pain',tagLabel:'WHY HASN’T THIS CHANGED',amber:true,
+   main:'What’s actually stopped you from changing this so far?',
+   fus:['What’s stopped you from getting help before now?',
+        'Why do you feel like this hasn’t happened already?',
+        'Why do you think you’re still here?',
+        'What do you feel that’s cost you — not finding this sooner?']},
 
   {tag:'pain',tagLabel:'CONSEQUENCE',
    main:'What happens if nothing changes?',
    fus:['How would you feel if you were still here next year?',
         'At what point does staying where you are become harder than making a change?',
         'Can I ask you a personal question — what does it feel like knowing you are capable of more but still stuck?',
-        'How much longer do you think you could live like this?']},
+        'How much longer do you think you could live like this?',
+        'What happens if another five years goes by? How much worse would it be then?',
+        'Do you really want to be having this same conversation in five years?']},
 
   {tag:'pain',tagLabel:'TRIED',
    main:'Is this the first time you have reached out to a programme like this — or have you tried things before?',
@@ -453,8 +474,6 @@ function getSlides(){
    fus:['What would be different?',
         'What would have changed?',
         'How would that feel?']},
-
-
 
   {tag:'dream',tagLabel:'DREAM — PIVOT',green:true,
    main:'If we fast forward 12 months and this all works out exactly how you hoped — what would your day to day life look like?',
@@ -478,6 +497,14 @@ function getSlides(){
         'Who else benefits if you get this right?',
         'What excites you most about that future?']},
 
+  {tag:'dream',tagLabel:'EXPAND THE DREAM',green:true,
+   main:'You mentioned [their number] — why [that number] specifically?',
+   fus:['Why not more than that?',
+        'Do you think you’re capable of more than that?',
+        'I had someone join recently who’s now doing [bigger number] — would you be comfortable if I pushed you a little harder than that?',
+        'What would that extra amount actually change for you?',
+        'Would that be life-changing or lifestyle-changing?']},
+
   {tag:'atm',tagLabel:'A — AUTHORITY',
    main:"Does she know you're on this call — or are we on a secret mission?",
    fus:['When you make bigger decisions like this — do you take the lead or talk it through together?',
@@ -498,6 +525,12 @@ function getSlides(){
         "What did you like? What didn't you like?",
         'What would you want differently this time?']},
 
+  {tag:'atm',tagLabel:'M — THE GAP',
+   main:'Just so I understand what we’d be building from — where are you currently at?',
+   fus:['So are we going from [X] to [Y]?',
+        'What would that extra amount actually change day to day?',
+        'Would that be life-changing or lifestyle-changing?']},
+
   {tag:'atm',tagLabel:'M — WILLINGNESS',
    main:"If you found exactly what you were looking for — is money actually the thing that would stop you? Or is it more making sure you're making the right decision?",
    fus:["If 1 is money is a genuine concern and 10 is money wouldn't stop you — where would you put yourself?",
@@ -510,7 +543,14 @@ function getSlides(){
    fus:['What makes you say that?',
         'How serious are you about solving this?',
         'Why now?',
-        'Why has this become important?']},
+        'Why has this become important?',
+        'What are you willing to sacrifice to make this happen?']},
+
+  {tag:'atm',tagLabel:'ACCOUNTABILITY',amber:true,
+   main:'Are you comfortable with me holding you accountable to that?',
+   fus:['If we can help you — are you willing to do the work?',
+        'Are you willing to show up every day?',
+        'I want the absolute best for you — are you ready to commit to that?']},
 
   {tag:'summary',tagLabel:'SUMMARY',
    main:"Just so I make sure I've understood correctly…",
