@@ -186,6 +186,8 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .end-rule{font-size:14px;font-weight:700;color:var(--amber);padding:7px 0;border-bottom:1px solid var(--border);}
 .end-rule:last-child{border-bottom:none;}
 .restart-btn{background:var(--green);border:none;border-radius:16px;padding:16px 48px;color:#000;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
+.ck{font-size:11px;font-weight:700;letter-spacing:1px;color:#444;cursor:pointer;padding:3px 8px;border-radius:10px;border:1px solid #1e1e1e;background:#141414;transition:all 0.2s;}
+.ck.done{color:#00d26a;border-color:rgba(0,210,106,0.4);background:rgba(0,210,106,0.08);}
 </style>
 </head>
 <body>
@@ -306,15 +308,18 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
       <span class="hk d">D</span>
     </div>
   </div>
-  <div class="gold-bar">⚡ STAY LONGER THAN FEELS COMFORTABLE — WHEN YOU HEAR EMOTION, ASK 2–3 MORE</div>
-  <div class="trigger-row">
-    <span class="trig-lbl">DIG:</span>
-    <span class="tw">TIME</span><span class="tw">FREEDOM</span><span class="tw">FAMILY</span>
-    <span class="tw">FRUSTRATION</span><span class="tw">REGRET</span><span class="tw">STUCK</span>
-    <span class="tw">BURNOUT</span><span class="tw">POTENTIAL</span>
+
+  <div id="checklistBar" style="background:#0d0d0d;border-bottom:1px solid #1e1e1e;padding:8px 16px;flex-shrink:0;display:flex;gap:16px;flex-wrap:wrap;">
+    <span style="font-size:9px;letter-spacing:2px;color:#444;text-transform:uppercase;align-self:center;flex-shrink:0;">GOT:</span>
+    <span class="ck" onclick="toggleCk(this)">WORK</span>
+    <span class="ck" onclick="toggleCk(this)">DURATION</span>
+    <span class="ck" onclick="toggleCk(this)">ENJOYMENT</span>
+    <span class="ck" onclick="toggleCk(this)">HOURS</span>
+    <span class="ck" onclick="toggleCk(this)">TIME</span>
+    <span class="ck" onclick="toggleCk(this)">FAMILY</span>
+    <span class="ck" onclick="toggleCk(this)">FUTURE</span>
   </div>
   <div class="slide-body" id="slideBody"></div>
-  <div class="rem-strip"><div class="rem-inner" id="remInner"></div></div>
   <div class="slide-botbar">
     <div style="display:flex;gap:8px;">
       <button class="pain-btn" onclick="activatePainMode()">🔴 PAIN</button>
@@ -378,188 +383,164 @@ var DREAM_Qs=[
 // SLIDES — each one is a screen in the call
 function getSlides(){
   var p=prospectName;
+  var name=yourName+(yourRole?", "+yourRole:"");
   return [
-  {tag:'disc',tagLabel:'RAPPORT',isRapport:true,
-   main:"Hey "+p+" — good to speak with you. I'm "+yourName+(yourRole?", "+yourRole:"")+".",
+
+  {tag:"disc",tagLabel:"RAPPORT",isRapport:true,
+   main:"Hey "+p+" — good to speak with you. I'm "+name+".",
    sub:"How are you doing today?",fus:[]},
 
-  {tag:'disc',tagLabel:'FRAME',
-   main:"Today's call is simple. We have approximately 1 hour.",sub:null,
+  {tag:"disc",tagLabel:"FRAME",main:"Today's call is simple. We have approximately 1 hour.",sub:null,
    fus:["I just want to understand where you're at, where you'd like to get to, and see whether we can genuinely help.",
         "If we can, I'll explain how. If we can't, I'll point you in the right direction.",
         "Sound fair?"]},
 
-  {tag:'disc',tagLabel:'OPENING',
-   main:'What made you decide to jump on the call today?',
-   fus:['What got you interested in this?',
-        'What stood out that made you want to find out more?',
-        'What made you choose to speak with us specifically?',
-        'What are you hoping this could do for you?',
-        'Why now — what made this feel like the right time?',
-        'What’s the biggest reason in your life right now you’d be looking to make a change?']},
+  {tag:"disc",tagLabel:"OPENING",
+   main:"What made you decide to jump on the call today?",
+   fus:["Do you think that's the biggest reason in your life right now you'd be looking to get into something like this?",
+        "Then run the loop — [their word]? What do you mean by that? How long has that been going on?"]},
 
-  {tag:'disc',tagLabel:'LOOP REMINDER',amber:true,
-   main:'THE LOOP — use on any loaded word',
-   fus:['WHAT — "What do you mean by that?" / "How so?"',
-        'HOW LONG — "How long has that been going on?"',
-        'WHY — "Why does that matter to you?" / "Why do you think that hasn’t changed?"',
-        'IMPACT — "How’s that showing up in your day to day / family / health?"',
-        'FUTURE — "If nothing changes, where does that leave you?"',
-        'Context + Question — repeat their word back first: "[word]?" then ask.',
-        'DON’T MOVE ON until you get a definitive.']},
+  {tag:"disc",tagLabel:"THE LOOP — USE ON EVERY LOADED WORD",amber:true,
+   main:"[Their word]? — repeat it back. Then ask.",
+   fus:["WHAT — What do you mean by that? / How so? / Help me understand that.",
+        "HOW LONG — How long has that been going on? / How long have you felt like that?",
+        "WHY — Why does that matter to you? / Why do you think that hasn't changed?",
+        "IMPACT — How's that showing up in your day to day? / relationships? / health?",
+        "FUTURE — You mentioned [X] — what happens if nothing changes?",
+        "STAY HERE — don't move on until you get a definitive.",
+        "IF VAGUE — I really want to help you but I can't if you give me one word answers."]},
 
-  {tag:'disc',tagLabel:'ABOUT THEM — LIFE',
-   main:'Tell me a bit about yourself. Tell me about your life outside of work.',
-   fus:['Married, in a relationship, or flying solo?',
-        'How long have you guys been together?',
-        'Got any kids?']},
+  {tag:"pain",tagLabel:"P — PAIN SURFACE",amber:true,
+   main:"You mentioned [their word] — what impact is that actually having on your life?",
+   fus:["You said [their word] — what's the hardest part about that?",
+        "You mentioned [the hours / the situation] — what's frustrating about it?",
+        "What's that actually costing you?",
+        "You talked about [family / time / money] — how does this affect them?",
+        "What are you noticing day to day that's reinforcing that feeling?"]},
 
-  {tag:'disc',tagLabel:'ABOUT THEM — WORK',
-   main:'What do you do for work?',
-   fus:['[Genuine reaction — that must be hard / demanding / interesting...]',
-        'How long have you been doing that?',
-        'Do you still enjoy it?',
-        'Lots of hours? Shift work? Weekends?',
-        'Do you commute? How long is that?',
-        'So when do you actually get time for yourself?']},
+  {tag:"pain",tagLabel:"I — TIME ELAPSED",
+   main:"How long has that actually been going on?",
+   fus:["How long have you felt like that?",
+        "Is this recent or has this been building for years?",
+        "You've already been dealing with this for [X] years — ⏸ PAUSE",
+        "You said [X] years — do you think you could do another [X] years like this?",
+        "You've been living with this for [X] years — what would another [X] look like?"]},
 
-  {tag:'disc',tagLabel:'TIME BRIDGE',
-   main:'How long do you see yourself doing that for?',
-   fus:['What makes you say that?',
-        '[X] years — ⏸ PAUSE',
-        "What's life going to look like then?",
-        'And what if it goes longer than that?',
-        'What if [X] years becomes [X+5]? What then?']},
-
-  {tag:'disc',tagLabel:'TIME COMMITMENT',
-   main:'Do you think, given that schedule, you could commit [X] hours a week to a programme like this?',
-   fus:['Most students do anywhere between 4 and 10 hours a week and see very good results.',
-        'What would need to change for you to make that work?',
-        'If this was truly important to you — could you find a way?']},
-
-  {tag:'pain',tagLabel:'PAIN — SURFACE',amber:true,
-   main:'You mentioned [the hours / the work / the situation] — what impact is that actually having on your life?',
-   fus:["What's the hardest part about that?",
-        "What's frustrating about it?",
-        "What's that costing you?",
-        'How does it affect the family?',
-        'How’s that showing up for you day to day?']},
-
-  {tag:'pain',tagLabel:'WHY HASN’T THIS CHANGED',amber:true,
-   main:'What’s actually stopped you from changing this so far?',
-   fus:['What’s stopped you from getting help before now?',
-        'Why do you feel like this hasn’t happened already?',
-        'Why do you think you’re still here?',
-        'What do you feel that’s cost you — not finding this sooner?']},
-
-  {tag:'pain',tagLabel:'CONSEQUENCE',
-   main:'What happens if nothing changes?',
-   fus:['How would you feel if you were still here next year?',
-        'At what point does staying where you are become harder than making a change?',
-        'Can I ask you a personal question — what does it feel like knowing you are capable of more but still stuck?',
-        'How much longer do you think you could live like this?',
-        'What happens if another five years goes by? How much worse would it be then?',
-        'Do you really want to be having this same conversation in five years?']},
-
-  {tag:'pain',tagLabel:'TRIED',
-   main:'Is this the first time you have reached out to a programme like this — or have you tried things before?',
-   fus:['What have you done in the past?',
-        'What happened?',
+  {tag:"pain",tagLabel:"I — THINGS TRIED",
+   main:"Is this the first time you've reached out for help — or have you tried things before?",
+   fus:["What have you done in the past?",
+        "What happened?",
         "Why do you think that didn't work?",
-        'In your opinion — what do you think was missing?',
-        'So if that was part of this programme — do you think this would work for you?']},
+        "In your opinion — what do you think was missing?",
+        "You mentioned [what they tried] — what's stopped you from figuring this out on your own?",
+        "So if that was part of this programme — do you think this would work for you?"]},
 
-  {tag:'dream',tagLabel:'THE FLIP',green:true,
-   main:'If you went ahead with a programme like this and we were having this exact conversation a year from now — what would that look like?',
-   fus:['What would be different?',
-        'What would have changed?',
-        'How would that feel?']},
+  {tag:"pain",tagLabel:"WHY HASN'T THIS CHANGED",amber:true,
+   main:"What's actually stopped you from changing this so far?",
+   fus:["You've known about this for [X] years — why do you think this hasn't happened already?",
+        "Why do you think you're still here?",
+        "You mentioned [their reason] — what has that cost you?",
+        "Why are you bringing this to us now?"]},
 
-  {tag:'dream',tagLabel:'DREAM — PIVOT',green:true,
-   main:'If we fast forward 12 months and this all works out exactly how you hoped — what would your day to day life look like?',
-   fus:['What would actually become possible?',
-        'What would you be able to do that you cannot do right now?',
-        'You mentioned freedom — can you see how powerful something like this could potentially be for the right person?',
-        'What would you do with all that freedom?']},
+  {tag:"pain",tagLabel:"I — CONSEQUENCE",
+   main:"You've been dealing with this for [X] years — what happens if nothing changes?",
+   fus:["You mentioned feeling [their emotion] — how would you feel if you were still here next year?",
+        "You said [X] years — what happens if that becomes [X+5]? How much worse would it be?",
+        "At what point does staying where you are become harder than making a change?",
+        "You mentioned feeling capable of more — what does it feel like knowing you're still stuck?",
+        "You've already lost [X] years to this — how much longer do you think you could live like this?",
+        "You said you'd feel like a failure — do you really want to be having this same conversation in five years?"]},
 
-  {tag:'dream',tagLabel:'DREAM — LIFESTYLE',
-   main:'Would you upgrade your lifestyle?',
-   fus:['Would you be able to go out without thinking about every penny?',
-        'Do you think you would treat yourself a bit more?',
-        'New car? New house? More holidays?',
-        'What would be the first thing you would do?']},
+  {tag:"pain",tagLabel:"UPGRADE BELIEF",amber:true,
+   main:"If this was truly important to you — could you find a way?",
+   fus:["What would need to change for you to make this a priority?",
+        "At what point does this become important enough to act on?"]},
 
-  {tag:'dream',tagLabel:'DREAM — PERSONAL',amber:true,
-   main:'You mentioned the family earlier — would you be more available to them?',
-   fus:['Would you have more time for the kids?',
-        'Would you feel more confident?',
-        'What would your family notice first?',
-        'Who else benefits if you get this right?',
-        'What excites you most about that future?']},
+  {tag:"dream",tagLabel:"THE FLIP — PIVOT TO DREAM",green:true,
+   main:"If you went ahead with something like this and we were having this exact conversation in 12 months — what would that look like?",
+   fus:["You mentioned [their pain] — what would be different?",
+        "What would have changed?",
+        "What would actually become possible?",
+        "You said you can't [do X] right now — what would you be able to do?",
+        "What would you do with that freedom?",
+        "Would you upgrade your lifestyle?",
+        "You mentioned money being tight — would you be able to go out without thinking about every penny?",
+        "How would that feel?"]},
 
-  {tag:'dream',tagLabel:'EXPAND THE DREAM',green:true,
-   main:'You mentioned [their number] — why [that number] specifically?',
-   fus:['Why not more than that?',
-        'Do you think you’re capable of more than that?',
-        'I had someone join recently who’s now doing [bigger number] — would you be comfortable if I pushed you a little harder than that?',
-        'What would that extra amount actually change for you?',
-        'Would that be life-changing or lifestyle-changing?']},
+  {tag:"dream",tagLabel:"DREAM — PERSONAL",amber:true,
+   main:"You mentioned [family / confidence / time] earlier — tell me more about that.",
+   fus:["You talked about [family] — would you be more available to them?",
+        "You mentioned [kids / partner] — what would they notice first?",
+        "You said you'd feel more confident — what would that actually look like for you?",
+        "You mentioned [their goal] — who else benefits if you get this right?",
+        "You talked about [their dream] — what excites you most about that future?"]},
 
-  {tag:'atm',tagLabel:'A — AUTHORITY',
+  {tag:"dream",tagLabel:"EXPAND THE DREAM",green:true,
+   main:"You mentioned [their number] — why that number specifically?",
+   fus:["Why not more than that?",
+        "Do you think you're capable of more than that?",
+        "I had someone join recently doing [bigger number] — would you be comfortable if I pushed you harder than that?",
+        "You said [their number] — what would an extra [X] on top of that actually change?",
+        "Would that be life-changing or lifestyle-changing?"]},
+
+  {tag:"atm",tagLabel:"K — KINDRED / TRUST",
+   main:"What made you choose to reach out to us specifically?",
+   fus:["What stood out?",
+        "Why not try to figure this out on your own?",
+        "You mentioned [what they said] — what is it about this that feels right?"]},
+
+  {tag:"atm",tagLabel:"A — AUTHORITY",
    main:"Does she know you're on this call — or are we on a secret mission?",
-   fus:['When you make bigger decisions like this — do you take the lead or talk it through together?',
-        'If you found exactly what you were looking for today — how would you normally make a decision like that?',
-        'If today felt right — is that a call you could make yourself?']},
+   fus:["When you make bigger decisions like this — do you take the lead or talk it through together?",
+        "If you found exactly what you were looking for today — how would you normally make a decision like that?",
+        "If today felt right — is that a call you could make yourself?"]},
 
-  {tag:'atm',tagLabel:'T — TIME',
-   main:'If we found exactly what you were looking for today — would you feel ready to move forward?',
-   fus:['Totally fair. What would you need to think about?',
-        "What's normally your process for a decision like this?",
-        "Is there anything specific you'd want clarity on first?",
-        'If this was important enough — could you make time for it?',
-        "[If stalling] You've been dealing with this for [X] years. If you can't make it a priority now — when will you ever?"]},
+  {tag:"atm",tagLabel:"T — TIME COMMITMENT",
+   main:"If we found the right fit today — could you realistically commit the time?",
+   fus:["You mentioned [their schedule] — if this was important enough, could you find a way?",
+        "What would need to change for you to make time?",
+        "You've been dealing with this for [X] years — if you can't make it a priority now, when will you ever?"]},
 
-  {tag:'atm',tagLabel:'M — MONEY',
-   main:'Have you invested in yourself before?',
-   fus:['What was that experience like?',
+  {tag:"atm",tagLabel:"M — MONEY",
+   main:"Have you invested in yourself before?",
+   fus:["What was that experience like?",
         "What did you like? What didn't you like?",
-        'What would you want differently this time?']},
+        "What would you want differently this time?",
+        "Just so I understand what we'd be building from — where are you currently at?",
+        "So are we going from [X] to [Y]?",
+        "You mentioned wanting [their goal] — would that be life-changing or lifestyle-changing?"]},
 
-  {tag:'atm',tagLabel:'M — THE GAP',
-   main:'Just so I understand what we’d be building from — where are you currently at?',
-   fus:['So are we going from [X] to [Y]?',
-        'What would that extra amount actually change day to day?',
-        'Would that be life-changing or lifestyle-changing?']},
-
-  {tag:'atm',tagLabel:'M — WILLINGNESS',
+  {tag:"atm",tagLabel:"M — WILLINGNESS",
    main:"If you found exactly what you were looking for — is money actually the thing that would stop you? Or is it more making sure you're making the right decision?",
    fus:["If 1 is money is a genuine concern and 10 is money wouldn't stop you — where would you put yourself?",
-        'Why that number and not lower?',
-        'What would need to happen for that number to be higher?',
-        'Is that a money thing or more of a certainty thing?']},
+        "You said [their number] — why that number and not lower?",
+        "What would need to happen for that number to be higher?",
+        "Is that a money thing or more of a certainty thing?"]},
 
-  {tag:'atm',tagLabel:'COMMITMENT',
-   main:"Be honest with me — if this solved the problem we've been discussing, would you find a way or would you find a reason?",
-   fus:['What makes you say that?',
-        'How serious are you about solving this?',
-        'Why now?',
-        'Why has this become important?',
-        'What are you willing to sacrifice to make this happen?']},
+  {tag:"atm",tagLabel:"COMMITMENT — FLIP THE FRAME",amber:true,
+   main:"A lot of people say they want to change. Very few do what it takes. Why are you different?",
+   fus:["You mentioned [their reason] — why are you willing to do what others won't?",
+        "What are you willing to sacrifice to make this happen?",
+        "Be honest with me — would you find a way or would you find a reason?",
+        "You said [their goal] — why now? Why has this become important?",
+        "How serious are you really?"]},
 
-  {tag:'atm',tagLabel:'ACCOUNTABILITY',amber:true,
-   main:'Are you comfortable with me holding you accountable to that?',
-   fus:['If we can help you — are you willing to do the work?',
-        'Are you willing to show up every day?',
-        'I want the absolute best for you — are you ready to commit to that?']},
+  {tag:"atm",tagLabel:"ACCOUNTABILITY",amber:true,
+   main:"Are you comfortable with me holding you accountable to that?",
+   fus:["If we can help you — are you willing to do the work?",
+        "Are you willing to show up every single day?",
+        "I'm only going to invite you in if you're willing to do absolutely everything it takes.",
+        "Because if you're not showing up — that's bad for you and it makes me look like a fool.",
+        "Are you ready to commit to that?"]},
 
-  {tag:'summary',tagLabel:'SUMMARY',
+  {tag:"summary",tagLabel:"SUMMARY — BEFORE YOU PITCH",
    main:"Just so I make sure I've understood correctly…",
-   fus:['Summarise their pain in their exact words.',
-        'Summarise their frustrations.',
-        'Summarise their failed attempts.',
-        'Summarise their dream and goals.',
-        'Summarise the consequences of doing nothing.',
-        '"Have I got that right?"',
+   fus:["You mentioned [pain] — summarise in their exact words.",
+        "You've been dealing with this for [X] years.",
+        "You tried [their attempts] — and it didn't work because [their reason].",
+        "What you actually want is [their dream].",
+        "And if nothing changes [their consequence].",
+        "Have I got that right?",
         "Based on everything you've told me — I genuinely think we can help. Would you like me to walk you through how?"]}
   ];
 }
@@ -574,7 +555,7 @@ function beginCall(){
   yourRole=document.getElementById('inRole').value.trim();
   prospectName=document.getElementById('inProspect').value.trim()||'Bob';
   notes=[];currentSlide=0;
-  updateNotesBtn();buildReminders();
+  updateNotesBtn();
   renderSlide();
   showScreen('sCall');
   startRapportTimer();
@@ -621,6 +602,12 @@ function renderSlide(){
     fuHtml;
 }
 
+function toggleCk(el){el.classList.toggle('done');}
+
+function resetChecklist(){
+  document.querySelectorAll('.ck').forEach(function(c){c.classList.remove('done');});
+}
+
 function goBack(){
   if(currentSlide>0){currentSlide--;renderSlide();}
 }
@@ -645,14 +632,7 @@ function startRapportTimer(){
   },1000);
 }
 
-function buildReminders(){
-  var inner=document.getElementById('remInner');if(!inner)return;
-  var html='';
-  [REMINDERS,REMINDERS].forEach(function(set){
-    set.forEach(function(r,i){html+='<span class="rem-pill'+(i<3?' hot':'')+'">'+r+'</span>';});
-  });
-  inner.innerHTML=html;
-}
+
 
 function endCall(){showScreen('sEnd');}
 function restart(){showScreen('sSetup');}
